@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 海野味小屋
 subtitle: ''
-description: ''
+description: '东东海的私人小屋'
 keywords:
-author: John Doe
-language: en
+author: 东东海
+language: zh-hans
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://haiyewei.seesea.cloud
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
