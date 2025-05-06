@@ -2,6 +2,11 @@
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
+
+# 自动生成sitemap
+sitemap:
+	path: sitemap.xml
+  
 # Site
 title: 海野味小屋
 subtitle: '东东海的归属小屋'
