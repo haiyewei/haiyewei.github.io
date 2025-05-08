@@ -15,8 +15,10 @@ keywords:
 author: 东东海
 language: zh-hans
 timezone: ''
-
-# URL
+#https://haiyewei.netlify.app/
+#https://haiyewei.github.io/
+#https://haiyewei.pages.dev/
+# URL#
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://haiyewei.seesea.cloud
 permalink: :year/:month/:day/:title/
