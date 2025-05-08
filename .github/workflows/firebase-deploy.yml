@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # 更新 Node.js 版本到 20
+          node-version: '20' 
           cache: 'npm'
 
       - name: Install Dependencies
@@ -31,48 +31,19 @@ jobs:
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}' # GITHUB_TOKEN 用于某些 Firebase 功能
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_HEXO_YOUR_PROJECT_ID }}' # 或者使用 FIREBASE_TOKEN
-          # firebaseToolsVersion: 'latest' # 可选：指定 Firebase CLI 版本
-          projectId: 'YOUR_FIREBASE_PROJECT_ID' # 替换为您的 Firebase 项目 ID
-          channelId: live # 部署到实时频道，也可以是 preview 频道
+          repoToken: '${{ secrets.GITHUB_TOKEN }}' 
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_HEXO_YOUR_PROJECT_ID }}' # 确保这个 Secret 名称与您在 GitHub 中设置的完全一致
+          projectId: 'haiyewei-df8f9' # 更新为您的 Firebase 项目 ID
+          channelId: live 
         env:
-          FIREBASE_CLI_PREVIEWS: hostingchannels # 如果使用 channelId，可能需要此环境变量
+          FIREBASE_CLI_PREVIEWS: hostingchannels 
           # 如果不使用 service account JSON，而是使用 CI token:
           # FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
 # 注意:
-# 1. 将 'YOUR_FIREBASE_PROJECT_ID' 替换为您实际的 Firebase 项目 ID。
-# 2. 您需要在 GitHub 仓库的 Settings > Secrets and variables > Actions 中添加以下 Secrets：
-#    - FIREBASE_TOKEN: 通过 `firebase login:ci` 生成的令牌。
-#    或者，更推荐的方式是使用服务账户：
-#    - FIREBASE_SERVICE_ACCOUNT_HEXO_YOUR_PROJECT_ID: 您的 Firebase 项目的服务账户 JSON 密钥内容。
-#      (将 HEXO_YOUR_PROJECT_ID 替换为您的项目相关的名称，这只是一个建议的 Secret 名称)
-#      您可以从 Firebase 控制台 > 项目设置 > 服务帐号 > 生成新的私钥 来获取此 JSON 文件。
-#      然后将整个 JSON 文件的内容作为 Secret 的值。
-#      如果使用服务账户，请确保 `firebaseServiceAccount` 参数指向正确的 Secret 名称。
+# 1. 请再次确认 'YOUR_FIREBASE_PROJECT_ID' 已被替换为您的 Firebase 项目 ID (已更新为 haiyewei-df8f9)。
+# 2. 您必须在 GitHub 仓库的 Settings > Secrets and variables > Actions 中添加名为 `FIREBASE_SERVICE_ACCOUNT_HEXO_YOUR_PROJECT_ID` 的 Secret。
+#    - 这个 Secret 的值必须是您的 Firebase 项目的服务账户 JSON 密钥的【完整内容】。
+#    - 您可以从 Firebase 控制台 > 项目设置 > 服务帐号 > 生成新的私钥 来获取此 JSON 文件。
+#    - 如果您使用了不同的 Secret 名称，请确保在上面的 `firebaseServiceAccount` 参数中也使用相同的名称。
 # 3. 确保您的项目根目录下有 `firebase.json` 和 `.firebaserc` 文件。
-#    如果还没有，您可以在本地项目目录运行 `firebase init hosting` 来生成它们。
-#    通常 `firebase.json` 会包含如下配置：
-#    {
-#      "hosting": {
-#        "public": "public", // Hexo 生成的静态文件目录
-#        "ignore": [
-#          "firebase.json",
-#          "**/.*",
-#          "**/node_modules/**"
-#        ],
-#        "rewrites": [
-#          {
-#            "source": "**",
-#            "destination": "/index.html"
-#          }
-#        ]
-#      }
-#    }
-#    `.firebaserc` 文件会包含项目关联信息：
-#    {
-#      "projects": {
-#        "default": "YOUR_FIREBASE_PROJECT_ID"
-#      }
-#    }
