@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # 根据您的项目需求选择
+          node-version: '20' # 更新 Node.js 版本到 20
           cache: 'npm'
 
       - name: Install Dependencies
@@ -32,9 +32,9 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}' # GITHUB_TOKEN 用于某些 Firebase 功能
-          firebaseServiceAccount: '${{ secrets.FIREBASE_TOKEN }}' # 或者使用 FIREBASE_TOKEN
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_HEXO_YOUR_PROJECT_ID }}' # 或者使用 FIREBASE_TOKEN
           # firebaseToolsVersion: 'latest' # 可选：指定 Firebase CLI 版本
-          projectId: 'haiyewei-df8f9' # 替换为您的 Firebase 项目 ID
+          projectId: 'YOUR_FIREBASE_PROJECT_ID' # 替换为您的 Firebase 项目 ID
           channelId: live # 部署到实时频道，也可以是 preview 频道
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels # 如果使用 channelId，可能需要此环境变量
