@@ -252,7 +252,7 @@ web_analytics:
   # 百度统计的 Key，值需要获取下方链接中 `hm.js?` 后边的字符串
   # Baidu analytics, get the string behind `hm.js?`
   # See: https://tongji.baidu.com/sc-web/10000033910/home/site/getjs?siteId=13751376
-  baidu:
+  baidu: 7555ba0a53c15a113b046166513f2432
 
   # Google Analytics 4 的媒体资源 ID
   # Google Analytics 4 MEASUREMENT_ID
@@ -300,7 +300,7 @@ web_analytics:
 
     # 用于统计 PV UV 的开始时间，格式为 "YYYY-MM-DD"
     # statistics on the start time, the format is "YYYY-MM-DD"
-    start_time: 2024-01-01
+    start_time: 2025-05-01
 
     # 新建一个 umami viewOnly 用户，然后通过 login api 获取该用户 token
     # create an umami viewOnly user, and then get user token through the login api
