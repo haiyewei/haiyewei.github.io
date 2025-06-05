@@ -9,9 +9,9 @@ menu:
   #   朋友圈: /fcircle/ || anzhiyu-icon-artstation
   #   留言板: /comments/ || anzhiyu-icon-envelope
 
-  # 我的:
-  #   音乐馆: /music/ || anzhiyu-icon-music
-  #   追番页: /bangumis/ || anzhiyu-icon-bilibili
+  我的:
+    音乐馆: /music/?id=3510922168&server=tencent || anzhiyu-icon-music
+  # 追番页: /bangumis/ || anzhiyu-icon-bilibili
   #   相册集: /album/ || anzhiyu-icon-images
   #   小空调: /air-conditioner/ || anzhiyu-icon-fan
 
@@ -71,7 +71,7 @@ social:
 
 # 作者卡片 状态
 author_status:
-  enable: false
+  enable: true
   # 可以是任何图片，建议放表情包或者emoji图片，效果都很好，[表情包速查](https://emotion.xiaokang.me/)
   statusImg: "https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png"
   skills:
@@ -1135,7 +1135,7 @@ nav_music:
   all_playlist: https://y.qq.com/n/ryqq/playlist/3510922168
 
 # 路径为 /music 的音乐页面默认加载的歌单 1. nav_music 2. custom
-music_page_default: nav_music
+music_page_default: custom
 
 # 评论匿名邮箱
 visitorMail:
@@ -1156,30 +1156,30 @@ greetingBox:
   enable: false #开启后必须配置下面的list对应的时间段，不然会出现小白条
   default: 晚上好👋
   list:
-     - greeting: 晚安😴
-       startTime: 0
-       endTime: 5
-     - greeting: 早上好鸭👋, 祝你一天好心情！
-       startTime: 6
-       endTime: 9
-     - greeting: 上午好👋, 状态很好，鼓励一下～
-       startTime: 10
-       endTime: 10
-     - greeting: 11点多啦, 在坚持一下就吃饭啦～
-       startTime: 11
-       endTime: 11
-     - greeting: 午安👋, 宝贝
-       startTime: 12
-       endTime: 14
-     - greeting: 🌈充实的一天辛苦啦！
-       startTime: 14
-       endTime: 18
-     - greeting: 19点喽, 奖励一顿丰盛的大餐吧🍔。
-       startTime: 19
-       endTime: 19
-     - greeting: 晚上好👋, 在属于自己的时间好好放松😌~
-       startTime: 20
-       endTime: 24
+    - greeting: 晚安😴
+      startTime: 0
+      endTime: 5
+    - greeting: 早上好鸭👋, 祝你一天好心情！
+      startTime: 6
+      endTime: 9
+    - greeting: 上午好👋, 状态很好，鼓励一下～
+      startTime: 10
+      endTime: 10
+    - greeting: 11点多啦, 在坚持一下就吃饭啦～
+      startTime: 11
+      endTime: 11
+    - greeting: 午安👋, 宝贝
+      startTime: 12
+      endTime: 14
+    - greeting: 🌈充实的一天辛苦啦！
+      startTime: 14
+      endTime: 18
+    - greeting: 19点喽, 奖励一顿丰盛的大餐吧🍔。
+      startTime: 19
+      endTime: 19
+    - greeting: 晚上好👋, 在属于自己的时间好好放松😌~
+      startTime: 20
+      endTime: 24
 
 # 文章顶部ai摘要
 post_head_ai_description:
@@ -1220,7 +1220,7 @@ agreementPopup:
 
 # 右键菜单
 rightClickMenu:
-  enable: false
+  enable: true
 
 # 首页随便逛逛people模式 而非技能点模式，关闭后为技能点模式需要配置creativity.yml
 peoplecanvas:
