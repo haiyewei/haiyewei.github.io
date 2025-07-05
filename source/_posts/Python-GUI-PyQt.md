@@ -1,7 +1,7 @@
 ---
 title: Python_GUI_PyQt
 author: GGLG
-categorise: Python
+categories: Python
 date: 2025-07-05 23:19:30
 tags: [python, GUI, frontend, PyQt]
 ---
