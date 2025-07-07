@@ -6,7 +6,9 @@ date: 2025-07-06 00:15:58
 tags: [Python, fundamental, grammar, basic, 语法]
 ---
 
-## <center>Python基础
+# <center>Python基础
+
+## <center>第一部分
 
 ### 基本操作
 ```python
@@ -120,4 +122,71 @@ class 类名称(父类):     # 在()中添加父类可以继承父类的属性�
     def 方法名(self):
         self.属性名 = 赋值内容 
         属性名 = 赋值内容 
+```
+
+### <center>模块导入
+
+```python
+# import 导入所需的库文件
+import 库名 
+
+# 只导入库中的某个类或者方法
+from 库名 import 类或方法名
+```
+
+## <center>第二部分
+
+### <center>数据操作
+
+#### 列表操作
+
+##### 列表创建
+```python
+list = []               # 空列表
+list = [1, 2, 3]        # 单类元素列表
+list = [1, "string", 3] # 混合列表
+list = [[1, 2], [3, 4]] # 嵌套列表
+```
+
+##### 元素访问
+###### 索引
+```python
+list = [1, 2, 3, 4]
+print(list[0])      # 访问list第一个元素
+print(list[3])      # 访问list末尾元素,list[-1]等效
+```
+###### 切片
+```python
+# 切片通过起始和步长值提取出所需要的列表片段
+# 语法结构: 
+[起始索引:终端索引:步长]
+
+list = [1, 2, 3, 4, 5, 6, 7]
+print(list[1:3]) # 输出2, 3(该输出不包含终端索引)
+print(list[:3])  # 输出1, 2, 3
+print(list[:])   # 输出所有元素(未输入索引表示抵达从源头抵达终端)
+```
+
+##### 元素修改
+```python
+list[索引] = 赋值   # 通过索引赋值即可修该索引对应元素
+```
+
+##### 元素添加
+```python
+# 末尾添加元素
+list.append(添加内容)
+
+# 插入元素
+list.insert(索引, 插入内容)
+```
+
+##### 列表拓展与合并
+```python
+list = [1, 2, 3]
+# 拓展列表
+list.extend([4, 5])       # 在list上进行拓展
+
+# 列表合并
+combined = list + [6, 7]  # 不修改list列表
 ```
