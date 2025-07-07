@@ -146,9 +146,13 @@ list = []               # 空列表
 list = [1, 2, 3]        # 单类元素列表
 list = [1, "string", 3] # 混合列表
 list = [[1, 2], [3, 4]] # 嵌套列表
+
+# 使用表达式创建列表
+list = [x**2 for x in range(5)]
 ```
 
 ##### 元素访问
+
 ###### 索引
 ```python
 list = [1, 2, 3, 4]
@@ -189,4 +193,25 @@ list.extend([4, 5])       # 在list上进行拓展
 
 # 列表合并
 combined = list + [6, 7]  # 不修改list列表
+```
+
+##### 删除列表元素
+```python
+# 移除指定元素
+list.remove(被移除元素)
+
+# 移除指定索引对应元素
+del list[索引]
+
+# 移除指定索引元素并将其值返回
+a = list.pop(索引)
+
+# 清空列表
+list.clear()
+```
+##### 遍历列表
+```python
+# 使用成员运算符in和for循环遍历列表
+for num in list:
+    print(num, "\n")
 ```
