@@ -215,3 +215,36 @@ list.clear()
 for num in list:
     print(num, "\n")
 ```
+#### 字典操作
+
+##### 字典创建
+```python
+# 字典结构
+dic = {key:value}       # 键值对
+# 例
+dic = {"date":07.07}
+print(dic["date"])      # 通过键索引值
+```
+
+##### 字典新增元素
+```python
+# 新增元素
+dic["fruit"] = apple    # 直接创建新的键并赋予值即可    
+```
+
+##### 字典遍历
+```python
+dic = {}
+# 遍历键
+for key in dic.keys():
+
+# 遍历值
+for value in dic.values():
+
+# 遍历键值
+for item in dic.items():    
+```
+
+```
+其余字典内容与列表内容类似
+```
