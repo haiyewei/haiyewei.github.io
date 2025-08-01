@@ -446,7 +446,7 @@ math:
   # Leave it empty if you don't need math
   use: katex
   per_page: false 
-  hide_scrollbar: false
+  hide_scrollbar: true
 
   mathjax:
     # Enable the contextual menu
