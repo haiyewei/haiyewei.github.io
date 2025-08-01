@@ -129,8 +129,8 @@ mathjax:
 # KaTeX
 katex:
   enable: true
-  per_page: true
-  hide_scrollbar: true
+  per_page: false
+  hide_scrollbar: false
 
 # Image (图片设置)
 # --------------------------------------
