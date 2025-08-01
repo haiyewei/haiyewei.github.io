@@ -1,7 +1,7 @@
 ---
 title: Caddy、PHP 8.0 及其主要扩展、MariaDB 和 Redis 的全面指南
 date: 2025-08-01T10:22:35.000Z
-author: GGLG
+author: DDLG
 tags:
 ---
 
