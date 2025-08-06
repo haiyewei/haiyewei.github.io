@@ -444,7 +444,7 @@ busuanzi:
 math:
   # Choose: mathjax, katex
   # Leave it empty if you don't need math
-  use: katex
+  engine: katex
   per_page: false 
   hide_scrollbar: true
 
