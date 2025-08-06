@@ -1079,8 +1079,8 @@ CDN:
     # giscus:
     # instantpage:
     # instantsearch:
-    # katex:
-    # katex_copytex:
+    # katex: true
+    # katex_copytex: true
     # lazyload:
     # local_search:
     # main:
