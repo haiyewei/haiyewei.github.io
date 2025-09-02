@@ -126,6 +126,31 @@ END_VAR
 
 #### 自定义数据类型
 
-数组:
+1. 数组 (ARRAY)
+```
+VAR
+    ARR1 : ARRAY[0..9] OF REAL;                 //一维数组
+    ARR2 : ARRAY[0..9, 2..5] OF INT;            //二维数组
+    ARR3 : ARRAY[0..9, 2..5, 3..8] OF WORD      //三维数组
+END_VAR
+```
+2. 结构体 (STRUCT)
+```
+TYPE 类型名 :
+    STRUCT
+    属性变量 : 类型
+    END_STRUCT
+END_TYPE
+```
 
+#### 数据类型转换
+1. 隐式转换 (PLC内部自动执行)
+2. 显式转换 (使用_TO_关键字组合两类型的方法实现)
+```
+VAR
+    DATA1 : INT := -12;
+    DATA2 : WORD := 65524;
+END_VAR
 
+DATA2 := INT_TO_WORD(DATA1)
+```
