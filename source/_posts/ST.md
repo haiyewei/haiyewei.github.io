@@ -72,11 +72,17 @@ END_VAR
 |LWORD|长字(64位)|||
 </center>
 
-<center>字符串定义</center>
+<center>
 
-```
-用单引号表示字符串 'String'
-```
+|字符串类型|
+|变量类型|类型名称|变量类型|类型名称|
+|:---:|:---:|:---:|:---:|
+|CHAR|字符型|WCHAR|宽字符型|
+|STRING|字符串|WSTRING|宽字符串型|
+
+</center>
+
+
 <center>
 
 |常见转义字符|
