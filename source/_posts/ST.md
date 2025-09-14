@@ -38,6 +38,7 @@ tags: [PLC, 可编程逻辑控制器, ST]
 
 #### 变量属性
 
+
 <center>|PLC常见属性|
 
 |变量属性|属性说明|变量属性|属性说明|
@@ -58,6 +59,7 @@ VAR_Global CONSTANT
     PI : REAL := 3.1415926
 END_VAR
 ```
+
 #### 常见变量类型
 <center>|数据类型|
 
@@ -212,3 +214,11 @@ END_REAPEAT;
 EXIT     退出
 CONTINUE 继续
 ```
+
+### ST基础指令
+
+<center>ST基础指令
+
+|指令原型|含义|指令原型|含义|
+|:---:|:---:|:---:|:---:|
+|"R_TRIG_DB"(CLK:= bool_in, Q=> bool_out);|上升沿|"F_TRIG_DB"(CLK:= bool_in, Q=> bool_out);|下降沿|
