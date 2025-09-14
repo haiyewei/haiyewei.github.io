@@ -160,3 +160,26 @@ END_VAR
 
 DATA2 := INT_TO_WORD(DATA1)
 ```
+
+### 流程控制
+
+#### 条件选择
+
+条件
+```
+IF 条件 THEN
+    分支
+ELSIF 条件1 THEN
+    分支1
+ELSE
+    分支2
+END_IF
+```
+
+选择
+```
+CACE 变量 OF
+    变量值1：分支1
+    变量值2：分支2
+END_CACE
+```
