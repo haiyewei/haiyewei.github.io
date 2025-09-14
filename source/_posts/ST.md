@@ -168,18 +168,47 @@ DATA2 := INT_TO_WORD(DATA1)
 条件
 ```
 IF 条件 THEN
-    分支
+    分支;
 ELSIF 条件1 THEN
-    分支1
+    分支1;
 ELSE
-    分支2
-END_IF
+    分支2;
+END_IF;
 ```
 
 选择
 ```
 CACE 变量 OF
-    变量值1：分支1
-    变量值2：分支2
-END_CACE
+    变量值1：分支1;
+    变量值2：分支2;
+END_CACE;
+```
+
+#### 循环
+
+FOR
+```
+FOR 循环变量 := init_V TO end_V BY 步长 DO
+    循环内容;
+END_FOR;
+```
+
+WHILE
+```
+WHILE 语句 DO
+    循环内容；
+END_WHILE;
+```
+
+REPEAT
+```
+REPEAT
+    循环内容;
+UNTIL 条件
+END_REAPEAT;
+```
+#### 退出和继续流程块
+```
+EXIT     退出
+CONTINUE 继续
 ```
