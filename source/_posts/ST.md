@@ -217,8 +217,38 @@ CONTINUE 继续
 
 ### ST基础指令
 
-<center>ST基础指令
+<center>边沿指令
 
 |指令原型|含义|指令原型|含义|
 |:---:|:---:|:---:|:---:|
 |"R_TRIG_DB"(CLK:= bool_in, Q=> bool_out);|上升沿|"F_TRIG_DB"(CLK:= bool_in, Q=> bool_out);|下降沿|
+
+</center>
+
+<center>定时器指令
+
+|指令原型|含义|
+|:---:|:---:|
+|TP(IN:=bool_in, PT:=time_in, Q=>bool_out, ET=>time_out);|脉冲定时器|
+|TON(IN:=bool_in, PT:=time_in, Q=>bool_out, ET=>time_out);|延时接通定时器|
+|TOF(IN:=bool_in, PT:=time_in, Q=>bool_out, ET=>time_out);|延时断开定时器|
+|TONR(IN:=bool_in, R:=bool_in,  PT:=time_in, Q=>bool_out, ET=>time_out);|保持型延时接通定时器|
+|RESET_TIMER(ICE_TIMER_IN);|复位定时器|
+|PRESET_TIMER(PT:=time_in, TIMER:=ICE_TIMER_IN);|定时器预设值设置|
+</center>
+
+<center>计数器指令
+
+|指令原型|含义|
+|:---:|:---:|
+|CTU(CU:=bool_in, R:=bool_in, PV:=in, Q=>bool_out, CV=>out);|加计数|
+|CTD(CD:=bool_in, LD:=bool_in, PV:=in, Q=>bool_out, CV=>out);|减计数|
+|CTUD(CU:=bool_in, CD:=bool_in, R:=bool_in, LD:=bool_in, PV:=in, QU=>bool_out, QD=>bool_out, CV=>out);|加减计数|
+
+</center>
+
+<center>
+
+
+
+</center>
