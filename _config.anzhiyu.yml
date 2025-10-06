@@ -145,7 +145,7 @@ favicon: /favicon.ico
 
 # Avatar (头像)
 avatar:
-  img: /img/DDLG.jpg
+  img: /themes/anzhiyu/source/img/DDLG.jpg
   effect: false
 
 # Disable all banner image
