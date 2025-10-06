@@ -116,7 +116,5 @@ aplayer:
   meting: true
   asset_inject: false
 
-math:
-  engine: katex
-  per_page: false
+
   
