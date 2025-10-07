@@ -28,6 +28,6 @@
     "hexo-theme-butterfly": "^5.3.5",
     "hexo-theme-landscape": "^1.0.0",
     "hexo-theme-solitude": "^3.0.19",
-    "katex": "^0.16.22"
+    "katex": "^0.16.23"
   }
 }
