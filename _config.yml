@@ -47,7 +47,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 syntax_highlighter: highlight.js
@@ -127,5 +127,4 @@ markdown_it_plus:
     - markdown-it-katex
     - markdown-it-emoji
 
-post_asset_folder: true
   
