@@ -235,15 +235,19 @@ CONTINUE 继续
 
 ### ST基础指令
 
-<center>边沿指令
+#### 边沿指令
+
+<center>
 
 |指令原型|含义|指令原型|含义|
 |:---:|:---:|:---:|:---:|
 |"R_TRIG_DB"(CLK:= bool_in, Q=> bool_out);|上升沿|"F_TRIG_DB"(CLK:= bool_in, Q=> bool_out);|下降沿|
 
-</center>
+</center><br>
 
-<center>定时器指令
+#### 定时器指令
+
+<center>
 
 |指令原型|含义|
 |:---:|:---:|
@@ -253,9 +257,11 @@ CONTINUE 继续
 |TONR(IN:=bool_in, R:=bool_in,  PT:=time_in, Q=>bool_out, ET=>time_out);|保持型延时接通定时器|
 |RESET_TIMER(ICE_TIMER_IN);|复位定时器|
 |PRESET_TIMER(PT:=time_in, TIMER:=ICE_TIMER_IN);|定时器预设值设置|
-</center>
+</center><br>
 
-<center>计数器指令
+#### 计数器指令
+
+<center>
 
 |指令原型|含义|
 |:---:|:---:|
@@ -265,8 +271,25 @@ CONTINUE 继续
 
 </center>
 
+#### 数学指令
+
 <center>
 
+|指令原型|含义|指令原型|含义|
+|:---:|:---:|:---:|:---:|
+|SIN()|正弦|COS()|余弦|
+|SQR()|平方|MAX()|最大值|
+|MIN()|最小值|
 
+</center>
+
+#### 读写存储器指令
+
+<center>
+
+|指令原型|含义|
+|:---:|:---:|
+|PEEK(area:=byte_in, dbNumber:=dint_in, byteOffset:=dint_in)|存储器读指令|
+|POKE(area:=byte_in, dbNumber:=dint_in, byteOffset:=dint_in, value:=byte_in)|存储器写指令|
 
 </center>
