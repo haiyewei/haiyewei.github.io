@@ -1,3 +1,10 @@
+---
+title: npm_guide
+categories: 技术教程
+author: DDLG
+tags: [npm, package manager, 包管理工具]
+---
+
 # npm 使用指南
 
 npm (Node Package Manager) 是 Node.js 的默认包管理器，也是世界上最大的软件注册表。开发者使用 npm 来发现、共享和使用代码包。本指南将全面介绍 npm 的常用功能和命令。
