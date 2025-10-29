@@ -247,22 +247,46 @@ body[data-type="essay"] #web_bg {
 #bber .aplayer .aplayer-info .aplayer-controller .aplayer-time {
   position: initial;
 }
-#bber .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar {
+#bber
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-bar-wrap
+  .aplayer-bar {
   background: var(--anzhiyu-gray);
   height: 8px;
   border-radius: 12px;
   transition: 0.3s;
   overflow: hidden;
 }
-#bber .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-loaded {
+#bber
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-bar-wrap
+  .aplayer-bar
+  .aplayer-loaded {
   height: 100%;
   border-radius: 12px;
 }
-#bber .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played {
+#bber
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-bar-wrap
+  .aplayer-bar
+  .aplayer-played {
   height: 100%;
   border-radius: 12px;
 }
-#bber .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played .aplayer-thumb {
+#bber
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-bar-wrap
+  .aplayer-bar
+  .aplayer-played
+  .aplayer-thumb {
   display: none;
 }
 #bber .aplayer .aplayer-info .aplayer-controller .aplayer-time {
@@ -276,7 +300,12 @@ body[data-type="essay"] #web_bg {
   overflow: hidden;
   margin-top: 0px;
 }
-body[data-type="essay"] #page .author-content-item .card-content .banner-button-group .banner-button:hover {
+body[data-type="essay"]
+  #page
+  .author-content-item
+  .card-content
+  .banner-button-group
+  .banner-button:hover {
   color: var(--anzhiyu-white);
   border-radius: 20px !important;
 }

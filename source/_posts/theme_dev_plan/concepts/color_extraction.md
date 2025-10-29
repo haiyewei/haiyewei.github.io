@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # Color Extraction
 
 ## Background
@@ -42,15 +43,15 @@ vibrant colors to use as source color to generate a dynamic color scheme.
 
 Key metrics include:
 
--   **Color diversity:** The algorithm promotes visually distinct colors by
-    giving higher scores to hues that are well-represented in the image within a
-    30-degree neighborhood on the color wheel. It also iteratively tests
-    different minimum hue differences to find a set that meets the desired
-    number of colors while maintaining good hue distribution.
+- **Color diversity:** The algorithm promotes visually distinct colors by
+  giving higher scores to hues that are well-represented in the image within a
+  30-degree neighborhood on the color wheel. It also iteratively tests
+  different minimum hue differences to find a set that meets the desired
+  number of colors while maintaining good hue distribution.
 
--   **Vibrant chroma:** Colors closer to the target chroma of 48.0 receive
-    higher scores. Colors with very low chroma (close to grayscale) or those
-    that are extremely rare in the image will be filtered out.
+- **Vibrant chroma:** Colors closer to the target chroma of 48.0 receive
+  higher scores. Colors with very low chroma (close to grayscale) or those
+  that are extremely rare in the image will be filtered out.
 
 ## To color themes
 
@@ -66,4 +67,5 @@ accessible and beautiful UIs? The steps can be summarized as follows:
 1.  Colors get applied to UIs via Material tokens.
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

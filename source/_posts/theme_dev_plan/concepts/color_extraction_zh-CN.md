@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # 颜色提取
 
 ## 背景
@@ -49,4 +50,5 @@ tags: DynamicColor
 6. 颜色通过 Material 令牌应用于 UI。
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

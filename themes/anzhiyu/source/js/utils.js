@@ -55,9 +55,17 @@ const anzhiyu = {
     }
   },
 
-  snackbarShow: (text, showActionFunction = false, duration = 2000, actionText = false) => {
+  snackbarShow: (
+    text,
+    showActionFunction = false,
+    duration = 2000,
+    actionText = false,
+  ) => {
     const { position, bgLight, bgDark } = GLOBAL_CONFIG.Snackbar;
-    const bg = document.documentElement.getAttribute("data-theme") === "light" ? bgLight : bgDark;
+    const bg =
+      document.documentElement.getAttribute("data-theme") === "light"
+        ? bgLight
+        : bgDark;
     const root = document.querySelector(":root");
     root.style.setProperty("--anzhiyu-snackbar-time", duration + "ms");
 
@@ -76,13 +84,13 @@ const anzhiyu = {
   loadComment: (dom, callback) => {
     if ("IntersectionObserver" in window) {
       const observerItem = new IntersectionObserver(
-        entries => {
+        (entries) => {
           if (entries[0].isIntersecting) {
             callback();
             observerItem.disconnect();
           }
         },
-        { threshold: [0] }
+        { threshold: [0] },
       );
       observerItem.observe(dom);
     } else {
@@ -119,7 +127,7 @@ const anzhiyu = {
   },
 
   initJustifiedGallery: function (selector) {
-    const runJustifiedGallery = i => {
+    const runJustifiedGallery = (i) => {
       if (!anzhiyu.isHidden(i)) {
         fjGallery(i, {
           itemSelector: ".fj-gallery-item",
@@ -134,7 +142,7 @@ const anzhiyu = {
 
     if (Array.from(selector).length === 0) runJustifiedGallery(selector);
     else
-      selector.forEach(i => {
+      selector.forEach((i) => {
         runJustifiedGallery(i);
       });
   },
@@ -167,9 +175,9 @@ const anzhiyu = {
     creatEle.appendChild(selector);
   },
 
-  isHidden: ele => ele.offsetHeight === 0 && ele.offsetWidth === 0,
+  isHidden: (ele) => ele.offsetHeight === 0 && ele.offsetWidth === 0,
 
-  getEleTop: ele => {
+  getEleTop: (ele) => {
     let actualTop = ele.offsetTop;
     let current = ele.offsetParent;
 
@@ -181,13 +189,16 @@ const anzhiyu = {
     return actualTop;
   },
 
-  loadLightbox: ele => {
+  loadLightbox: (ele) => {
     const service = GLOBAL_CONFIG.lightbox;
 
     if (service === "mediumZoom") {
       const zoom = mediumZoom(ele);
-      zoom.on("open", e => {
-        const photoBg = document.documentElement.getAttribute("data-theme") === "dark" ? "#121212" : "#fff";
+      zoom.on("open", (e) => {
+        const photoBg =
+          document.documentElement.getAttribute("data-theme") === "dark"
+            ? "#121212"
+            : "#fff";
         zoom.update({
           background: photoBg,
         });
@@ -195,7 +206,7 @@ const anzhiyu = {
     }
 
     if (service === "fancybox") {
-      Array.from(ele).forEach(i => {
+      Array.from(ele).forEach((i) => {
         if (i.parentNode.tagName !== "A") {
           const dataSrc = i.dataset.lazySrc || i.src;
           const dataCaption = i.title || i.alt || "";
@@ -221,7 +232,7 @@ const anzhiyu = {
   },
 
   setLoading: {
-    add: ele => {
+    add: (ele) => {
       const html = `
         <div class="loading-container">
           <div class="loading-item">
@@ -231,12 +242,12 @@ const anzhiyu = {
       `;
       ele.insertAdjacentHTML("afterend", html);
     },
-    remove: ele => {
+    remove: (ele) => {
       ele.nextElementSibling.remove();
     },
   },
 
-  updateAnchor: anchor => {
+  updateAnchor: (anchor) => {
     if (anchor !== window.location.hash) {
       if (!anchor) anchor = location.pathname;
       const title = GLOBAL_CONFIG_SITE.title;
@@ -246,7 +257,7 @@ const anzhiyu = {
           title,
         },
         title,
-        anchor
+        anchor,
       );
     }
   },
@@ -256,10 +267,17 @@ const anzhiyu = {
     const winHeight = document.documentElement.clientHeight;
     const headerHeight = ele.offsetTop;
     const contentMath =
-      docHeight > winHeight ? docHeight - winHeight : document.documentElement.scrollHeight - winHeight;
+      docHeight > winHeight
+        ? docHeight - winHeight
+        : document.documentElement.scrollHeight - winHeight;
     const scrollPercent = (currentTop - headerHeight) / contentMath;
     const scrollPercentRounded = Math.round(scrollPercent * 100);
-    const percentage = scrollPercentRounded > 100 ? 100 : scrollPercentRounded <= 0 ? 0 : scrollPercentRounded;
+    const percentage =
+      scrollPercentRounded > 100
+        ? 100
+        : scrollPercentRounded <= 0
+          ? 0
+          : scrollPercentRounded;
     return percentage;
   },
 
@@ -287,7 +305,7 @@ const anzhiyu = {
     const keyObj = globalFn[key] || {};
     const keyArr = Object.keys(keyObj);
     if (!keyArr.length) return;
-    keyArr.forEach(i => {
+    keyArr.forEach((i) => {
       keyObj[i]();
     });
     delete parent.globalFn[key];
@@ -345,7 +363,8 @@ const anzhiyu = {
     if (document.documentElement) {
       documentScrollTop = document.documentElement.scrollTop;
     }
-    scrollTop = bodyScrollTop - documentScrollTop > 0 ? bodyScrollTop : documentScrollTop;
+    scrollTop =
+      bodyScrollTop - documentScrollTop > 0 ? bodyScrollTop : documentScrollTop;
 
     if (scrollTop != 0) {
       pageHeaderEl.classList.add("nav-fixed");
@@ -417,12 +436,14 @@ const anzhiyu = {
       if (window.getComputedStyle(commentBarrage).display === "flex") {
         commentBarrage.style.display = "none";
         anzhiyu.snackbarShow("✨ 已关闭评论弹幕");
-        document.querySelector(".menu-commentBarrage-text").textContent = "显示热评";
+        document.querySelector(".menu-commentBarrage-text").textContent =
+          "显示热评";
         document.querySelector("#consoleCommentBarrage").classList.remove("on");
         localStorage.setItem("commentBarrageSwitch", "false");
       } else {
         commentBarrage.style.display = "flex";
-        document.querySelector(".menu-commentBarrage-text").textContent = "关闭热评";
+        document.querySelector(".menu-commentBarrage-text").textContent =
+          "关闭热评";
         document.querySelector("#consoleCommentBarrage").classList.add("on");
         anzhiyu.snackbarShow("✨ 已开启评论弹幕");
         localStorage.removeItem("commentBarrageSwitch");
@@ -435,10 +456,10 @@ const anzhiyu = {
     const paginationElement = document.getElementById("pagination");
 
     if (commentElement && paginationElement) {
-      new IntersectionObserver(entries => {
+      new IntersectionObserver((entries) => {
         const commentBarrage = document.querySelector(".comment-barrage");
 
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             paginationElement.classList.add("show-window");
             if (commentBarrage) {
@@ -488,7 +509,10 @@ const anzhiyu = {
     $list.addEventListener("mousewheel", scrollHandler, { passive: false });
     if ($target) {
       $target.classList.add("selected");
-      $list.scrollLeft = $target.offsetLeft - $list.offsetLeft - ($list.offsetWidth - $target.offsetWidth) / 2;
+      $list.scrollLeft =
+        $target.offsetLeft -
+        $list.offsetLeft -
+        ($list.offsetWidth - $target.offsetWidth) / 2;
     }
   },
   // catalog激活
@@ -499,7 +523,7 @@ const anzhiyu = {
       const catalogListItems = $list.querySelectorAll(".catalog-list-item");
 
       let $catalog = null;
-      catalogListItems.forEach(item => {
+      catalogListItems.forEach((item) => {
         if (pathname.startsWith(item.id)) {
           $catalog = item;
           return;
@@ -513,7 +537,9 @@ const anzhiyu = {
   tagsPageActive: function () {
     const $list = document.getElementById("tag-page-tags");
     if ($list) {
-      const $tagPageTags = document.getElementById(decodeURIComponent(window.location.pathname));
+      const $tagPageTags = document.getElementById(
+        decodeURIComponent(window.location.pathname),
+      );
       anzhiyu.scrollByMouseWheel($list, $tagPageTags);
     }
   },
@@ -575,7 +601,8 @@ const anzhiyu = {
       document.querySelectorAll("#bber time").forEach(function (e) {
         var t = e,
           datetime = t.getAttribute("datetime");
-        (t.innerText = anzhiyu.diffDate(datetime, true)), (t.style.display = "inline");
+        ((t.innerText = anzhiyu.diffDate(datetime, true)),
+          (t.style.display = "inline"));
       });
   },
   // 修改相册集中的时间
@@ -584,7 +611,8 @@ const anzhiyu = {
       document.querySelectorAll("#album_detail time").forEach(function (e) {
         var t = e,
           datetime = t.getAttribute("datetime");
-        (t.innerText = anzhiyu.diffDate(datetime, true)), (t.style.display = "inline");
+        ((t.innerText = anzhiyu.diffDate(datetime, true)),
+          (t.style.display = "inline"));
       });
   },
   // 刷新瀑布流
@@ -631,7 +659,11 @@ const anzhiyu = {
     const evt = new Event("input", { cancelable: true, bubbles: true });
     const defaultPlaceholder =
       "昵称（请勿包含博客等字样）：\n网站地址（要求博客地址，请勿提交个人主页）：\n头像图片url（请提供尽可能清晰的图片，我会上传到我自己的图床）：\n描述：\n站点截图（可选）：\n";
-    input.value = this.getConfigIfPresent(GLOBAL_CONFIG.linkPageTop, "addFriendPlaceholder", defaultPlaceholder);
+    input.value = this.getConfigIfPresent(
+      GLOBAL_CONFIG.linkPageTop,
+      "addFriendPlaceholder",
+      defaultPlaceholder,
+    );
     input.dispatchEvent(evt);
     input.focus();
     input.setSelectionRange(-1, -1);
@@ -649,8 +681,10 @@ const anzhiyu = {
       anzhiyu.musicBindEvent();
       anzhiyu_musicFirst = true;
     }
-    let msgPlay = '<i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span>';
-    let msgPause = '<i class="anzhiyufont anzhiyu-icon-pause"></i><span>暂停音乐</span>';
+    let msgPlay =
+      '<i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span>';
+    let msgPause =
+      '<i class="anzhiyufont anzhiyu-icon-pause"></i><span>暂停音乐</span>';
     if (anzhiyu_musicPlaying) {
       navMusicEl.classList.remove("playing");
       document.getElementById("menu-music-toggle").innerHTML = msgPlay;
@@ -665,7 +699,8 @@ const anzhiyu = {
       anzhiyu_musicPlaying = true;
       navMusicEl.classList.add("stretch");
     }
-    if (changePaly) document.querySelector("#nav-music meting-js").aplayer.toggle();
+    if (changePaly)
+      document.querySelector("#nav-music meting-js").aplayer.toggle();
     rm && rm.hideRightMenu();
   },
   // 音乐伸缩
@@ -757,8 +792,8 @@ const anzhiyu = {
 
     // 否则重新从服务器获取数据
     fetch("/json/music.json")
-      .then(response => response.json())
-      .then(songs => {
+      .then((response) => response.json())
+      .then((songs) => {
         const cacheData = {
           timestamp: new Date().getTime(),
           songs: songs,
@@ -801,12 +836,19 @@ const anzhiyu = {
       }
       if (!songFound) {
         // 如果全部歌曲都已被随机过，切换到对应的歌曲播放
-        const palyMusicIndex = allAudios.findIndex(song => song.name === randomSong.name);
+        const palyMusicIndex = allAudios.findIndex(
+          (song) => song.name === randomSong.name,
+        );
         if (palyMusicIndex != -1) metingAplayer.list.switch(palyMusicIndex);
       }
     }
 
-    console.info("已随机歌曲：", selectRandomSong, "本次随机歌曲：", randomSong.name);
+    console.info(
+      "已随机歌曲：",
+      selectRandomSong,
+      "本次随机歌曲：",
+      randomSong.name,
+    );
   },
   // 音乐节目切换背景
   changeMusicBg: function (isChangeBg = true) {
@@ -863,7 +905,7 @@ const anzhiyu = {
       document.getElementById("todayCard").classList.add("hide");
       const topGroup = document.querySelector(".topGroup");
       const recentPostItems = topGroup.querySelectorAll(".recent-post-item");
-      recentPostItems.forEach(item => {
+      recentPostItems.forEach((item) => {
         item.style.display = "flex";
       });
     }
@@ -872,7 +914,9 @@ const anzhiyu = {
   // 监听音乐背景改变
   addEventListenerMusic: function () {
     const anMusicPage = document.getElementById("anMusic-page");
-    const aplayerIconMenu = anMusicPage.querySelector(".aplayer-info .aplayer-time .aplayer-icon-menu");
+    const aplayerIconMenu = anMusicPage.querySelector(
+      ".aplayer-info .aplayer-time .aplayer-icon-menu",
+    );
     const anMusicBtnGetSong = anMusicPage.querySelector("#anMusicBtnGetSong");
     const anMusicRefreshBtn = anMusicPage.querySelector("#anMusicRefreshBtn");
     const anMusicSwitchingBtn = anMusicPage.querySelector("#anMusicSwitching");
@@ -885,20 +929,29 @@ const anzhiyu = {
 
     aplayerIconMenu.addEventListener("click", function () {
       document.getElementById("menu-mask").style.display = "block";
-      document.getElementById("menu-mask").style.animation = "0.5s ease 0s 1 normal none running to_show";
-      anMusicPage.querySelector(".aplayer.aplayer-withlist .aplayer-list").style.opacity = "1";
+      document.getElementById("menu-mask").style.animation =
+        "0.5s ease 0s 1 normal none running to_show";
+      anMusicPage.querySelector(
+        ".aplayer.aplayer-withlist .aplayer-list",
+      ).style.opacity = "1";
     });
 
     function anMusicPageMenuAask() {
       if (window.location.pathname != "/music/") {
-        document.getElementById("menu-mask").removeEventListener("click", anMusicPageMenuAask);
+        document
+          .getElementById("menu-mask")
+          .removeEventListener("click", anMusicPageMenuAask);
         return;
       }
 
-      anMusicPage.querySelector(".aplayer-list").classList.remove("aplayer-list-hide");
+      anMusicPage
+        .querySelector(".aplayer-list")
+        .classList.remove("aplayer-list-hide");
     }
 
-    document.getElementById("menu-mask").addEventListener("click", anMusicPageMenuAask);
+    document
+      .getElementById("menu-mask")
+      .addEventListener("click", anMusicPageMenuAask);
 
     // 监听增加单曲按钮
     anMusicBtnGetSong.addEventListener("click", () => {
@@ -965,7 +1018,9 @@ const anzhiyu = {
     const anMusicPage = document.getElementById("anMusic-page");
     const metingAplayer = anMusicPage.querySelector("meting-js").aplayer;
     const currentTime = new Date().getTime();
-    const cacheData = JSON.parse(localStorage.getItem("musicData")) || { timestamp: 0 };
+    const cacheData = JSON.parse(localStorage.getItem("musicData")) || {
+      timestamp: 0,
+    };
     let songs = [];
 
     if (changeMusicListFlag) {
@@ -997,12 +1052,15 @@ const anzhiyu = {
   addEventListenerConsoleMusicList: function () {
     const navMusic = document.getElementById("nav-music");
     if (!navMusic) return;
-    navMusic.addEventListener("click", e => {
+    navMusic.addEventListener("click", (e) => {
       const aplayerList = navMusic.querySelector(".aplayer-list");
       const listBtn = navMusic.querySelector(
-        "div.aplayer-info > div.aplayer-controller > div.aplayer-time.aplayer-time-narrow > button.aplayer-icon.aplayer-icon-menu svg"
+        "div.aplayer-info > div.aplayer-controller > div.aplayer-time.aplayer-time-narrow > button.aplayer-icon.aplayer-icon-menu svg",
       );
-      if (e.target != listBtn && aplayerList.classList.contains("aplayer-list-hide")) {
+      if (
+        e.target != listBtn &&
+        aplayerList.classList.contains("aplayer-list-hide")
+      ) {
         aplayerList.classList.remove("aplayer-list-hide");
       }
     });
@@ -1016,7 +1074,10 @@ const anzhiyu = {
       pageNumber = Number(toPageText.value);
 
     if (!isNaN(pageNumber) && pageNumber >= 1 && Number.isInteger(pageNumber)) {
-      var url = "/page/" + (pageNumber > lastPageNumber ? lastPageNumber : pageNumber) + "/";
+      var url =
+        "/page/" +
+        (pageNumber > lastPageNumber ? lastPageNumber : pageNumber) +
+        "/";
       toPageButton.href = pageNumber === 1 ? "/" : url;
     } else {
       toPageButton.href = "javascript:void(0);";
@@ -1036,10 +1097,14 @@ const anzhiyu = {
   //匿名评论
   addRandomCommentInfo: function () {
     // 从形容词数组中随机取一个值
-    const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const randomAdjective =
+      adjectives[Math.floor(Math.random() * adjectives.length)];
 
     // 从蔬菜水果动物名字数组中随机取一个值
-    const randomName = vegetablesAndFruits[Math.floor(Math.random() * vegetablesAndFruits.length)];
+    const randomName =
+      vegetablesAndFruits[
+        Math.floor(Math.random() * vegetablesAndFruits.length)
+      ];
 
     // 将两个值组合成一个字符串
     const name = `${randomAdjective}${randomName}`;
@@ -1107,12 +1172,12 @@ const anzhiyu = {
   totraveling: function () {
     anzhiyu.snackbarShow(
       "即将跳转到「开往」项目的成员博客，不保证跳转网站的安全性和可用性",
-      element => {
+      (element) => {
         element.style.opacity = 0;
         travellingsTimer && clearTimeout(travellingsTimer);
       },
       5000,
-      "取消"
+      "取消",
     );
     travellingsTimer = setTimeout(function () {
       window.open("https://www.travellings.cn/go.html", "_blank");
@@ -1126,12 +1191,16 @@ const anzhiyu = {
 
   // 音乐绑定事件
   musicBindEvent: function () {
-    document.querySelector("#nav-music .aplayer-music").addEventListener("click", function () {
-      anzhiyu.musicTelescopic();
-    });
-    document.querySelector("#nav-music .aplayer-button").addEventListener("click", function () {
-      anzhiyu.musicToggle(false);
-    });
+    document
+      .querySelector("#nav-music .aplayer-music")
+      .addEventListener("click", function () {
+        anzhiyu.musicTelescopic();
+      });
+    document
+      .querySelector("#nav-music .aplayer-button")
+      .addEventListener("click", function () {
+        anzhiyu.musicToggle(false);
+      });
   },
 
   // 判断是否是移动端
@@ -1139,7 +1208,7 @@ const anzhiyu = {
     let isMobile = false;
     if (
       navigator.userAgent.match(
-        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i,
       ) ||
       document.body.clientWidth < 800
     ) {
@@ -1167,7 +1236,10 @@ const anzhiyu = {
   // 判断是否在el内
   isInViewPortOfOne: function (el) {
     if (!el) return;
-    const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    const viewPortHeight =
+      window.innerHeight ||
+      document.documentElement.clientHeight ||
+      document.body.clientHeight;
     const offsetTop = el.offsetTop;
     const scrollTop = document.documentElement.scrollTop;
     const top = offsetTop - scrollTop;
@@ -1239,8 +1311,8 @@ const anzhiyu = {
     let observer;
     return () => {
       if (!observer) {
-        observer = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
+        observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
             if (entry.intersectionRatio > 0) {
               enterCallback?.();
             } else {
@@ -1272,7 +1344,8 @@ const anzhiyu = {
           left: 0,
           behavior: "smooth",
         });
-        nextButton.innerHTML = '<i class="anzhiyufont anzhiyu-icon-angle-double-right"></i>';
+        nextButton.innerHTML =
+          '<i class="anzhiyufont anzhiyu-icon-angle-double-right"></i>';
       } else {
         // 滚动到下一个视图
         items.scrollBy({
@@ -1281,7 +1354,9 @@ const anzhiyu = {
         });
       }
     } else {
-      console.error("Element(s) not found: 'catalog-list' and/or 'category-bar-next'.");
+      console.error(
+        "Element(s) not found: 'catalog-list' and/or 'category-bar-next'.",
+      );
     }
   },
   // 分类条
@@ -1314,7 +1389,9 @@ const anzhiyu = {
   // 切换菜单显示热评
   switchRightClickMenuHotReview: function () {
     const postComment = document.getElementById("post-comment");
-    const menuCommentBarrageDom = document.getElementById("menu-commentBarrage");
+    const menuCommentBarrageDom = document.getElementById(
+      "menu-commentBarrage",
+    );
     if (postComment) {
       menuCommentBarrageDom.style.display = "flex";
     } else {
@@ -1325,7 +1402,8 @@ const anzhiyu = {
   changeSayHelloText: function () {
     const greetings = GLOBAL_CONFIG.authorStatus.skills;
 
-    const authorInfoSayHiElement = document.getElementById("author-info__sayhi");
+    const authorInfoSayHiElement =
+      document.getElementById("author-info__sayhi");
 
     // 如果只有一个问候语，设置为默认值
     if (greetings.length === 1) {
@@ -1379,7 +1457,7 @@ const anzhiyuPopupManager = {
       popupWindow.removeEventListener("click", this.clickEventHandler);
       if (url) {
         if (window.pjax) {
-          this.clickEventHandler = event => {
+          this.clickEventHandler = (event) => {
             event.preventDefault();
             pjax.loadUrl(url);
             popupWindow.classList.remove("show-popup-window");
@@ -1428,7 +1506,10 @@ const anzhiyuPopupManager = {
       if (url && !this.Jump) {
         this.Jump = false;
       }
-      if (!popupWindow.classList.contains("popup-hide") && popupWindow.className != "") {
+      if (
+        !popupWindow.classList.contains("popup-hide") &&
+        popupWindow.className != ""
+      ) {
         popupWindow.classList.add("popup-hide");
       }
 

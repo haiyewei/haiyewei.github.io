@@ -38,11 +38,11 @@ search:
   load_data: データベースを読み込んでいます
   input_placeholder: 記事を検索
   algolia_search:
-    hits_empty: '${query} の検索結果が見つかりませんでした。'
-    hits_stats: '${hits} 件の結果が ${time}ms で見つかりました'
+    hits_empty: "${query} の検索結果が見つかりませんでした。"
+    hits_stats: "${hits} 件の結果が ${time}ms で見つかりました"
   local_search:
-    hits_empty: '${query} の検索結果が見つかりませんでした。'
-    hits_stats: '${hits} 件の記事が見つかりました'
+    hits_empty: "${query} の検索結果が見つかりませんでした。"
+    hits_stats: "${hits} 件の記事が見つかりました"
 
 pagination:
   prev: 前へ

@@ -1,17 +1,17 @@
 /* global hexo */
 
-'use strict';
+"use strict";
 
 const DEFAULT_LAYOUTS = {
-  2 : [1, 1],
-  3 : [2, 1],
-  4 : [2, 2],
-  5 : [3, 2],
-  6 : [3, 3],
-  7 : [3, 2, 2],
-  8 : [3, 2, 3],
-  9 : [3, 3, 3],
-  10: [3, 2, 2, 3]
+  2: [1, 1],
+  3: [2, 1],
+  4: [2, 2],
+  5: [3, 2],
+  6: [3, 3],
+  7: [3, 2, 2],
+  8: [3, 2, 3],
+  9: [3, 3, 3],
+  10: [3, 2, 2, 3],
 };
 
 const groupBy = (total, layout) => {
@@ -24,11 +24,13 @@ const groupBy = (total, layout) => {
 };
 
 const templates = {
-
   dispatch: (images, total, layout) => {
-    const valid = layout && (layout.reduce((prev, current) => prev + current) === total);
+    const valid =
+      layout && layout.reduce((prev, current) => prev + current) === total;
     const _layout = valid ? layout : DEFAULT_LAYOUTS[total];
-    return _layout ? templates.getHTML(groupBy(_layout, images)) : templates.defaults(images);
+    return _layout
+      ? templates.getHTML(groupBy(_layout, images))
+      : templates.defaults(images);
   },
 
   defaults: (images) => {
@@ -44,23 +46,27 @@ const templates = {
   },
 
   getHTML: (rows) => {
-    return rows.map(row => {
-      return `<div class="group-image-row">${templates.getColumnHTML(row)}</div>`;
-    }).join('');
+    return rows
+      .map((row) => {
+        return `<div class="group-image-row">${templates.getColumnHTML(row)}</div>`;
+      })
+      .join("");
   },
 
   getColumnHTML: (images) => {
-    return images.map(image => {
-      return `<div class="group-image-wrap">${image}</div>`;
-    }).join('');
-  }
+    return images
+      .map((image) => {
+        return `<div class="group-image-wrap">${image}</div>`;
+      })
+      .join("");
+  },
 };
 
 const groupImage = (args, content) => {
   const total = parseInt(args[0], 10);
-  const layout = args[1] && args[1].split('-').map((v) => parseInt(v, 10));
+  const layout = args[1] && args[1].split("-").map((v) => parseInt(v, 10));
 
-  content = hexo.render.renderSync({ text: content, engine: 'markdown' });
+  content = hexo.render.renderSync({ text: content, engine: "markdown" });
 
   const images = content.match(/<img[\s\S]*?>/g);
 
@@ -74,5 +80,5 @@ const groupImage = (args, content) => {
   ![](url)
   {% endgroupimage %}
  */
-hexo.extend.tag.register('groupimage', groupImage, { ends: true });
-hexo.extend.tag.register('gi', groupImage, { ends: true });
+hexo.extend.tag.register("groupimage", groupImage, { ends: true });
+hexo.extend.tag.register("gi", groupImage, { ends: true });

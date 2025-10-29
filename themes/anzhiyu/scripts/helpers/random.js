@@ -11,15 +11,13 @@ hexo.extend.generator.register("random", function (locals) {
 
   const link_list = [];
 
-  link.forEach(element => {
-    element.link_list.forEach(link_list_item => {
+  link.forEach((element) => {
+    element.link_list.forEach((link_list_item) => {
       link_list.push(link_list_item);
     });
   });
 
-  let result = `var posts=${JSON.stringify(
-    posts
-  )};function toRandomPost(){
+  let result = `var posts=${JSON.stringify(posts)};function toRandomPost(){
     ${pjaxEn ? "pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);" : "window.location.href='/'+posts[Math.floor(Math.random() * posts.length)];"}
   };`;
 

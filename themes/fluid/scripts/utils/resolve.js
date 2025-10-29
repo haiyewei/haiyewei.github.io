@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-const path = require('path');
+const path = require("path");
 
-const resolveModule = (name, file = '') => {
+const resolveModule = (name, file = "") => {
   let dir;
   try {
     dir = path.dirname(require.resolve(`${name}/package.json`));
   } catch (error) {
-    return '';
+    return "";
   }
   return `${dir}/${file}`;
 };

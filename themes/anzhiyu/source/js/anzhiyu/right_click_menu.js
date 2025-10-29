@@ -71,9 +71,15 @@ var oncontextmenuFunction = function (event) {
     const $rightMenuSearchBaidu = document.querySelector("#menu-searchBaidu");
     const $rightMenuMusicToggle = document.querySelector("#menu-music-toggle");
     const $rightMenuMusicBack = document.querySelector("#menu-music-back");
-    const $rightMenuMusicForward = document.querySelector("#menu-music-forward");
-    const $rightMenuMusicPlaylist = document.querySelector("#menu-music-playlist");
-    const $rightMenuMusicCopyMusicName = document.querySelector("#menu-music-copyMusicName");
+    const $rightMenuMusicForward = document.querySelector(
+      "#menu-music-forward",
+    );
+    const $rightMenuMusicPlaylist = document.querySelector(
+      "#menu-music-playlist",
+    );
+    const $rightMenuMusicCopyMusicName = document.querySelector(
+      "#menu-music-copyMusicName",
+    );
 
     let href = event.target.href;
     let imgsrc = event.target.currentSrc;
@@ -123,7 +129,10 @@ var oncontextmenuFunction = function (event) {
     }
 
     // 判断是否为输入框
-    if (event.target.tagName.toLowerCase() === "input" || event.target.tagName.toLowerCase() === "textarea") {
+    if (
+      event.target.tagName.toLowerCase() === "input" ||
+      event.target.tagName.toLowerCase() === "textarea"
+    ) {
       pluginMode = true;
       $rightMenuPasteText.style.display = "block";
     } else {
@@ -197,18 +206,18 @@ function imageToBlob(imageURL) {
   const ctx = c.getContext("2d");
   img.crossOrigin = "";
   img.src = imageURL;
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     img.onload = function () {
       c.width = this.naturalWidth;
       c.height = this.naturalHeight;
       ctx.drawImage(this, 0, 0);
       c.toBlob(
-        blob => {
+        (blob) => {
           // here the image is a blob
           resolve(blob);
         },
         "image/png",
-        0.75
+        0.75,
       );
     };
   });
@@ -244,7 +253,7 @@ function stopMaskScroll() {
         rm.hideRightMenu();
         // e.preventDefault();
       },
-      { passive: true }
+      { passive: true },
     );
   }
   if (document.getElementById("rightMenu")) {
@@ -256,7 +265,7 @@ function stopMaskScroll() {
         rm.hideRightMenu();
         // e.preventDefault();
       },
-      { passive: true }
+      { passive: true },
     );
   }
 }
@@ -294,7 +303,9 @@ function selceText() {
 // 读取剪切板
 rm.readClipboard = function () {
   if (navigator.clipboard) {
-    navigator.clipboard.readText().then(clipText => rm.insertAtCaret(globalEvent.target, clipText));
+    navigator.clipboard
+      .readText()
+      .then((clipText) => rm.insertAtCaret(globalEvent.target, clipText));
   }
 };
 
@@ -310,7 +321,10 @@ rm.insertAtCaret = function (elemt, value) {
   } else {
     if (startPos || startPos == "0") {
       var scrollTop = elemt.scrollTop;
-      elemt.value = elemt.value.substring(0, startPos) + value + elemt.value.substring(endPos, elemt.value.length);
+      elemt.value =
+        elemt.value.substring(0, startPos) +
+        value +
+        elemt.value.substring(endPos, elemt.value.length);
       elemt.focus();
       elemt.selectionStart = startPos + value.length;
       elemt.selectionEnd = startPos + value.length;
@@ -376,29 +390,37 @@ rm.copyLink = function () {
 
 function addRightMenuClickEvent() {
   // 添加点击事件
-  document.getElementById("menu-backward").addEventListener("click", function () {
-    window.history.back();
-    rm.hideRightMenu();
-  });
+  document
+    .getElementById("menu-backward")
+    .addEventListener("click", function () {
+      window.history.back();
+      rm.hideRightMenu();
+    });
 
-  document.getElementById("menu-forward").addEventListener("click", function () {
-    window.history.forward();
-    rm.hideRightMenu();
-  });
+  document
+    .getElementById("menu-forward")
+    .addEventListener("click", function () {
+      window.history.forward();
+      rm.hideRightMenu();
+    });
 
-  document.getElementById("menu-refresh").addEventListener("click", function () {
-    window.location.reload();
-  });
+  document
+    .getElementById("menu-refresh")
+    .addEventListener("click", function () {
+      window.location.reload();
+    });
 
   document.getElementById("menu-top").addEventListener("click", function () {
     anzhiyu.scrollToDest(0, 500);
     rm.hideRightMenu();
   });
 
-  document.getElementById("menu-translate").addEventListener("click", function () {
-    window.translateFn.translatePage();
-    rm.hideRightMenu();
-  });
+  document
+    .getElementById("menu-translate")
+    .addEventListener("click", function () {
+      window.translateFn.translatePage();
+      rm.hideRightMenu();
+    });
 
   const menuLinks = document.querySelectorAll(".menu-link");
   menuLinks.forEach(function (link) {
@@ -410,70 +432,104 @@ function addRightMenuClickEvent() {
       window.location.href = window.location.origin;
     });
 
-  document.getElementById("menu-randomPost").addEventListener("click", function () {
-    toRandomPost();
-  });
+  document
+    .getElementById("menu-randomPost")
+    .addEventListener("click", function () {
+      toRandomPost();
+    });
 
-  document.getElementById("menu-commentBarrage").addEventListener("click", anzhiyu.switchCommentBarrage);
+  document
+    .getElementById("menu-commentBarrage")
+    .addEventListener("click", anzhiyu.switchCommentBarrage);
 
-  document.getElementById("rightmenu-mask").addEventListener("click", rm.hideRightMenu);
+  document
+    .getElementById("rightmenu-mask")
+    .addEventListener("click", rm.hideRightMenu);
 
-  document.getElementById("rightmenu-mask").addEventListener("contextmenu", function (event) {
-    rm.hideRightMenu();
-    event.preventDefault(); // Prevent the default context menu from appearing
-  });
+  document
+    .getElementById("rightmenu-mask")
+    .addEventListener("contextmenu", function (event) {
+      rm.hideRightMenu();
+      event.preventDefault(); // Prevent the default context menu from appearing
+    });
 
   document.getElementById("menu-copy").addEventListener("click", () => {
     rm.copyPageUrl();
   });
 
-  document.getElementById("menu-pastetext").addEventListener("click", rm.pasteText);
+  document
+    .getElementById("menu-pastetext")
+    .addEventListener("click", rm.pasteText);
 
-  document.getElementById("menu-copytext").addEventListener("click", function () {
-    rm.rightmenuCopyText(selectTextNow);
-    const copyright = GLOBAL_CONFIG.copyright;
-    if (copyright.copy) {
-      anzhiyu.snackbarShow(copyright.languages.copySuccess);
-    }
-  });
+  document
+    .getElementById("menu-copytext")
+    .addEventListener("click", function () {
+      rm.rightmenuCopyText(selectTextNow);
+      const copyright = GLOBAL_CONFIG.copyright;
+      if (copyright.copy) {
+        anzhiyu.snackbarShow(copyright.languages.copySuccess);
+      }
+    });
 
-  document.getElementById("menu-commenttext").addEventListener("click", function () {
-    rm.rightMenuCommentText(selectTextNow);
-  });
+  document
+    .getElementById("menu-commenttext")
+    .addEventListener("click", function () {
+      rm.rightMenuCommentText(selectTextNow);
+    });
 
-  document.getElementById("menu-newwindow").addEventListener("click", function () {
-    window.open(domhref, "_blank");
-    rm.hideRightMenu();
-  });
+  document
+    .getElementById("menu-newwindow")
+    .addEventListener("click", function () {
+      window.open(domhref, "_blank");
+      rm.hideRightMenu();
+    });
 
-  document.getElementById("menu-copylink").addEventListener("click", rm.copyLink);
+  document
+    .getElementById("menu-copylink")
+    .addEventListener("click", rm.copyLink);
 
-  document.getElementById("menu-downloadimg").addEventListener("click", function () {
-    anzhiyu.downloadImage(domImgSrc, "anzhiyu");
-  });
+  document
+    .getElementById("menu-downloadimg")
+    .addEventListener("click", function () {
+      anzhiyu.downloadImage(domImgSrc, "anzhiyu");
+    });
 
-  document.getElementById("menu-newwindowimg").addEventListener("click", function () {
-    window.open(domImgSrc, "_blank");
-    rm.hideRightMenu();
-  });
+  document
+    .getElementById("menu-newwindowimg")
+    .addEventListener("click", function () {
+      window.open(domImgSrc, "_blank");
+      rm.hideRightMenu();
+    });
 
-  document.getElementById("menu-copyimg").addEventListener("click", function () {
-    rm.writeClipImg(domImgSrc);
-  });
+  document
+    .getElementById("menu-copyimg")
+    .addEventListener("click", function () {
+      rm.writeClipImg(domImgSrc);
+    });
 
-  document.getElementById("menu-searchBaidu").addEventListener("click", rm.searchBaidu);
+  document
+    .getElementById("menu-searchBaidu")
+    .addEventListener("click", rm.searchBaidu);
 
   //音乐
-  document.getElementById("menu-music-toggle").addEventListener("click", anzhiyu.musicToggle);
+  document
+    .getElementById("menu-music-toggle")
+    .addEventListener("click", anzhiyu.musicToggle);
 
-  document.getElementById("menu-music-back").addEventListener("click", anzhiyu.musicSkipBack);
+  document
+    .getElementById("menu-music-back")
+    .addEventListener("click", anzhiyu.musicSkipBack);
 
-  document.getElementById("menu-music-forward").addEventListener("click", anzhiyu.musicSkipForward);
+  document
+    .getElementById("menu-music-forward")
+    .addEventListener("click", anzhiyu.musicSkipForward);
 
-  document.getElementById("menu-music-copyMusicName").addEventListener("click", function () {
-    rm.rightmenuCopyText(anzhiyu.musicGetName());
-    anzhiyu.snackbarShow("复制歌曲名称成功", false, 3000);
-  });
+  document
+    .getElementById("menu-music-copyMusicName")
+    .addEventListener("click", function () {
+      rm.rightmenuCopyText(anzhiyu.musicGetName());
+      anzhiyu.snackbarShow("复制歌曲名称成功", false, 3000);
+    });
 }
 
 addRightMenuClickEvent();

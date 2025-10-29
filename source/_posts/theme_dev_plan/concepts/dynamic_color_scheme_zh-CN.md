@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # 动态配色方案
 
 ## MCU 中的色彩空间
@@ -42,4 +43,5 @@ Material 配色方案从一个源颜色开始，所有其他方案颜色都源�
 有关 Material 颜色系统的更多信息，请参阅[系统如何工作](https://m3.material.io/styles/color/system/how-the-system-works)。
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

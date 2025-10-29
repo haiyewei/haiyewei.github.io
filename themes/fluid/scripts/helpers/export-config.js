@@ -1,14 +1,14 @@
 /* global hexo */
 
-'use strict';
+"use strict";
 
-const url = require('url');
-const urlJoin = require('../utils/url-join');
+const url = require("url");
+const urlJoin = require("../utils/url-join");
 
 /**
  * Export theme config to js
  */
-hexo.extend.helper.register('export_config', function () {
+hexo.extend.helper.register("export_config", function () {
   let { config, theme, fluid_version } = this;
   const exportConfig = {
     hostname: url.parse(config.url).hostname || config.url,

@@ -1,11 +1,15 @@
-'use strict';
+"use strict";
 
 const isObject = (obj) => {
-  return obj && typeof obj === 'object' && !Array.isArray(obj);
+  return obj && typeof obj === "object" && !Array.isArray(obj);
 };
 
 const isNotEmptyObject = (obj) => {
-  return obj && typeof obj === 'object' && Object.getOwnPropertyNames(obj).length !== 0;
+  return (
+    obj &&
+    typeof obj === "object" &&
+    Object.getOwnPropertyNames(obj).length !== 0
+  );
 };
 
 const isEmptyObject = (obj) => {
@@ -32,5 +36,5 @@ module.exports = {
   isObject,
   isNotEmptyObject,
   isEmptyObject,
-  merge
+  merge,
 };

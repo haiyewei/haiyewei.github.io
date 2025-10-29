@@ -9,11 +9,15 @@ hexo.extend.helper.register("aside_archives", function (options = {}) {
   const { config } = this;
   const archiveDir = config.archive_dir;
   const { timezone } = config;
-  const lang = toMomentLocale(this.page.lang || this.page.language || config.language);
+  const lang = toMomentLocale(
+    this.page.lang || this.page.language || config.language,
+  );
   let { format } = options;
   const type = options.type || "monthly";
   const { transform } = options;
-  const showCount = Object.prototype.hasOwnProperty.call(options, "show_count") ? options.show_count : true;
+  const showCount = Object.prototype.hasOwnProperty.call(options, "show_count")
+    ? options.show_count
+    : true;
   const order = options.order || -1;
   const compareFunc =
     type === "monthly"
@@ -32,7 +36,7 @@ hexo.extend.helper.register("aside_archives", function (options = {}) {
   const data = [];
   let length = 0;
 
-  posts.forEach(post => {
+  posts.forEach((post) => {
     // Clone the date object to avoid pollution
     let date = post.date.clone();
 
@@ -56,7 +60,7 @@ hexo.extend.helper.register("aside_archives", function (options = {}) {
     }
   });
 
-  const link = item => {
+  const link = (item) => {
     let url = `${archiveDir}/${item.year}/`;
 
     if (type === "monthly") {
@@ -71,7 +75,7 @@ hexo.extend.helper.register("aside_archives", function (options = {}) {
   const Judge = limit === 0 ? len : Math.min(len, limit);
 
   result += `<div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>${this._p(
-    "aside.card_archives"
+    "aside.card_archives",
   )}</span>`;
 
   if (len > Judge) {

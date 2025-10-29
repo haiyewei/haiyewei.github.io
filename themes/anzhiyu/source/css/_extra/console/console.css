@@ -8,7 +8,9 @@
   left: 0;
   justify-content: center;
   opacity: 0;
-  transition: 0.3s ease-out, color 0s;
+  transition:
+    0.3s ease-out,
+    color 0s;
   flex-direction: column;
   align-items: center;
   pointer-events: none;
@@ -290,7 +292,10 @@
   padding: 8px 16px;
 }
 
-#console .console-card.history .card-archive-list .card-archive-list-link:hover {
+#console
+  .console-card.history
+  .card-archive-list
+  .card-archive-list-link:hover {
   background: var(--anzhiyu-main);
   color: var(--anzhiyu-white);
 }
@@ -318,7 +323,11 @@
   margin: -4px;
 }
 
-[data-theme="dark"] #console .button-group .console-btn-item a.darkmode_switchbutton {
+[data-theme="dark"]
+  #console
+  .button-group
+  .console-btn-item
+  a.darkmode_switchbutton {
   background: var(--anzhiyu-orange);
   color: var(--anzhiyu-white);
 }
@@ -443,10 +452,20 @@ body:has(#console.show) #nav-music .aplayer.aplayer-withlrc .aplayer-pic {
   margin-left: 0px;
   border-radius: 50%;
 }
-body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-music .aplayer-author {
+body:has(#console.show)
+  #nav-music
+  .aplayer
+  .aplayer-info
+  .aplayer-music
+  .aplayer-author {
   display: inline;
 }
-body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-music .aplayer-title {
+body:has(#console.show)
+  #nav-music
+  .aplayer
+  .aplayer-info
+  .aplayer-music
+  .aplayer-title {
   color: var(--anzhiyu-fontcolor);
   cursor: auto;
   line-height: 2;
@@ -465,16 +484,32 @@ body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-controller {
   top: 26px;
   align-items: center;
 }
-body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar {
+body:has(#console.show)
+  #nav-music
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-bar-wrap
+  .aplayer-bar {
   height: 10px;
   border-radius: 10px;
   background: #cdcdcd;
 }
-body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-controller .aplayer-time {
+body:has(#console.show)
+  #nav-music
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-time {
   display: block;
   bottom: 0;
 }
-body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap {
+body:has(#console.show)
+  #nav-music
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-bar-wrap {
   margin: 0;
   padding: 0;
 }
@@ -690,8 +725,18 @@ body:has(#console.show) #nav-music .aplayer .aplayer-lrc .aplayer-lrc-contents {
     padding: 30px;
     border-radius: 0;
   }
-  body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-music .aplayer-title,
-  body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-music .aplayer-author {
+  body:has(#console.show)
+    #nav-music
+    .aplayer
+    .aplayer-info
+    .aplayer-music
+    .aplayer-title,
+  body:has(#console.show)
+    #nav-music
+    .aplayer
+    .aplayer-info
+    .aplayer-music
+    .aplayer-author {
     color: var(--anzhiyu-white);
   }
   body:has(#console.show) #nav-music .aplayer.aplayer-withlrc .aplayer-info {
@@ -701,7 +746,10 @@ body:has(#console.show) #nav-music .aplayer .aplayer-lrc .aplayer-lrc-contents {
   body:has(#console.show) #nav-music .aplayer .aplayer-body {
     justify-content: space-between;
   }
-  body:has(#console.show) #nav-music .aplayer.aplayer-withlrc .aplayer-info::after {
+  body:has(#console.show)
+    #nav-music
+    .aplayer.aplayer-withlrc
+    .aplayer-info::after {
     position: absolute;
     content: "iPhone";
     top: -20px;
@@ -718,7 +766,11 @@ body:has(#console.show) #nav-music .aplayer .aplayer-lrc .aplayer-lrc-contents {
     text-align: left;
   }
 
-  body:has(#console.show) #nav-music .aplayer .aplayer-lrc p.aplayer-lrc-current {
+  body:has(#console.show)
+    #nav-music
+    .aplayer
+    .aplayer-lrc
+    p.aplayer-lrc-current {
     color: var(--anzhiyu-white);
     font-size: 20px;
     line-height: 25px !important;
@@ -735,10 +787,19 @@ body:has(#console.show) #nav-music .aplayer .aplayer-lrc .aplayer-lrc-contents {
     margin-top: 20px;
     margin-bottom: 20px;
   }
-  body:has(#console.show) #nav-music .aplayer .aplayer-lrc .aplayer-lrc-contents {
+  body:has(#console.show)
+    #nav-music
+    .aplayer
+    .aplayer-lrc
+    .aplayer-lrc-contents {
     margin: -40px 0px 0;
   }
-  body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-controller .aplayer-time {
+  body:has(#console.show)
+    #nav-music
+    .aplayer
+    .aplayer-info
+    .aplayer-controller
+    .aplayer-time {
     color: var(--anzhiyu-white);
     left: 50%;
     transform: translateX(-50%);
@@ -747,7 +808,11 @@ body:has(#console.show) #nav-music .aplayer .aplayer-lrc .aplayer-lrc-contents {
     width: 100%;
     padding: 0;
   }
-  body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-controller {
+  body:has(#console.show)
+    #nav-music
+    .aplayer
+    .aplayer-info
+    .aplayer-controller {
     top: 58px;
   }
   body:has(#console.show) .aplayer .aplayer-icon-back,
@@ -776,7 +841,13 @@ body:has(#console.show) #nav-music .aplayer .aplayer-lrc .aplayer-lrc-contents {
     transform: translateX(-50%);
     width: 75px;
   }
-  body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar {
+  body:has(#console.show)
+    #nav-music
+    .aplayer
+    .aplayer-info
+    .aplayer-controller
+    .aplayer-bar-wrap
+    .aplayer-bar {
     height: 10px;
     border-radius: 10px;
   }
@@ -869,21 +940,42 @@ body:has(#console.show) #nav-music .aplayer .aplayer-lrc .aplayer-lrc-contents {
     transform: translateX(-50%);
   }
 
-  body:has(#console.show) #nav-music .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap {
+  body:has(#console.show)
+    #nav-music
+    .aplayer
+    .aplayer-info
+    .aplayer-controller
+    .aplayer-bar-wrap {
     margin: 0;
     padding: 0;
   }
-  body:has(#console.show) .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-time-inner {
+  body:has(#console.show)
+    .aplayer
+    .aplayer-info
+    .aplayer-controller
+    .aplayer-time
+    .aplayer-time-inner {
     position: relative;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  body:has(#console.show) .aplayer .aplayer-info .aplayer-controller .aplayer-time .aplayer-icon path {
+  body:has(#console.show)
+    .aplayer
+    .aplayer-info
+    .aplayer-controller
+    .aplayer-time
+    .aplayer-icon
+    path {
     fill: var(--anzhiyu-white);
   }
-  body:has(#console.show) .aplayer .aplayer-info .aplayer-controller .aplayer-volume-wrap .aplayer-volume-bar-wrap {
+  body:has(#console.show)
+    .aplayer
+    .aplayer-info
+    .aplayer-controller
+    .aplayer-volume-wrap
+    .aplayer-volume-bar-wrap {
     overflow: visible;
     bottom: 0px;
     left: 45px;

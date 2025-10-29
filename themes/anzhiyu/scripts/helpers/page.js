@@ -10,21 +10,23 @@
 const { stripHTML, escapeHTML, prettyUrls } = require("hexo-util");
 const crypto = require("crypto");
 
-hexo.extend.helper.register('page_description', function () {
-  const { config, page } = this
-  let description = page.description || page.content || page.title || config.description
+hexo.extend.helper.register("page_description", function () {
+  const { config, page } = this;
+  let description =
+    page.description || page.content || page.title || config.description;
 
   if (description) {
-    description = escapeHTML(stripHTML(description).substring(0, 150)
-      .trim()
-    ).replace(/\n/g, ' ')
-    return description
+    description = escapeHTML(
+      stripHTML(description).substring(0, 150).trim(),
+    ).replace(/\n/g, " ");
+    return description;
   }
-})
+});
 
 hexo.extend.helper.register("get_page_fill_description", function () {
   const { config, page } = this;
-  let description = page.content || page.description || page.title || config.description;
+  let description =
+    page.content || page.description || page.title || config.description;
 
   if (description) {
     // 使用正则表达式匹配 h1-h6 标签中的文本内容
@@ -35,7 +37,7 @@ hexo.extend.helper.register("get_page_fill_description", function () {
       headings.push(match[0]);
     }
 
-    const contents = headings.map(heading => {
+    const contents = headings.map((heading) => {
       // 去掉 a 标签及其内容
       const text = heading.replace(/<a[^>]*>.*?<\/a>/g, "");
       // 去除特殊符号 &,:,; 等
@@ -43,7 +45,8 @@ hexo.extend.helper.register("get_page_fill_description", function () {
     });
 
     // 排除 div.post-ai-description 元素中的内容
-    const excludedDivRegex = /<div[^>]*class="?post-ai-description"?.*?>[\s\S]*?<\/div>/gi;
+    const excludedDivRegex =
+      /<div[^>]*class="?post-ai-description"?.*?>[\s\S]*?<\/div>/gi;
     description = description.replace(excludedDivRegex, "");
 
     description = escapeHTML(stripHTML(description).trim())
@@ -70,14 +73,14 @@ hexo.extend.helper.register("cloudTags", function (options = {}) {
   }
 
   const sizes = [];
-  source.sort("length").forEach(tag => {
+  source.sort("length").forEach((tag) => {
     const { length } = tag;
     if (sizes.includes(length)) return;
     sizes.push(length);
   });
 
   const length = sizes.length - 1;
-  source.sort("name").forEach(tag => {
+  source.sort("name").forEach((tag) => {
     const ratio = length ? sizes.indexOf(tag.length) / length : 0;
     const size = minfontsize + (maxfontsize - minfontsize) * ratio;
     let style = `font-size: ${parseFloat(size.toFixed(2))}${unit};`;
@@ -93,7 +96,9 @@ hexo.extend.helper.register("cloudTags", function (options = {}) {
       style += ` color: ${color};`;
     }
 
-    const matchingTag = highlightTags.find(highlightTag => highlightTag === tag.name);
+    const matchingTag = highlightTags.find(
+      (highlightTag) => highlightTag === tag.name,
+    );
     if (matchingTag) {
       style += ` font-weight: 500; color: var(--anzhiyu-lighttext)`;
     }
@@ -103,7 +108,10 @@ hexo.extend.helper.register("cloudTags", function (options = {}) {
 });
 
 hexo.extend.helper.register("urlNoIndex", function (url = null) {
-  return prettyUrls(url || this.url, { trailing_index: false, trailing_html: true });
+  return prettyUrls(url || this.url, {
+    trailing_index: false,
+    trailing_html: true,
+  });
 });
 
 hexo.extend.helper.register("md5", function (path) {
@@ -113,22 +121,24 @@ hexo.extend.helper.register("md5", function (path) {
     .digest("hex");
 });
 
-hexo.extend.helper.register('injectHtml', function (data) {
-  if (!data) return ''
-  return data.join('')
-})
+hexo.extend.helper.register("injectHtml", function (data) {
+  if (!data) return "";
+  return data.join("");
+});
 
 hexo.extend.helper.register("findArchivesTitle", function (page, menu, date) {
   if (page.year) {
     const dateStr = page.month ? `${page.year}-${page.month}` : `${page.year}`;
-    const date_format = page.month ? hexo.theme.config.aside.card_archives.format : "YYYY";
+    const date_format = page.month
+      ? hexo.theme.config.aside.card_archives.format
+      : "YYYY";
     return date(dateStr, date_format);
   }
 
   const defaultTitle = this._p("page.archives");
   if (!menu) return defaultTitle;
 
-  const loop = m => {
+  const loop = (m) => {
     for (const key in m) {
       if (typeof m[key] === "object") {
         loop(m[key]);
@@ -143,7 +153,7 @@ hexo.extend.helper.register("findArchivesTitle", function (page, menu, date) {
   return loop(menu) || defaultTitle;
 });
 
-hexo.extend.helper.register('isImgOrUrl', function (path) {
-  const imgTestReg = /\.(png|jpe?g|gif|svg|webp)(\?.*)?$/i
-  return path.indexOf('//') !== -1 || imgTestReg.test(path)
-})
+hexo.extend.helper.register("isImgOrUrl", function (path) {
+  const imgTestReg = /\.(png|jpe?g|gif|svg|webp)(\?.*)?$/i;
+  return path.indexOf("//") !== -1 || imgTestReg.test(path);
+});

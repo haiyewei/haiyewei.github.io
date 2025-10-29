@@ -38,11 +38,11 @@ search:
   load_data: 데이터베이스 로드 중
   input_placeholder: 글 검색
   algolia_search:
-    hits_empty: '${query}에 대한 결과를 찾을 수 없습니다.'
-    hits_stats: '${hits}개의 결과를 ${time}ms 만에 찾음'
+    hits_empty: "${query}에 대한 결과를 찾을 수 없습니다."
+    hits_stats: "${hits}개의 결과를 ${time}ms 만에 찾음"
   local_search:
-    hits_empty: '${query}에 대한 결과를 찾을 수 없습니다.'
-    hits_stats: '${hits}개의 글을 찾음'
+    hits_empty: "${query}에 대한 결과를 찾을 수 없습니다."
+    hits_stats: "${hits}개의 글을 찾음"
 
 pagination:
   prev: 이전

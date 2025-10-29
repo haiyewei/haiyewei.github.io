@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # 从图像中提取颜色
 
 有关概念性概述，请参阅[颜色提取](../concepts/color_extraction_zh-CN.md)。
@@ -109,4 +110,5 @@ let colors = Score.score(quantizerResult.colorToCount)
 </section>
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

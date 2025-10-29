@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # 创建配色方案
 
 有关概念性概述，请参阅[动态配色方案](../concepts/dynamic_color_scheme_zh-CN.md)。
@@ -14,21 +15,21 @@ tags: DynamicColor
 要获取用于设置 UI 样式的颜色值，第一步是使用以下参数初始化 `DynamicScheme`：
 
 1.  源颜色（以前称为种子颜色）。
-    -   可以是 ARGB 格式的 `sourceColorArgb`，或 HCT 格式的 `sourceColorHct`。
+    - 可以是 ARGB 格式的 `sourceColorArgb`，或 HCT 格式的 `sourceColorHct`。
 2.  方案变体 `variant`。
 3.  方案是浅色模式还是深色模式，`isDark`。
 4.  对比度级别 `contrastLevel`，类型为 `Double`。建议的级别是：
-    -   `0.0` 表示默认对比度。
-    -   `0.5` 表示较高对比度。
-    -   `1.0` 表示最高对比度。
-    -   `-1.0` 表示降低对比度。
+    - `0.0` 表示默认对比度。
+    - `0.5` 表示较高对比度。
+    - `1.0` 表示最高对比度。
+    - `-1.0` 表示降低对比度。
 5.  色调调色板：
-    *   `primaryPalette`
-    *   `secondaryPalette`
-    *   `tertiaryPalette`
-    *   `neutralPalette`
-    *   `neutralVariantPalette`
-    *   `errorPalette`
+    - `primaryPalette`
+    - `secondaryPalette`
+    - `tertiaryPalette`
+    - `neutralPalette`
+    - `neutralVariantPalette`
+    - `errorPalette`
 
 我们提供了各种方案变体，例如 `SchemeTonalSpot`、`SchemeContent` 等，它们继承自 `DynamicScheme` 并带有预定义的色调调色板。这意味着您只需要指定源颜色、主题模式和对比度级别即可创建方案。
 
@@ -81,15 +82,15 @@ let scheme = SchemeTonalSpot(
 
 我们提供以下变体：
 
-*   Content
-*   Expressive
-*   Fidelity
-*   Fruit salad
-*   Monochrome
-*   Neutral
-*   Rainbow
-*   Tonal spot
-*   Vibrant
+- Content
+- Expressive
+- Fidelity
+- Fruit salad
+- Monochrome
+- Neutral
+- Rainbow
+- Tonal spot
+- Vibrant
 
 #### 方法 2 — 指定调色板
 
@@ -130,15 +131,15 @@ DynamicScheme scheme = new DynamicScheme(
 
 ```typescript
 const scheme = new DynamicScheme({
-    sourceColorArgb: 0xFFEB0057,
-    variant: Variant.VIBRANT,
-    isDark: false,
-    contrastLevel: 0.0,
-    primaryPalette: TonalPalette.fromInt(0xFFEB0057),
-    secondaryPalette: TonalPalette.fromInt(0xFFF46B00),
-    tertiaryPalette: TonalPalette.fromInt(0xFF00AB46),
-    neutralPalette: TonalPalette.fromInt(0xFF949494),
-    neutralVariantPalette: TonalPalette.fromInt(0xFFBC8877)
+  sourceColorArgb: 0xffeb0057,
+  variant: Variant.VIBRANT,
+  isDark: false,
+  contrastLevel: 0.0,
+  primaryPalette: TonalPalette.fromInt(0xffeb0057),
+  secondaryPalette: TonalPalette.fromInt(0xfff46b00),
+  tertiaryPalette: TonalPalette.fromInt(0xff00ab46),
+  neutralPalette: TonalPalette.fromInt(0xff949494),
+  neutralVariantPalette: TonalPalette.fromInt(0xffbc8877),
 });
 ```
 
@@ -248,12 +249,10 @@ let hct = MaterialDynamicColors.primary.getHct(scheme)
 
 <section>
 
-
-
 ###### Dart
 
-| 替代 …                 | 使用 …                               |
-| ---------------------------- | ----------------------------------- |
+| 替代 …                       | 使用 …                                                                                   |
+| ---------------------------- | ---------------------------------------------------------------------------------------- |
 | `Scheme.light(color)`        | `SchemeTonalSpot(sourceColorHct: Hct.fromInt(color), isDark: false, contrastLevel: 0.0)` |
 | `Scheme.dark(color)`         | `SchemeTonalSpot(sourceColorHct: Hct.fromInt(color), isDark: true, contrastLevel: 0.0)`  |
 | `Scheme.lightContent(color)` | `SchemeContent(sourceColorHct: Hct.fromInt(color), isDark: false, contrastLevel: 0.0)`   |
@@ -261,8 +260,8 @@ let hct = MaterialDynamicColors.primary.getHct(scheme)
 
 ###### Java
 
-| 替代 …                 | 使用 …                                         |
-| ---------------------------- | --------------------------------------------- |
+| 替代 …                       | 使用 …                                                |
+| ---------------------------- | ----------------------------------------------------- |
 | `Scheme.light(color)`        | `new SchemeTonalSpot(Hct.fromInt(color), false, 0.0)` |
 | `Scheme.dark(color)`         | `new SchemeTonalSpot(Hct.fromInt(color), true, 0.0)`  |
 | `Scheme.lightContent(color)` | `new SchemeContent(Hct.fromInt(color), false, 0.0)`   |
@@ -270,8 +269,8 @@ let hct = MaterialDynamicColors.primary.getHct(scheme)
 
 ###### TypeScript
 
-| 替代 …                 | 使用 …                                         |
-| ---------------------------- | --------------------------------------------- |
+| 替代 …                       | 使用 …                                                |
+| ---------------------------- | ----------------------------------------------------- |
 | `Scheme.light(color)`        | `new SchemeTonalSpot(Hct.fromInt(color), false, 0.0)` |
 | `Scheme.dark(color)`         | `new SchemeTonalSpot(Hct.fromInt(color), true, 0.0)`  |
 | `Scheme.lightContent(color)` | `new SchemeContent(Hct.fromInt(color), false, 0.0)`   |
@@ -279,8 +278,8 @@ let hct = MaterialDynamicColors.primary.getHct(scheme)
 
 ###### C++
 
-| 替代 …                             | 使用 …                             |
-| ---------------------------------------- | --------------------------------- |
+| 替代 …                                   | 使用 …                                    |
+| ---------------------------------------- | ----------------------------------------- |
 | `MaterialLightColorScheme(color)`        | `SchemeTonalSpot(Hct(color), false, 0.0)` |
 | `MaterialDarkColorScheme(color)`         | `SchemeTonalSpot(Hct(color), true, 0.0)`  |
 | `MaterialLightContentColorScheme(color)` | `SchemeContent(Hct(color), false, 0.0)`   |
@@ -288,14 +287,12 @@ let hct = MaterialDynamicColors.primary.getHct(scheme)
 
 ###### Swift
 
-| 替代 …                 | 使用 …                               |
-| ---------------------------- | ----------------------------------- |
+| 替代 …                       | 使用 …                                                                                   |
+| ---------------------------- | ---------------------------------------------------------------------------------------- |
 | `Scheme.light(color)`        | `SchemeTonalSpot(sourceColorHct: Hct.fromInt(color), isDark: false, contrastLevel: 0.0)` |
 | `Scheme.dark(color)`         | `SchemeTonalSpot(sourceColorHct: Hct.fromInt(color), isDark: true, contrastLevel: 0.0)`  |
 | `Scheme.lightContent(color)` | `SchemeContent(sourceColorHct: Hct.fromInt(color), isDark: false, contrastLevel: 0.0)`   |
 | `Scheme.darkContent(color)`  | `SchemeContent(sourceColorHct: Hct.fromInt(color), isDark: true, contrastLevel: 0.0)`    |
-
-
 
 </section>
 
@@ -310,4 +307,5 @@ let hct = MaterialDynamicColors.primary.getHct(scheme)
 对于 `SchemeContent`，所有颜色都可能受到影响，因为 `SchemeContent` 是一个保真方案：颜色角色的色调可能取决于种子颜色的色调。
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

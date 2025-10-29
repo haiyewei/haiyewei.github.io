@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # Dynamic Color Scheme
 
 ## Color space in MCU
@@ -87,4 +88,5 @@ See
 for more information on Material color system.
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

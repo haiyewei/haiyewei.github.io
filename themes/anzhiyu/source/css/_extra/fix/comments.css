@@ -3,7 +3,11 @@
   justify-content: center;
 }
 
-body[data-type="envelope"] #page #post-comment .tk-comments-container > .tk-comment {
+body[data-type="envelope"]
+  #page
+  #post-comment
+  .tk-comments-container
+  > .tk-comment {
   border: none;
   box-shadow: none;
 }

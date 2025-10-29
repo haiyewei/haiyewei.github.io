@@ -85,7 +85,9 @@ body[data-type="room"] #page .page-title {
   left: 0;
   width: 100%;
   height: 100%;
-  box-shadow: 1.5vw -3vw 3vw black, 1.5vw 0.5vw 1.5vw black;
+  box-shadow:
+    1.5vw -3vw 3vw black,
+    1.5vw 0.5vw 1.5vw black;
 }
 
 #room_page .h-lights {
@@ -118,7 +120,11 @@ body[data-type="room"] #page .page-title {
   height: 12vw;
   border-radius: 50%;
   transform: rotateZ(-50deg);
-  background-image: radial-gradient(rgba(81, 137, 251, 0.45) 50%, rgba(40, 125, 210, 0.45), transparent);
+  background-image: radial-gradient(
+    rgba(81, 137, 251, 0.45) 50%,
+    rgba(40, 125, 210, 0.45),
+    transparent
+  );
   box-shadow: -1vw -1vw 2vw 1vw rgba(131, 171, 252, 0.1);
   filter: blur(1vw);
 }
@@ -130,7 +136,11 @@ body[data-type="room"] #page .page-title {
   height: 12vw;
   border-radius: 50%;
   transform: rotateZ(-50deg);
-  background-image: radial-gradient(rgba(81, 137, 251, 0.5) 50%, rgba(40, 125, 210, 0.5), transparent);
+  background-image: radial-gradient(
+    rgba(81, 137, 251, 0.5) 50%,
+    rgba(40, 125, 210, 0.5),
+    transparent
+  );
   filter: blur(2vw);
 }
 
@@ -141,7 +151,12 @@ body[data-type="room"] #page .page-title {
   width: 200%;
   top: -6vw;
   height: 150%;
-  background-image: linear-gradient(to bottom, rgba(40, 125, 210, 0.1), rgba(81, 137, 251, 0.1), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(40, 125, 210, 0.1),
+    rgba(81, 137, 251, 0.1),
+    transparent
+  );
   border-top-left-radius: 10vw;
   border-top-right-radius: 10vw;
   filter: blur(1.5vw);
@@ -185,7 +200,11 @@ body[data-type="room"] #page .page-title {
   height: 16vw;
   transform-origin: bottom left;
   transform: skewY(49deg);
-  background-image: linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7));
+  background-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.7)
+  );
   filter: blur(0.35vw);
 }
 
@@ -210,14 +229,16 @@ body[data-type="room"] #page .page-title {
   width: 27vw;
   height: 0.5vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-27vw) translateY(-0.5vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-27vw)
+    translateY(-0.5vw);
 }
 
 .alt__right {
   width: 27vw;
   height: 0.5vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(27vw) translateX(-27vw) translateY(-0.5vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(27vw) translateX(-27vw)
+    translateY(-0.5vw);
 }
 
 .alt__left {
@@ -265,7 +286,12 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   height: 100%;
   width: 100%;
-  background-image: linear-gradient(to bottom, rgba(20, 61, 103, 0.75), rgba(81, 137, 251, 0.75), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(20, 61, 103, 0.75),
+    rgba(81, 137, 251, 0.75),
+    transparent
+  );
 }
 
 .alt__top .light:nth-of-type(2) {
@@ -273,7 +299,12 @@ body[data-type="room"] #page .page-title {
   left: 4vw;
   height: 100%;
   width: 6vw;
-  background-image: linear-gradient(to bottom, transparent 20%, rgba(40, 125, 210, 0.75), rgba(81, 137, 251, 0.25) 80%);
+  background-image: linear-gradient(
+    to bottom,
+    transparent 20%,
+    rgba(40, 125, 210, 0.75),
+    rgba(81, 137, 251, 0.25) 80%
+  );
   filter: blur(0.1vw);
 }
 
@@ -285,7 +316,10 @@ body[data-type="room"] #page .page-title {
   height: 3vw;
   border-radius: 50%;
   transform: rotateZ(42deg);
-  background-image: radial-gradient(rgba(131, 171, 252, 0.75) 50%, rgba(32, 99, 167, 0.75));
+  background-image: radial-gradient(
+    rgba(131, 171, 252, 0.75) 50%,
+    rgba(32, 99, 167, 0.75)
+  );
   filter: blur(0.55vw);
 }
 
@@ -297,7 +331,10 @@ body[data-type="room"] #page .page-title {
   height: 2vw;
   border-radius: 50%;
   transform: rotateZ(40deg);
-  background-image: radial-gradient(rgba(131, 171, 252, 0.75) 50%, rgba(32, 99, 167, 0.75));
+  background-image: radial-gradient(
+    rgba(131, 171, 252, 0.75) 50%,
+    rgba(32, 99, 167, 0.75)
+  );
   filter: blur(0.55vw);
 }
 
@@ -309,7 +346,10 @@ body[data-type="room"] #page .page-title {
   height: 2vw;
   border-radius: 50%;
   transform: rotateZ(40deg);
-  background-image: radial-gradient(rgba(141, 178, 252, 0.75) 50%, rgba(32, 99, 167, 0.75));
+  background-image: radial-gradient(
+    rgba(141, 178, 252, 0.75) 50%,
+    rgba(32, 99, 167, 0.75)
+  );
   filter: blur(0.75vw);
 }
 
@@ -321,7 +361,10 @@ body[data-type="room"] #page .page-title {
   height: 2vw;
   border-radius: 50%;
   transform: rotateZ(40deg);
-  background-image: radial-gradient(rgba(141, 178, 252, 0.75) 50%, rgba(32, 99, 167, 0.75));
+  background-image: radial-gradient(
+    rgba(141, 178, 252, 0.75) 50%,
+    rgba(32, 99, 167, 0.75)
+  );
   filter: blur(0.35vw);
 }
 
@@ -331,7 +374,12 @@ body[data-type="room"] #page .page-title {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to right, black, #5189fb 10%, transparent 20%);
+  background-image: linear-gradient(
+    to right,
+    black,
+    #5189fb 10%,
+    transparent 20%
+  );
 }
 
 .alt__top .light:nth-of-type(7)::before {
@@ -339,7 +387,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 20%;
   height: 100%;
-  background-image: linear-gradient(to right, rgba(5, 70, 199, 0.6), transparent 60%);
+  background-image: linear-gradient(
+    to right,
+    rgba(5, 70, 199, 0.6),
+    transparent 60%
+  );
 }
 
 .alt__top .light:nth-of-type(7)::after {
@@ -347,7 +399,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 20%;
-  background-image: linear-gradient(to bottom, rgba(6, 78, 224, 0.5), transparent 60%);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(6, 78, 224, 0.5),
+    transparent 60%
+  );
 }
 
 .alt__top .light:nth-of-type(8) {
@@ -358,7 +414,10 @@ body[data-type="room"] #page .page-title {
   height: 4vw;
   border-radius: 50%;
   transform: rotateZ(40deg);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 50%, rgba(128, 121, 174, 0.1));
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(128, 121, 174, 0.1)
+  );
   filter: blur(0.8vw);
 }
 
@@ -392,7 +451,8 @@ body[data-type="room"] #page .page-title {
   width: 1vw;
   height: 2vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(27vw) translateX(-1vw) translateY(-2vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(27vw) translateX(-1vw)
+    translateY(-2vw);
 }
 
 .alb__left {
@@ -466,7 +526,8 @@ body[data-type="room"] #page .page-title {
   width: 28vw;
   height: 2vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-28vw) translateY(-2vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-28vw)
+    translateY(-2vw);
 }
 
 .arb__left {
@@ -507,7 +568,13 @@ body[data-type="room"] #page .page-title {
 }
 
 .arb__top {
-  background-image: linear-gradient(to top, #fbfafe, #3b3469 25%, #2e2a48 75%, #9e99c1);
+  background-image: linear-gradient(
+    to top,
+    #fbfafe,
+    #3b3469 25%,
+    #2e2a48 75%,
+    #9e99c1
+  );
 }
 
 .arb__top::before {
@@ -516,7 +583,12 @@ body[data-type="room"] #page .page-title {
   width: 100%;
   height: 30%;
   top: 0;
-  background-image: linear-gradient(to bottom, transparent, rgba(81, 137, 251, 0.85), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(81, 137, 251, 0.85),
+    transparent
+  );
 }
 
 .arb__bottom {
@@ -552,7 +624,8 @@ body[data-type="room"] #page .page-title {
   width: 27vw;
   height: 20vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-27vw) translateY(-20vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-27vw)
+    translateY(-20vw);
 }
 
 .blt__left {
@@ -585,7 +658,13 @@ body[data-type="room"] #page .page-title {
 }
 
 .blt__right {
-  background-image: linear-gradient(to bottom, #151225, #383358, #383358 90%, #242040);
+  background-image: linear-gradient(
+    to bottom,
+    #151225,
+    #383358,
+    #383358 90%,
+    #242040
+  );
 }
 
 .blt__right::before {
@@ -641,14 +720,16 @@ body[data-type="room"] #page .page-title {
   width: 2vw;
   height: 0.75vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-2vw) translateY(-0.75vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-2vw)
+    translateY(-0.75vw);
 }
 
 .blt2__right {
   width: 27vw;
   height: 0.75vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(2vw) translateX(-27vw) translateY(-0.75vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(2vw) translateX(-27vw)
+    translateY(-0.75vw);
 }
 
 .blt2__left {
@@ -691,7 +772,11 @@ body[data-type="room"] #page .page-title {
   height: 100%;
   bottom: 0;
   border-bottom: 0.1vw solid rgba(251, 250, 254, 0.75);
-  background-image: linear-gradient(to top, rgba(81, 137, 251, 0.35), transparent);
+  background-image: linear-gradient(
+    to top,
+    rgba(81, 137, 251, 0.35),
+    transparent
+  );
 }
 
 .blt2__left {
@@ -733,7 +818,8 @@ body[data-type="room"] #page .page-title {
   width: 1vw;
   height: 20vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(26vw) translateX(-1vw) translateY(-20vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(26vw) translateX(-1vw)
+    translateY(-20vw);
 }
 
 .blb__left {
@@ -766,7 +852,8 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(
+  background-image:
+    linear-gradient(
       to bottom,
       rgba(40, 125, 210, 0.25),
       transparent 20%,
@@ -775,7 +862,13 @@ body[data-type="room"] #page .page-title {
     ),
     linear-gradient(to right, rgba(31, 33, 88, 0.35), transparent),
     linear-gradient(to bottom, rgba(31, 33, 88, 0.35), transparent),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent 20%, transparent 80%, rgba(40, 125, 210, 0.25));
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5),
+      transparent 20%,
+      transparent 80%,
+      rgba(40, 125, 210, 0.25)
+    );
 }
 
 .blb__front::after {
@@ -821,14 +914,16 @@ body[data-type="room"] #page .page-title {
   width: 25vw;
   height: 0.75vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-25vw) translateY(-0.75vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-25vw)
+    translateY(-0.75vw);
 }
 
 .blb2__right {
   width: 2vw;
   height: 0.75vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(25vw) translateX(-2vw) translateY(-0.75vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(25vw) translateX(-2vw)
+    translateY(-0.75vw);
 }
 
 .blb2__left {
@@ -863,7 +958,11 @@ body[data-type="room"] #page .page-title {
   height: 100%;
   bottom: 0;
   border-bottom: 0.1vw solid rgba(251, 250, 254, 0.75);
-  background-image: linear-gradient(to top, rgba(40, 125, 210, 0.25), transparent);
+  background-image: linear-gradient(
+    to top,
+    rgba(40, 125, 210, 0.25),
+    transparent
+  );
 }
 
 .blb2__back {
@@ -911,7 +1010,8 @@ body[data-type="room"] #page .page-title {
   width: 0.75vw;
   height: 6vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.75vw) translateY(-6vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.75vw)
+    translateY(-6vw);
 }
 
 .bocina-l__right,
@@ -919,7 +1019,8 @@ body[data-type="room"] #page .page-title {
   width: 1.5vw;
   height: 6vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.75vw) translateX(-1.5vw) translateY(-6vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.75vw)
+    translateX(-1.5vw) translateY(-6vw);
 }
 
 .bocina-l__left,
@@ -974,7 +1075,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to right, rgba(81, 137, 251, 0.35) 65%, rgba(81, 137, 251, 0.95));
+  background-image: linear-gradient(
+    to right,
+    rgba(81, 137, 251, 0.35) 65%,
+    rgba(81, 137, 251, 0.95)
+  );
 }
 
 .bocina-l__left {
@@ -988,7 +1093,11 @@ body[data-type="room"] #page .page-title {
   left: 20%;
   width: 120%;
   height: 120%;
-  background-image: linear-gradient(to left, rgba(7, 23, 39, 0.75), rgba(0, 0, 0, 0.75));
+  background-image: linear-gradient(
+    to left,
+    rgba(7, 23, 39, 0.75),
+    rgba(0, 0, 0, 0.75)
+  );
   filter: blur(0.5vw);
 }
 
@@ -1005,7 +1114,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to left, rgba(81, 137, 251, 0.35) 65%, rgba(81, 137, 251, 0.95));
+  background-image: linear-gradient(
+    to left,
+    rgba(81, 137, 251, 0.35) 65%,
+    rgba(81, 137, 251, 0.95)
+  );
 }
 
 .bocina-r__back {
@@ -1023,7 +1136,11 @@ body[data-type="room"] #page .page-title {
   left: -20%;
   width: 120%;
   height: 120%;
-  background-image: linear-gradient(to right, rgba(7, 23, 39, 0.75), rgba(0, 0, 0, 0.75));
+  background-image: linear-gradient(
+    to right,
+    rgba(7, 23, 39, 0.75),
+    rgba(0, 0, 0, 0.75)
+  );
   filter: blur(0.5vw);
 }
 
@@ -1050,7 +1167,8 @@ body[data-type="room"] #page .page-title {
   width: 1.5vw;
   height: 0.25vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-1.5vw) translateY(-0.25vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-1.5vw)
+    translateY(-0.25vw);
 }
 
 .repisa-t__right,
@@ -1058,7 +1176,8 @@ body[data-type="room"] #page .page-title {
   width: 10vw;
   height: 0.25vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1.5vw) translateX(-10vw) translateY(-0.25vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1.5vw) translateX(-10vw)
+    translateY(-0.25vw);
 }
 
 .repisa-t__left,
@@ -1116,7 +1235,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to right, rgba(6, 78, 224, 0.75), transparent);
+  background-image: linear-gradient(
+    to right,
+    rgba(6, 78, 224, 0.75),
+    transparent
+  );
 }
 
 .repisa-t__bottom,
@@ -1130,7 +1253,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to right, rgba(6, 78, 224, 0.75), transparent);
+  background-image: linear-gradient(
+    to right,
+    rgba(6, 78, 224, 0.75),
+    transparent
+  );
 }
 
 .repisa-b {
@@ -1164,7 +1291,8 @@ body[data-type="room"] #page .page-title {
   width: 12vw;
   height: 6vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.5vw) translateX(-12vw) translateY(-6vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.5vw) translateX(-12vw)
+    translateY(-6vw);
 }
 
 .tv__left {
@@ -1207,8 +1335,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  box-shadow: 0.125vw 0.125vw 1vw rgba(81, 137, 251, 0.5), -0.125vw 0.125vw 1vw rgba(81, 137, 251, 0.5),
-    0.125vw -0.125vw 1vw rgba(81, 137, 251, 0.5), -0.125vw -0.125vw 1vw rgba(81, 137, 251, 0.5);
+  box-shadow:
+    0.125vw 0.125vw 1vw rgba(81, 137, 251, 0.5),
+    -0.125vw 0.125vw 1vw rgba(81, 137, 251, 0.5),
+    0.125vw -0.125vw 1vw rgba(81, 137, 251, 0.5),
+    -0.125vw -0.125vw 1vw rgba(81, 137, 251, 0.5);
   background-image: url("https://img02.anheyu.com/adminuploads/1/2022/10/20/6351038493d46.gif");
   background-size: cover;
   background-repeat: no-repeat;
@@ -1228,7 +1359,10 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 13vw;
   height: 7vw;
-  background-image: radial-gradient(rgba(36, 112, 188, 0.95), rgba(56, 121, 250, 0.95));
+  background-image: radial-gradient(
+    rgba(36, 112, 188, 0.95),
+    rgba(56, 121, 250, 0.95)
+  );
   filter: blur(1.25vw);
   animation: luz-tv 0.25s infinite alternate;
 }
@@ -1261,14 +1395,16 @@ body[data-type="room"] #page .page-title {
   width: 12vw;
   height: 0.25vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-12vw) translateY(-0.25vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-12vw)
+    translateY(-0.25vw);
 }
 
 .librero__right {
   width: 1.5vw;
   height: 0.25vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(12vw) translateX(-1.5vw) translateY(-0.25vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(12vw) translateX(-1.5vw)
+    translateY(-0.25vw);
 }
 
 .librero__left {
@@ -1306,7 +1442,11 @@ body[data-type="room"] #page .page-title {
   width: 100%;
   height: 4vw;
   border-radius: 50%;
-  background-image: radial-gradient(rgba(106, 154, 251, 0.7) 50%, rgba(32, 99, 167, 0.6), transparent);
+  background-image: radial-gradient(
+    rgba(106, 154, 251, 0.7) 50%,
+    rgba(32, 99, 167, 0.6),
+    transparent
+  );
   filter: blur(1.25vw);
 }
 
@@ -1327,7 +1467,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(31, 104, 249, 0.75), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(31, 104, 249, 0.75),
+    transparent
+  );
 }
 
 .librero__bottom {
@@ -1339,7 +1483,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(31, 104, 249, 0.75), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(31, 104, 249, 0.75),
+    transparent
+  );
 }
 
 .libros {
@@ -1365,14 +1513,16 @@ body[data-type="room"] #page .page-title {
   width: 0.5vw;
   height: 1.5vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.5vw) translateY(-1.5vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.5vw)
+    translateY(-1.5vw);
 }
 
 .libro__right {
   width: 1vw;
   height: 1.5vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.5vw) translateX(-1vw) translateY(-1.5vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.5vw) translateX(-1vw)
+    translateY(-1.5vw);
 }
 
 .libro__left {
@@ -1405,7 +1555,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(81, 137, 251, 0.4), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(81, 137, 251, 0.4),
+    transparent
+  );
 }
 
 .libro__back {
@@ -1421,7 +1575,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(81, 137, 251, 0.85), rgba(40, 125, 210, 0.35));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(81, 137, 251, 0.85),
+    rgba(40, 125, 210, 0.35)
+  );
 }
 
 .libro__left {
@@ -1437,7 +1595,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(81, 137, 251, 0.85), rgba(40, 125, 210, 0.35));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(81, 137, 251, 0.85),
+    rgba(40, 125, 210, 0.35)
+  );
 }
 
 .libro__bottom {
@@ -1502,14 +1664,16 @@ body[data-type="room"] #page .page-title {
   width: 0.125vw;
   height: 1.125vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.125vw) translateY(-1.125vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.125vw)
+    translateY(-1.125vw);
 }
 
 .foto__right {
   width: 2.25vw;
   height: 1.125vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.125vw) translateX(-2.25vw) translateY(-1.125vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.125vw)
+    translateX(-2.25vw) translateY(-1.125vw);
 }
 
 .foto__left {
@@ -1542,7 +1706,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(81, 137, 251, 0.4), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(81, 137, 251, 0.4),
+    transparent
+  );
 }
 
 .foto__back {
@@ -1562,7 +1730,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: repeating-linear-gradient(to bottom, #9e99c1 0.1vw, #b7a5ed 0.2vw);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #9e99c1 0.1vw,
+    #b7a5ed 0.2vw
+  );
 }
 
 .foto__left {
@@ -1578,7 +1750,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(81, 137, 251, 0.85), rgba(40, 125, 210, 0.35));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(81, 137, 251, 0.85),
+    rgba(40, 125, 210, 0.35)
+  );
 }
 
 .foto__bottom {
@@ -1628,14 +1804,16 @@ body[data-type="room"] #page .page-title {
   width: 1vw;
   height: 0.75vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-1vw) translateY(-0.75vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-1vw)
+    translateY(-0.75vw);
 }
 
 .caja__right {
   width: 1.5vw;
   height: 0.75vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-1.5vw) translateY(-0.75vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-1.5vw)
+    translateY(-0.75vw);
 }
 
 .caja__left {
@@ -1668,7 +1846,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(81, 137, 251, 0.4), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(81, 137, 251, 0.4),
+    transparent
+  );
 }
 
 .caja__back {
@@ -1684,7 +1866,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(81, 137, 251, 0.85), rgba(40, 125, 210, 0.35));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(81, 137, 251, 0.85),
+    rgba(40, 125, 210, 0.35)
+  );
 }
 
 .caja__left {
@@ -1700,7 +1886,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(81, 137, 251, 0.85), rgba(40, 125, 210, 0.35));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(81, 137, 251, 0.85),
+    rgba(40, 125, 210, 0.35)
+  );
 }
 
 .caja__bottom {
@@ -1760,7 +1950,8 @@ body[data-type="room"] #page .page-title {
   width: 0.25vw;
   height: 7vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(5vw) translateX(-0.25vw) translateY(-7vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(5vw) translateX(-0.25vw)
+    translateY(-7vw);
 }
 
 .cuadro-l__left,
@@ -1797,8 +1988,11 @@ body[data-type="room"] #page .page-title {
 .cuadro-l__back,
 .cuadro-r__back {
   background-color: #383358;
-  box-shadow: 0.35vw 0.35vw 0.35vw rgba(81, 137, 251, 0.2), -0.35vw 0.35vw 0.35vw rgba(81, 137, 251, 0.2),
-    -0.35vw -0.35vw 0.35vw rgba(81, 137, 251, 0.2), 0.35vw -0.35vw 0.35vw rgba(81, 137, 251, 0.2);
+  box-shadow:
+    0.35vw 0.35vw 0.35vw rgba(81, 137, 251, 0.2),
+    -0.35vw 0.35vw 0.35vw rgba(81, 137, 251, 0.2),
+    -0.35vw -0.35vw 0.35vw rgba(81, 137, 251, 0.2),
+    0.35vw -0.35vw 0.35vw rgba(81, 137, 251, 0.2);
 }
 
 .cuadro-l__right,
@@ -1835,7 +2029,11 @@ body[data-type="room"] #page .page-title {
   width: 5vw;
   height: 7vw;
   background-origin: padding-box;
-  background-image: linear-gradient(to bottom, rgba(40, 125, 210, 0.15), rgba(40, 125, 210, 0.15));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(40, 125, 210, 0.15),
+    rgba(40, 125, 210, 0.15)
+  );
 }
 
 .cuadro-r {
@@ -1856,7 +2054,11 @@ body[data-type="room"] #page .page-title {
   width: 5vw;
   height: 7vw;
   background-origin: padding-box;
-  background-image: linear-gradient(to bottom, rgba(40, 125, 210, 0.15), rgba(40, 125, 210, 0.15));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(40, 125, 210, 0.15),
+    rgba(40, 125, 210, 0.15)
+  );
 }
 
 .puerta-c {
@@ -1903,7 +2105,8 @@ body[data-type="room"] #page .page-title {
   width: 0.25vw;
   height: 16vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(7vw) translateX(-0.25vw) translateY(-16vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(7vw) translateX(-0.25vw)
+    translateY(-16vw);
 }
 
 .puerta__left {
@@ -1938,8 +2141,11 @@ body[data-type="room"] #page .page-title {
   width: 100%;
   height: 100%;
   background-image: radial-gradient(transparent 50%, rgba(4, 61, 174, 0.25));
-  box-shadow: 0.65vw 0.65vw 0.5vw rgba(81, 137, 251, 0.6), -0.65vw 0.65vw 0.5vw rgba(81, 137, 251, 0.6),
-    -0.65vw -0.65vw 0.5vw rgba(81, 137, 251, 0.6), 0.65vw -0.65vw 0.5vw rgba(81, 137, 251, 0.6);
+  box-shadow:
+    0.65vw 0.65vw 0.5vw rgba(81, 137, 251, 0.6),
+    -0.65vw 0.65vw 0.5vw rgba(81, 137, 251, 0.6),
+    -0.65vw -0.65vw 0.5vw rgba(81, 137, 251, 0.6),
+    0.65vw -0.65vw 0.5vw rgba(81, 137, 251, 0.6);
 }
 
 .puerta__front::after {
@@ -1950,8 +2156,11 @@ body[data-type="room"] #page .page-title {
   width: 1vw;
   height: 0.25vw;
   background-color: #9e99c1;
-  box-shadow: 0.125vw 0.125vw 0.25vw rgba(81, 137, 251, 0.6), -0.125vw 0.125vw 0.25vw rgba(81, 137, 251, 0.6),
-    -0.125vw -0.125vw 0.25vw rgba(81, 137, 251, 0.6), 0.125vw -0.125vw 0.25vw rgba(81, 137, 251, 0.6);
+  box-shadow:
+    0.125vw 0.125vw 0.25vw rgba(81, 137, 251, 0.6),
+    -0.125vw 0.125vw 0.25vw rgba(81, 137, 251, 0.6),
+    -0.125vw -0.125vw 0.25vw rgba(81, 137, 251, 0.6),
+    0.125vw -0.125vw 0.25vw rgba(81, 137, 251, 0.6);
 }
 
 .puerta-l,
@@ -1976,7 +2185,8 @@ body[data-type="room"] #page .page-title {
   width: 0.5vw;
   height: 16vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.5vw) translateY(-16vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.5vw)
+    translateY(-16vw);
 }
 
 .puerta-l__right,
@@ -1984,7 +2194,8 @@ body[data-type="room"] #page .page-title {
   width: 0.5vw;
   height: 16vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.5vw) translateX(-0.5vw) translateY(-16vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.5vw) translateX(-0.5vw)
+    translateY(-16vw);
 }
 
 .puerta-l__left,
@@ -2066,7 +2277,8 @@ body[data-type="room"] #page .page-title {
   width: 0.5vw;
   height: 0.5vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(8vw) translateX(-0.5vw) translateY(-0.5vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(8vw) translateX(-0.5vw)
+    translateY(-0.5vw);
 }
 
 .puerta-t__left {
@@ -2134,14 +2346,16 @@ body[data-type="room"] #page .page-title {
   width: 0.5vw;
   height: 18vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.5vw) translateY(-18vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.5vw)
+    translateY(-18vw);
 }
 
 .muro__right {
   width: 16vw;
   height: 18vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.5vw) translateX(-16vw) translateY(-18vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.5vw) translateX(-16vw)
+    translateY(-18vw);
 }
 
 .muro__left {
@@ -2201,14 +2415,21 @@ body[data-type="room"] #page .page-title {
   left: 5%;
   width: 90%;
   height: 25%;
-  background-image: linear-gradient(to bottom, rgba(4, 5, 13, 0.75), rgba(4, 5, 13, 0.95));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(4, 5, 13, 0.75),
+    rgba(4, 5, 13, 0.95)
+  );
   filter: blur(0.75vw);
 }
 
 .muro__left {
   background-color: #0b0c1f;
-  box-shadow: 0.5vw 0.5vw 0.6vw rgba(81, 137, 251, 0.3), 0.5vw -0.5vw 0.6vw rgba(81, 137, 251, 0.3),
-    -0.5vw 0.5vw 0.6vw rgba(81, 137, 251, 0.3), -0.5vw -0.5vw 0.6vw rgba(81, 137, 251, 0.3);
+  box-shadow:
+    0.5vw 0.5vw 0.6vw rgba(81, 137, 251, 0.3),
+    0.5vw -0.5vw 0.6vw rgba(81, 137, 251, 0.3),
+    -0.5vw 0.5vw 0.6vw rgba(81, 137, 251, 0.3),
+    -0.5vw -0.5vw 0.6vw rgba(81, 137, 251, 0.3);
 }
 
 .muro__top {
@@ -2221,7 +2442,11 @@ body[data-type="room"] #page .page-title {
   width: 100%;
   height: 100%;
   bottom: 0;
-  background-image: linear-gradient(to left, rgba(40, 125, 210, 0.5), rgba(81, 137, 251, 0.25));
+  background-image: linear-gradient(
+    to left,
+    rgba(40, 125, 210, 0.5),
+    rgba(81, 137, 251, 0.25)
+  );
 }
 
 .muro__bottom {
@@ -2287,7 +2512,8 @@ body[data-type="room"] #page .page-title {
   width: 14vw;
   height: 3vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(6vw) translateX(-14vw) translateY(-3vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(6vw) translateX(-14vw)
+    translateY(-3vw);
 }
 
 .sillon-b__left {
@@ -2332,7 +2558,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to bottom, rgba(40, 125, 210, 0.1), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(40, 125, 210, 0.1),
+    transparent
+  );
 }
 
 .sillon-b__top {
@@ -2345,7 +2575,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to right, rgba(40, 125, 210, 0.25), transparent);
+  background-image: linear-gradient(
+    to right,
+    rgba(40, 125, 210, 0.25),
+    transparent
+  );
 }
 
 .sillon-b__bottom {
@@ -2382,7 +2616,8 @@ body[data-type="room"] #page .page-title {
   width: 1vw;
   height: 4.5vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(6vw) translateX(-1vw) translateY(-4.5vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(6vw) translateX(-1vw)
+    translateY(-4.5vw);
 }
 
 .sillon-l__left,
@@ -2441,7 +2676,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to right, rgba(40, 125, 210, 0.75), transparent);
+  background-image: linear-gradient(
+    to right,
+    rgba(40, 125, 210, 0.75),
+    transparent
+  );
 }
 
 .sillon-l__bottom,
@@ -2481,7 +2720,8 @@ body[data-type="room"] #page .page-title {
   width: 14vw;
   height: 6.5vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-14vw) translateY(-6.5vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-14vw)
+    translateY(-6.5vw);
 }
 
 .sillon-t__left {
@@ -2531,7 +2771,11 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(to right, rgba(40, 125, 210, 0.5), transparent);
+  background-image: linear-gradient(
+    to right,
+    rgba(40, 125, 210, 0.5),
+    transparent
+  );
 }
 
 .sillon-t__bottom {
@@ -2577,14 +2821,16 @@ body[data-type="room"] #page .page-title {
   width: 10vw;
   height: 0.5vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-10vw) translateY(-0.5vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-10vw)
+    translateY(-0.5vw);
 }
 
 .mesa__right {
   width: 9vw;
   height: 0.5vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(10vw) translateX(-9vw) translateY(-0.5vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(10vw) translateX(-9vw)
+    translateY(-0.5vw);
 }
 
 .mesa__left {
@@ -2617,7 +2863,12 @@ body[data-type="room"] #page .page-title {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(45deg, rgba(81, 137, 251, 0.125), rgba(180, 205, 253, 0.25), transparent 55%);
+  background-image: linear-gradient(
+    45deg,
+    rgba(81, 137, 251, 0.125),
+    rgba(180, 205, 253, 0.25),
+    transparent 55%
+  );
 }
 
 .mesa__back {
@@ -2643,7 +2894,12 @@ body[data-type="room"] #page .page-title {
   bottom: 0;
   width: 50%;
   height: 50%;
-  background-image: linear-gradient(45deg, rgba(81, 137, 251, 0.5), rgba(251, 250, 254, 0.125) 50%, transparent 55%);
+  background-image: linear-gradient(
+    45deg,
+    rgba(81, 137, 251, 0.5),
+    rgba(251, 250, 254, 0.125) 50%,
+    transparent 55%
+  );
   filter: blur(0.5vw);
 }
 
@@ -2681,14 +2937,16 @@ body[data-type="room"] #page .page-title {
   width: 0.25vw;
   height: 1.75vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.25vw) translateY(-1.75vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.25vw)
+    translateY(-1.75vw);
 }
 
 .mesa-p__right {
   width: 0.25vw;
   height: 1.75vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.25vw) translateX(-0.25vw) translateY(-1.75vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.25vw)
+    translateX(-0.25vw) translateY(-1.75vw);
 }
 
 .mesa-p__left {
@@ -2789,14 +3047,16 @@ body[data-type="room"] #page .page-title {
   width: 2vw;
   height: 0.125vw;
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-2vw) translateY(-0.125vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-2vw)
+    translateY(-0.125vw);
 }
 
 .tablet__right {
   width: 2.5vw;
   height: 0.125vw;
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(2vw) translateX(-2.5vw) translateY(-0.125vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(2vw) translateX(-2.5vw)
+    translateY(-0.125vw);
 }
 
 .tablet__left {
@@ -2844,8 +3104,11 @@ body[data-type="room"] #page .page-title {
 
 .tablet__bottom {
   background-color: black;
-  box-shadow: 0.25vw 0.25vw 0.5vw rgba(24, 74, 124, 0.75), -0.25vw 0.25vw 0.5vw rgba(24, 74, 124, 0.75),
-    -0.25vw -0.25vw 0.5vw rgba(24, 74, 124, 0.75), 0.25vw -0.25vw 0.5vw rgba(24, 74, 124, 0.75);
+  box-shadow:
+    0.25vw 0.25vw 0.5vw rgba(24, 74, 124, 0.75),
+    -0.25vw 0.25vw 0.5vw rgba(24, 74, 124, 0.75),
+    -0.25vw -0.25vw 0.5vw rgba(24, 74, 124, 0.75),
+    0.25vw -0.25vw 0.5vw rgba(24, 74, 124, 0.75);
 }
 
 /**********************/
@@ -2859,13 +3122,19 @@ body[data-type="room"] #page .page-title {
 @keyframes pantalla-tv {
   from {
     background-color: #6a9afb;
-    box-shadow: 0.125vw 0.125vw 0vw rgba(81, 137, 251, 0), -0.125vw 0.125vw 0vw rgba(81, 137, 251, 0),
-      0.125vw -0.125vw 0vw rgba(81, 137, 251, 0), -0.125vw -0.125vw 0vw rgba(81, 137, 251, 0);
+    box-shadow:
+      0.125vw 0.125vw 0vw rgba(81, 137, 251, 0),
+      -0.125vw 0.125vw 0vw rgba(81, 137, 251, 0),
+      0.125vw -0.125vw 0vw rgba(81, 137, 251, 0),
+      -0.125vw -0.125vw 0vw rgba(81, 137, 251, 0);
   }
 }
 
 @keyframes luz-tv {
   from {
-    background-image: radial-gradient(rgba(36, 112, 188, 0.8), rgba(56, 121, 250, 0.8));
+    background-image: radial-gradient(
+      rgba(36, 112, 188, 0.8),
+      rgba(56, 121, 250, 0.8)
+    );
   }
 }

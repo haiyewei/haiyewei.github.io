@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # MCU 中的色彩空间
 
 ## 概述
@@ -21,15 +22,15 @@ tags: DynamicColor
 
 ![颜色十六进制代码 #ff6600](/images/orange.png){style="float: left; padding: 50px"}
 
-| 色彩空间 | 坐标 |
-| --- | --- |
-| sRGB | 255, 102, 0 (十六进制代码: #ff6600) |
-| 线性 RGB | 100.00, 13.29, 0.00 |
-| XYZ | 45.99, 30.76, 3.52 |
-| L\*a\*b\* | 62.31, 54.99, 71.33 |
-| Cam16-JCH | 55.16, 79.39, 42.39 |
-| Cam16-UCS | 67.65, 28.75, 26.24 |
-| HCT | 42.39, 79.39, 62.31 |
+| 色彩空间  | 坐标                                |
+| --------- | ----------------------------------- |
+| sRGB      | 255, 102, 0 (十六进制代码: #ff6600) |
+| 线性 RGB  | 100.00, 13.29, 0.00                 |
+| XYZ       | 45.99, 30.76, 3.52                  |
+| L\*a\*b\* | 62.31, 54.99, 71.33                 |
+| Cam16-JCH | 55.16, 79.39, 42.39                 |
+| Cam16-UCS | 67.65, 28.75, 26.24                 |
+| HCT       | 42.39, 79.39, 62.31                 |
 
 大多数色彩空间都是三维的，这并非巧合。人眼通常拥有三种类型的视锥细胞：一种对较短波长最敏感（通常称为蓝色），另一种对中等波长最敏感（通常称为绿色），第三种对较长波长最敏感（通常称为红色）。细胞对不同波长的光产生的信号有不同强度的反应。因此，人类对任何颜色的感知都可以用三个数值来描述。
 
@@ -57,8 +58,8 @@ CAM16 是一个**颜色外观模型**，它考虑了**观看条件**。同一个
 
 一个 `Cam16` 对象包含 9 个分量，如果给定以下任何一项，就可以唯一确定：
 
--   一个由 {`j`, `q`} 中的一个、{`chroma`, `m`, `s`} 中的一个和 `hue` 组成的三元组
--   一个由 `jstar`、`astar` 和 `bstar` 组成的三元组
+- 一个由 {`j`, `q`} 中的一个、{`chroma`, `m`, `s`} 中的一个和 `hue` 组成的三元组
+- 一个由 `jstar`、`astar` 和 `bstar` 组成的三元组
 
 从技术上讲，Cam16 不是一个单一的色彩空间，而是包含多个色彩空间。MCU 将**Cam16-JCH**（使用分量 `j`、`chroma`、`hue`）和 **Cam16-UCS**（使用分量 `jstar`、`astar`、`bstar`）用于不同的目的。
 
@@ -74,9 +75,9 @@ XYZ 有时被称为**连接器空间**，每个色彩空间都可以与它相互
 
 L\*a\*b\* 和 RGB 一样，都在一个立方体中。
 
--   L\* 是 Z 轴，代表亮度。
--   a\* 是 X 轴，从左到右，从绿色到红色。
--   b\* 是 Y 轴，从下到上，从蓝色到黄色。
+- L\* 是 Z 轴，代表亮度。
+- a\* 是 X 轴，从左到右，从绿色到红色。
+- b\* 是 Y 轴，从下到上，从蓝色到黄色。
 
 ### 线性 RGB (`linrgb`)
 
@@ -90,116 +91,116 @@ sRGB 色彩空间的线性化版本，对位深度没有限制。
 
 ###### Dart
 
-*   sRGB ⇌ HCT
-    -   `Hct.fromInt(argb)`
-    -   `Hct.from(h, c, t).toInt()`
-*   sRGB ⇌ XYZ
-    -   `ColorUtils.xyzFromArgb(argb)`
-    -   `ColorUtils.argbFromXyz(x, y, z)`
-*   sRGB ⇌ Cam16
-    -   `Cam16.fromInt(argb)`
-    -   `cam16.toInt()`
-    -   从 JCH 或 UCS 构建 Cam16：
-        -   `Cam16.fromJch(j, c, h)`
-        -   `Cam16.fromUcs(jstar, astar, bstar)`
-*   XYZ ⇌ Cam16
-    -   `Cam16.fromXyzInViewingConditions(x, y, z, vc)`
-    -   `cam16.xyzInViewingConditions(vc)`
-*   sRGB ⇌ L\*a\*b\*
-    -   `ColorUtils.labFromArgb(argb)`
-    -   `ColorUtils.argbFromLab(l, a, b)`
-*   linRGB → sRGB
-    -   `ColorUtils.argbFromLinrgb(linrgb)`
+- sRGB ⇌ HCT
+  - `Hct.fromInt(argb)`
+  - `Hct.from(h, c, t).toInt()`
+- sRGB ⇌ XYZ
+  - `ColorUtils.xyzFromArgb(argb)`
+  - `ColorUtils.argbFromXyz(x, y, z)`
+- sRGB ⇌ Cam16
+  - `Cam16.fromInt(argb)`
+  - `cam16.toInt()`
+  - 从 JCH 或 UCS 构建 Cam16：
+    - `Cam16.fromJch(j, c, h)`
+    - `Cam16.fromUcs(jstar, astar, bstar)`
+- XYZ ⇌ Cam16
+  - `Cam16.fromXyzInViewingConditions(x, y, z, vc)`
+  - `cam16.xyzInViewingConditions(vc)`
+- sRGB ⇌ L\*a\*b\*
+  - `ColorUtils.labFromArgb(argb)`
+  - `ColorUtils.argbFromLab(l, a, b)`
+- linRGB → sRGB
+  - `ColorUtils.argbFromLinrgb(linrgb)`
 
 ###### Java
 
-*   sRGB ⇌ HCT
-    -   `Hct.fromInt(argb)`
-    -   `Hct.from(h, c, t).toInt()`
-*   sRGB ⇌ XYZ
-    -   `ColorUtils.xyzFromArgb(argb)`
-    -   `ColorUtils.argbFromXyz(x, y, z)`
-*   sRGB ⇌ Cam16
-    -   `Cam16.fromInt(argb)`
-    -   `cam16.toInt()`
-    -   从 JCH 或 UCS 构建 Cam16：
-        -   `Cam16.fromJch(j, c, h)`
-        -   `Cam16.fromUcs(jstar, astar, bstar)`
-*   XYZ ⇌ Cam16
-    -   `Cam16.fromXyzInViewingConditions(x, y, z, vc)`
-    -   `cam16.xyzInViewingConditions(vc, returnArray)`
-*   sRGB ⇌ L\*a\*b\*
-    -   `ColorUtils.labFromArgb(argb)`
-    -   `ColorUtils.argbFromLab(l, a, b)`
-*   linRGB → sRGB
-    -   `ColorUtils.argbFromLinrgb(linrgb)`
+- sRGB ⇌ HCT
+  - `Hct.fromInt(argb)`
+  - `Hct.from(h, c, t).toInt()`
+- sRGB ⇌ XYZ
+  - `ColorUtils.xyzFromArgb(argb)`
+  - `ColorUtils.argbFromXyz(x, y, z)`
+- sRGB ⇌ Cam16
+  - `Cam16.fromInt(argb)`
+  - `cam16.toInt()`
+  - 从 JCH 或 UCS 构建 Cam16：
+    - `Cam16.fromJch(j, c, h)`
+    - `Cam16.fromUcs(jstar, astar, bstar)`
+- XYZ ⇌ Cam16
+  - `Cam16.fromXyzInViewingConditions(x, y, z, vc)`
+  - `cam16.xyzInViewingConditions(vc, returnArray)`
+- sRGB ⇌ L\*a\*b\*
+  - `ColorUtils.labFromArgb(argb)`
+  - `ColorUtils.argbFromLab(l, a, b)`
+- linRGB → sRGB
+  - `ColorUtils.argbFromLinrgb(linrgb)`
 
 ###### TypeScript
 
-*   sRGB ⇌ HCT
-    -   `Hct.fromInt(argb)`
-    -   `Hct.from(h, c, t).toInt()`
-*   sRGB ⇌ XYZ
-    -   `colorUtils.xyzFromArgb(argb)`
-    -   `colorUtils.argbFromXyz(x, y, z)`
-*   sRGB ⇌ Cam16
-    -   `Cam16.fromInt(argb)`
-    -   `cam16.toInt()`
-    -   从 JCH 或 UCS 构建 Cam16：
-        -   `Cam16.fromJch(j, c, h)`
-        -   `Cam16.fromUcs(jstar, astar, bstar)`
-*   XYZ ⇌ Cam16
-    -   `Cam16.fromXyzInViewingConditions(x, y, z, vc)`
-    -   `cam16.xyzInViewingConditions(vc)`
-*   sRGB ⇌ L\*a\*b\*
-    -   `colorUtils.labFromArgb(argb)`
-    -   `colorUtils.argbFromLab(l, a, b)`
-*   linRGB → sRGB
-    -   `colorUtils.argbFromLinrgb(linrgb)`
+- sRGB ⇌ HCT
+  - `Hct.fromInt(argb)`
+  - `Hct.from(h, c, t).toInt()`
+- sRGB ⇌ XYZ
+  - `colorUtils.xyzFromArgb(argb)`
+  - `colorUtils.argbFromXyz(x, y, z)`
+- sRGB ⇌ Cam16
+  - `Cam16.fromInt(argb)`
+  - `cam16.toInt()`
+  - 从 JCH 或 UCS 构建 Cam16：
+    - `Cam16.fromJch(j, c, h)`
+    - `Cam16.fromUcs(jstar, astar, bstar)`
+- XYZ ⇌ Cam16
+  - `Cam16.fromXyzInViewingConditions(x, y, z, vc)`
+  - `cam16.xyzInViewingConditions(vc)`
+- sRGB ⇌ L\*a\*b\*
+  - `colorUtils.labFromArgb(argb)`
+  - `colorUtils.argbFromLab(l, a, b)`
+- linRGB → sRGB
+  - `colorUtils.argbFromLinrgb(linrgb)`
 
 ###### C++
 
-*   sRGB ⇌ HCT
-    -   `Hct::Hct(argb)`
-    -   `Hct::ToInt()`
-*   sRGB ⇌ XYZ — *尚未提供*
-*   sRGB ⇌ Cam16
-    -   `CamFromInt(argb)`
-    -   `IntFromCam(cam)`
-    -   (*尚无法从 JCH 构建 Cam16*)
-    -   从 UCS 构建 Cam16：
-        -   `CamFromUcsAndViewingConditions(jstar, astar, bstar, vc)`
-*   XYZ ⇌ Cam16
-    -   `CamFromXyzAndViewingConditions(x, y, z, vc)`
-    -   (*尚无法将 Cam16 转换为 XYZ*)
-*   sRGB ⇌ L\*a\*b\*
-    -   `LabFromInt(argb)`
-    -   `IntFromLab(lab)`
-*   linRGB → sRGB
-    -   `ArgbFromLinrgb(linrgb)`
+- sRGB ⇌ HCT
+  - `Hct::Hct(argb)`
+  - `Hct::ToInt()`
+- sRGB ⇌ XYZ — _尚未提供_
+- sRGB ⇌ Cam16
+  - `CamFromInt(argb)`
+  - `IntFromCam(cam)`
+  - (_尚无法从 JCH 构建 Cam16_)
+  - 从 UCS 构建 Cam16：
+    - `CamFromUcsAndViewingConditions(jstar, astar, bstar, vc)`
+- XYZ ⇌ Cam16
+  - `CamFromXyzAndViewingConditions(x, y, z, vc)`
+  - (_尚无法将 Cam16 转换为 XYZ_)
+- sRGB ⇌ L\*a\*b\*
+  - `LabFromInt(argb)`
+  - `IntFromLab(lab)`
+- linRGB → sRGB
+  - `ArgbFromLinrgb(linrgb)`
 
 ###### Swift
 
-*   sRGB ⇌ HCT
-    -   `Hct.fromInt(argb)`
-    -   `Hct.from(h, c, t).toInt()`
-*   sRGB ⇌ XYZ
-    -   `ColorUtils.xyzFromArgb(argb)`
-    -   `ColorUtils.argbFromXyz(x, y, z)`
-*   sRGB ⇌ Cam16
-    -   `Cam16.fromInt(argb)`
-    -   `cam16.toInt()`
-    -   从 JCH 或 UCS 构建 Cam16：
-        -   `Cam16.fromJch(j, c, h)`
-        -   `Cam16.fromUcs(jstar, astar, bstar)`
-*   XYZ ⇌ Cam16
-    -   `Cam16.fromXyzInViewingConditions(x, y, z, vc)`
-    -   `cam16.xyzInViewingConditions(vc)`
-*   sRGB ⇌ L\*a\*b\*
-    -   `ColorUtils.labFromArgb(argb)`
-    -   `ColorUtils.argbFromLab(l, a, b)`
-*   linRGB → sRGB
-    -   `ColorUtils.argbFromLinrgb(linrgb)`
+- sRGB ⇌ HCT
+  - `Hct.fromInt(argb)`
+  - `Hct.from(h, c, t).toInt()`
+- sRGB ⇌ XYZ
+  - `ColorUtils.xyzFromArgb(argb)`
+  - `ColorUtils.argbFromXyz(x, y, z)`
+- sRGB ⇌ Cam16
+  - `Cam16.fromInt(argb)`
+  - `cam16.toInt()`
+  - 从 JCH 或 UCS 构建 Cam16：
+    - `Cam16.fromJch(j, c, h)`
+    - `Cam16.fromUcs(jstar, astar, bstar)`
+- XYZ ⇌ Cam16
+  - `Cam16.fromXyzInViewingConditions(x, y, z, vc)`
+  - `cam16.xyzInViewingConditions(vc)`
+- sRGB ⇌ L\*a\*b\*
+  - `ColorUtils.labFromArgb(argb)`
+  - `ColorUtils.argbFromLab(l, a, b)`
+- linRGB → sRGB
+  - `ColorUtils.argbFromLinrgb(linrgb)`
 
 </section>
 
@@ -207,15 +208,16 @@ sRGB 色彩空间的线性化版本，对位深度没有限制。
 
 ### 维基百科
 
--   [色彩空间](https://zh.wikipedia.org/wiki/色彩空间)
--   [颜色模型](https://zh.wikipedia.org/wiki/颜色模型)
--   [sRGB](https://zh.wikipedia.org/wiki/SRGB)
-    -   [sRGB: Gamma](https://en.wikipedia.org/wiki/SRGB#Transfer_function_\(%22gamma%22\))
--   [伽玛校正](https://zh.wikipedia.org/wiki/伽玛校正)
--   [CIE 1931 色彩空间 (CIEXYZ 等)](https://zh.wikipedia.org/wiki/CIE_1931_色彩空间)
--   [CIELAB 色彩空间 (L\*a\*b\*)](https://zh.wikipedia.org/wiki/CIELAB色彩空间)
--   [颜色外观模型 (CAM)](https://en.wikipedia.org/wiki/Color_appearance_model)
-    -   [Cam16](https://en.wikipedia.org/wiki/Color_appearance_model#CAM16)
+- [色彩空间](https://zh.wikipedia.org/wiki/色彩空间)
+- [颜色模型](https://zh.wikipedia.org/wiki/颜色模型)
+- [sRGB](https://zh.wikipedia.org/wiki/SRGB)
+  - [sRGB: Gamma](<https://en.wikipedia.org/wiki/SRGB#Transfer_function_(%22gamma%22)>)
+- [伽玛校正](https://zh.wikipedia.org/wiki/伽玛校正)
+- [CIE 1931 色彩空间 (CIEXYZ 等)](https://zh.wikipedia.org/wiki/CIE_1931_色彩空间)
+- [CIELAB 色彩空间 (L\*a\*b\*)](https://zh.wikipedia.org/wiki/CIELAB色彩空间)
+- [颜色外观模型 (CAM)](https://en.wikipedia.org/wiki/Color_appearance_model)
+  - [Cam16](https://en.wikipedia.org/wiki/Color_appearance_model#CAM16)
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

@@ -38,11 +38,11 @@ search:
   load_data: Loading Database
   input_placeholder: Search for Posts
   algolia_search:
-    hits_empty: 'No results found for: ${query}'
-    hits_stats: '${hits} results found in ${time} ms'
+    hits_empty: "No results found for: ${query}"
+    hits_stats: "${hits} results found in ${time} ms"
   local_search:
-    hits_empty: 'No results found for: ${query}'
-    hits_stats: '${hits} articles found'
+    hits_empty: "No results found for: ${query}"
+    hits_stats: "${hits} articles found"
 
 pagination:
   prev: Previous

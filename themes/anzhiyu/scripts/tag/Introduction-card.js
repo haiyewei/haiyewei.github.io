@@ -3,18 +3,18 @@
  * {% intCard link img tip cardTitle logo title subTitle %}
  */
 
-'use strict';
+"use strict";
 
-const urlFor = require('hexo-util').url_for.bind(hexo);
+const urlFor = require("hexo-util").url_for.bind(hexo);
 
 function intCard(args) {
   const [link, img, tip, cardTitle, logo, title, subTitle] = args;
 
-  const defaultTip = '最爱';
-  const defaultCardTitle = '最爱';
-  const defaultLogo = '';
-  const defaultTitle = '';
-  const defaultSubTitle = '';
+  const defaultTip = "最爱";
+  const defaultCardTitle = "最爱";
+  const defaultLogo = "";
+  const defaultTitle = "";
+  const defaultSubTitle = "";
 
   const renderIntroductionCardBottom = (args) => {
     const [logo, title, subTitle] = args;
@@ -34,9 +34,18 @@ function intCard(args) {
     `;
   };
 
-  const introductionCardBottom = (logo || title || subTitle) ? renderIntroductionCardBottom([logo || defaultLogo, title || defaultTitle, subTitle || defaultSubTitle]) : '';
+  const introductionCardBottom =
+    logo || title || subTitle
+      ? renderIntroductionCardBottom([
+          logo || defaultLogo,
+          title || defaultTitle,
+          subTitle || defaultSubTitle,
+        ])
+      : "";
 
-  const radius = introductionCardBottom ? "" : "height: 100%;border-radius:15px;";
+  const radius = introductionCardBottom
+    ? ""
+    : "height: 100%;border-radius:15px;";
   const height = introductionCardBottom ? "" : "height: 416px;";
 
   return `
@@ -53,4 +62,4 @@ function intCard(args) {
   `;
 }
 
-hexo.extend.tag.register('intCard', intCard, { ends: false });
+hexo.extend.tag.register("intCard", intCard, { ends: false });

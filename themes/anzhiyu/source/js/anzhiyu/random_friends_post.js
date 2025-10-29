@@ -102,7 +102,8 @@ function fetchRandomPost() {
     randomPostWorking = true;
     //获取旋转角度
     let randomRotate = randomPostTimes * 360;
-    let randomPostTipsItem = randomPostTips[Math.floor(Math.random() * randomPostTips.length)];
+    let randomPostTipsItem =
+      randomPostTips[Math.floor(Math.random() * randomPostTips.length)];
     let randomPostLevel = "";
     if (randomPostTimes > 10000) {
       randomPostLevel = "愿者上钩";
@@ -125,7 +126,11 @@ function fetchRandomPost() {
     }
     if (randomPostTimes >= 5) {
       document.getElementById("random-post").innerHTML =
-        `钓鱼中... （Lv.` + randomPostTimes + ` 当前称号：` + randomPostLevel + `）`;
+        `钓鱼中... （Lv.` +
+        randomPostTimes +
+        ` 当前称号：` +
+        randomPostLevel +
+        `）`;
     } else {
       document.getElementById("random-post").innerHTML = `钓鱼中...`;
     }
@@ -137,13 +142,16 @@ function fetchRandomPost() {
     }
 
     document.querySelector(".random-post-start").style.opacity = "0.2";
-    document.querySelector(".random-post-start").style.transitionDuration = "0.3s";
-    document.querySelector(".random-post-start").style.transform = "rotate(" + randomRotate + "deg)";
+    document.querySelector(".random-post-start").style.transitionDuration =
+      "0.3s";
+    document.querySelector(".random-post-start").style.transform =
+      "rotate(" + randomRotate + "deg)";
 
     //判断是否饥饿
     if (
       document.getElementById("random-post") &&
-      randomPostClick * fdata.hungryFish + fdata.defaultFish < randomPostTimes &&
+      randomPostClick * fdata.hungryFish + fdata.defaultFish <
+        randomPostTimes &&
       Math.round(Math.random()) == 0
     ) {
       document.getElementById("random-post").innerHTML =
@@ -152,8 +160,8 @@ function fetchRandomPost() {
     } else {
       var fetchUrl = fdata.apiurl + "randompost";
       fetch(fetchUrl)
-        .then(res => res.json())
-        .then(json => {
+        .then((res) => res.json())
+        .then((json) => {
           var title = json.title;
           var link = json.link;
           var author = json.author;
@@ -185,8 +193,10 @@ function initRandomPost() {
   if (localStorage.randomPostTimes) {
     randomPostTimes = parseInt(localStorage.randomPostTimes);
     randomPostClick = parseInt(localStorage.randomPostClick);
-    document.querySelector(".random-post-start").style.transitionDuration = "0.3s";
-    document.querySelector(".random-post-start").style.transform = "rotate(" + 360 * randomPostTimes + "deg)";
+    document.querySelector(".random-post-start").style.transitionDuration =
+      "0.3s";
+    document.querySelector(".random-post-start").style.transform =
+      "rotate(" + 360 * randomPostTimes + "deg)";
   }
   fetchRandomPost();
 }

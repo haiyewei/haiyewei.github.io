@@ -9,7 +9,12 @@ div#archive {
 }
 
 @media screen and (max-width: 768px) {
-  #page .fcircle_page .author-content-item .card-content .banner-button-group .banner-button {
+  #page
+    .fcircle_page
+    .author-content-item
+    .card-content
+    .banner-button-group
+    .banner-button {
     background-color: transparent !important;
   }
 }

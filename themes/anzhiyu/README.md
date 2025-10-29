@@ -60,13 +60,14 @@ cp -rf ./themes/anzhiyu/_config.yml ./_config.anzhiyu.yml
 - windows
   复制`/themes/anzhiyu/_config.yml`此文件到 hexo 根目录，并重命名为`_config.anzhiyu.yml`
 
-以后如果修改任何主题配置，都只需修改 _config.anzhiyu.yml 的配置即可。
+以后如果修改任何主题配置，都只需修改 \_config.anzhiyu.yml 的配置即可。
 
 注意：
- - 只要存在于 `_config.anzhiyu.yml` 的配置都是高优先级，修改原 `_config.yml` 是无效的。
- - 每次更新主题可能存在配置变更，请注意更新说明，可能需要手动对 `_config.anzhiyu.yml` 同步修改。
- - 想查看覆盖配置有没有生效，可以通过 `hexo g --debug` 查看命令行输出。
- - 如果想将某些配置覆盖为空，注意不要把主键删掉，不然是无法覆盖的
+
+- 只要存在于 `_config.anzhiyu.yml` 的配置都是高优先级，修改原 `_config.yml` 是无效的。
+- 每次更新主题可能存在配置变更，请注意更新说明，可能需要手动对 `_config.anzhiyu.yml` 同步修改。
+- 想查看覆盖配置有没有生效，可以通过 `hexo g --debug` 查看命令行输出。
+- 如果想将某些配置覆盖为空，注意不要把主键删掉，不然是无法覆盖的
 
 ## 功能特性
 

@@ -1,12 +1,18 @@
-'use strict'
+"use strict";
 
-hexo.extend.helper.register('inject_head_js', function () {
-  const { darkmode, aside, pjax } = this.theme
-  const start = darkmode.start || 6
-  const end = darkmode.end || 18
-  const { theme_color } = hexo.theme.config
-  const themeColorLight = theme_color && theme_color.enable ? theme_color.meta_theme_color_light : '#ffffff'
-  const themeColorDark = theme_color && theme_color.enable ? theme_color.meta_theme_color_dark : '#0d0d0d'
+hexo.extend.helper.register("inject_head_js", function () {
+  const { darkmode, aside, pjax } = this.theme;
+  const start = darkmode.start || 6;
+  const end = darkmode.end || 18;
+  const { theme_color } = hexo.theme.config;
+  const themeColorLight =
+    theme_color && theme_color.enable
+      ? theme_color.meta_theme_color_light
+      : "#ffffff";
+  const themeColorDark =
+    theme_color && theme_color.enable
+      ? theme_color.meta_theme_color_dark
+      : "#0d0d0d";
 
   const createCustomJs = () => `
     const saveToLocal = {
@@ -59,10 +65,10 @@ hexo.extend.helper.register('inject_head_js', function () {
         parent.globalFn = globalFn
       }
     }
-  `
+  `;
 
   const createDarkmodeJs = () => {
-    if (!darkmode.enable) return ''
+    if (!darkmode.enable) return "";
 
     let darkmodeJs = `
       const activateDarkMode = () => {
@@ -82,7 +88,7 @@ hexo.extend.helper.register('inject_head_js', function () {
       btf.activateLightMode = activateLightMode
 
       const theme = saveToLocal.get('theme')
-    `
+    `;
 
     switch (darkmode.autoChangeMode) {
       case 1:
@@ -106,34 +112,34 @@ hexo.extend.helper.register('inject_head_js', function () {
           } else {
             theme === 'light' ? activateLightMode() : activateDarkMode()
           }
-        `
-        break
+        `;
+        break;
       case 2:
         darkmodeJs += `
           const hour = new Date().getHours()
           const isNight = hour <= ${start} || hour >= ${end}
           if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
           else theme === 'light' ? activateLightMode() : activateDarkMode()
-        `
-        break
+        `;
+        break;
       default:
         darkmodeJs += `
           theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
-        `
+        `;
     }
 
-    return darkmodeJs
-  }
+    return darkmodeJs;
+  };
 
   const createAsideStatusJs = () => {
-    if (!aside.enable || !aside.button) return ''
+    if (!aside.enable || !aside.button) return "";
     return `
       const asideStatus = saveToLocal.get('aside-status')
       if (asideStatus !== undefined) {
         document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
       }
-    `
-  }
+    `;
+  };
 
   const createDetectAppleJs = () => `
     const detectApple = () => {
@@ -142,7 +148,7 @@ hexo.extend.helper.register('inject_head_js', function () {
       }
     }
     detectApple()
-  `
+  `;
 
   return `<script>
     (() => {
@@ -151,5 +157,5 @@ hexo.extend.helper.register('inject_head_js', function () {
       ${createAsideStatusJs()}
       ${createDetectAppleJs()}
     })()
-  </script>`
-})
+  </script>`;
+});

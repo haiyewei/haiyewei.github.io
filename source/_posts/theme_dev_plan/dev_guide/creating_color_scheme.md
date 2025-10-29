@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # Creating a Color Scheme
 
 See [Dynamic Color Scheme](../concepts/dynamic_color_scheme.md) for a conceptual
@@ -16,22 +17,22 @@ To get color values for styling your UIs, the first step is to initialize
 `DynamicScheme` with the below parameters:
 
 1.  A source color (formerly called seed color).
-    -   It can be in ARGB format, `sourceColorArgb`, or HCT format,
-        `sourceColorHct`.
+    - It can be in ARGB format, `sourceColorArgb`, or HCT format,
+      `sourceColorHct`.
 1.  Scheme variant, `variant`.
 1.  Whether the scheme is in light mode or dark mode, `isDark`.
 1.  Contrast level, `contrastLevel` typed `Double`. The recommended levels are:
-    -   `0.0` for default contrast.
-    -   `0.5` for higher contrast.
-    -   `1.0` for highest contrast.
-    -   `-1.0` for reduced contrast.
+    - `0.0` for default contrast.
+    - `0.5` for higher contrast.
+    - `1.0` for highest contrast.
+    - `-1.0` for reduced contrast.
 1.  Tonal palettes:
-    *   `primaryPalette`
-    *   `secondaryPalette`
-    *   `tertiaryPalette`
-    *   `neutralPalette`
-    *   `neutralVariantPalette`
-    *   `errorPalette`
+    - `primaryPalette`
+    - `secondaryPalette`
+    - `tertiaryPalette`
+    - `neutralPalette`
+    - `neutralVariantPalette`
+    - `errorPalette`
 
 We provide various scheme variants, such as `SchemeTonalSpot`, `SchemeContent`,
 etc, which inherit `DynamicScheme` and come with pre-defined tonal palettes.
@@ -93,15 +94,15 @@ let scheme = SchemeTonalSpot(
 
 We provide the below variants:
 
-*   Content
-*   Expressive
-*   Fidelity
-*   Fruit salad
-*   Monochrome
-*   Neutral
-*   Rainbow
-*   Tonal spot
-*   Vibrant
+- Content
+- Expressive
+- Fidelity
+- Fruit salad
+- Monochrome
+- Neutral
+- Rainbow
+- Tonal spot
+- Vibrant
 
 #### Method 2 — Specifying palettes
 
@@ -142,15 +143,15 @@ DynamicScheme scheme = new DynamicScheme(
 
 ```typescript
 const scheme = new DynamicScheme({
-    sourceColorArgb: 0xFFEB0057,
-    variant: Variant.VIBRANT,
-    isDark: false,
-    contrastLevel: 0.0,
-    primaryPalette: TonalPalette.fromInt(0xFFEB0057),
-    secondaryPalette: TonalPalette.fromInt(0xFFF46B00),
-    tertiaryPalette: TonalPalette.fromInt(0xFF00AB46),
-    neutralPalette: TonalPalette.fromInt(0xFF949494),
-    neutralVariantPalette: TonalPalette.fromInt(0xFFBC8877)
+  sourceColorArgb: 0xffeb0057,
+  variant: Variant.VIBRANT,
+  isDark: false,
+  contrastLevel: 0.0,
+  primaryPalette: TonalPalette.fromInt(0xffeb0057),
+  secondaryPalette: TonalPalette.fromInt(0xfff46b00),
+  tertiaryPalette: TonalPalette.fromInt(0xff00ab46),
+  neutralPalette: TonalPalette.fromInt(0xff949494),
+  neutralVariantPalette: TonalPalette.fromInt(0xffbc8877),
 });
 ```
 
@@ -263,12 +264,10 @@ contrast levels. The functionality of `Scheme` is fully replicated by
 
 <section>
 
-
-
 ###### Dart
 
-| Instead of …                 | Use …                               |
-| ---------------------------- | ----------------------------------- |
+| Instead of …                 | Use …                                                                                    |
+| ---------------------------- | ---------------------------------------------------------------------------------------- |
 | `Scheme.light(color)`        | `SchemeTonalSpot(sourceColorHct: Hct.fromInt(color), isDark: false, contrastLevel: 0.0)` |
 | `Scheme.dark(color)`         | `SchemeTonalSpot(sourceColorHct: Hct.fromInt(color), isDark: true, contrastLevel: 0.0)`  |
 | `Scheme.lightContent(color)` | `SchemeContent(sourceColorHct: Hct.fromInt(color), isDark: false, contrastLevel: 0.0)`   |
@@ -276,8 +275,8 @@ contrast levels. The functionality of `Scheme` is fully replicated by
 
 ###### Java
 
-| Instead of …                 | Use …                                         |
-| ---------------------------- | --------------------------------------------- |
+| Instead of …                 | Use …                                                 |
+| ---------------------------- | ----------------------------------------------------- |
 | `Scheme.light(color)`        | `new SchemeTonalSpot(Hct.fromInt(color), false, 0.0)` |
 | `Scheme.dark(color)`         | `new SchemeTonalSpot(Hct.fromInt(color), true, 0.0)`  |
 | `Scheme.lightContent(color)` | `new SchemeContent(Hct.fromInt(color), false, 0.0)`   |
@@ -285,8 +284,8 @@ contrast levels. The functionality of `Scheme` is fully replicated by
 
 ###### TypeScript
 
-| Instead of …                 | Use …                                         |
-| ---------------------------- | --------------------------------------------- |
+| Instead of …                 | Use …                                                 |
+| ---------------------------- | ----------------------------------------------------- |
 | `Scheme.light(color)`        | `new SchemeTonalSpot(Hct.fromInt(color), false, 0.0)` |
 | `Scheme.dark(color)`         | `new SchemeTonalSpot(Hct.fromInt(color), true, 0.0)`  |
 | `Scheme.lightContent(color)` | `new SchemeContent(Hct.fromInt(color), false, 0.0)`   |
@@ -294,8 +293,8 @@ contrast levels. The functionality of `Scheme` is fully replicated by
 
 ###### C++
 
-| Instead of …                             | Use …                             |
-| ---------------------------------------- | --------------------------------- |
+| Instead of …                             | Use …                                     |
+| ---------------------------------------- | ----------------------------------------- |
 | `MaterialLightColorScheme(color)`        | `SchemeTonalSpot(Hct(color), false, 0.0)` |
 | `MaterialDarkColorScheme(color)`         | `SchemeTonalSpot(Hct(color), true, 0.0)`  |
 | `MaterialLightContentColorScheme(color)` | `SchemeContent(Hct(color), false, 0.0)`   |
@@ -303,14 +302,12 @@ contrast levels. The functionality of `Scheme` is fully replicated by
 
 ###### Swift
 
-| Instead of …                 | Use …                               |
-| ---------------------------- | ----------------------------------- |
+| Instead of …                 | Use …                                                                                    |
+| ---------------------------- | ---------------------------------------------------------------------------------------- |
 | `Scheme.light(color)`        | `SchemeTonalSpot(sourceColorHct: Hct.fromInt(color), isDark: false, contrastLevel: 0.0)` |
 | `Scheme.dark(color)`         | `SchemeTonalSpot(sourceColorHct: Hct.fromInt(color), isDark: true, contrastLevel: 0.0)`  |
 | `Scheme.lightContent(color)` | `SchemeContent(sourceColorHct: Hct.fromInt(color), isDark: false, contrastLevel: 0.0)`   |
 | `Scheme.darkContent(color)`  | `SchemeContent(sourceColorHct: Hct.fromInt(color), isDark: true, contrastLevel: 0.0)`    |
-
-
 
 </section>
 
@@ -334,4 +331,5 @@ is a fidelity scheme: the tones of color roles may depend on the tone of the
 seed color.
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

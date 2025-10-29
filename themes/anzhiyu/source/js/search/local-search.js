@@ -8,7 +8,10 @@ window.addEventListener("load", () => {
     bodyStyle.width = "100%";
     bodyStyle.overflow = "hidden";
     anzhiyu.animateIn($searchMask, "to_show 0.5s");
-    anzhiyu.animateIn(document.querySelector("#local-search .search-dialog"), "titleScale 0.5s");
+    anzhiyu.animateIn(
+      document.querySelector("#local-search .search-dialog"),
+      "titleScale 0.5s",
+    );
     setTimeout(() => {
       document.querySelector("#local-search-input input").focus();
     }, 100);
@@ -29,28 +32,38 @@ window.addEventListener("load", () => {
     const bodyStyle = document.body.style;
     bodyStyle.width = "";
     bodyStyle.overflow = "";
-    anzhiyu.animateOut(document.querySelector("#local-search .search-dialog"), "search_close .5s");
+    anzhiyu.animateOut(
+      document.querySelector("#local-search .search-dialog"),
+      "search_close .5s",
+    );
     anzhiyu.animateOut($searchMask, "to_hide 0.5s");
   };
 
   const searchClickFn = () => {
-    document.querySelector("#search-button > .search").addEventListener("click", openSearch);
-    document.querySelector("#menu-search").addEventListener("click", openSearch);
+    document
+      .querySelector("#search-button > .search")
+      .addEventListener("click", openSearch);
+    document
+      .querySelector("#menu-search")
+      .addEventListener("click", openSearch);
   };
 
   const searchClickFnOnce = () => {
-    document.querySelector("#local-search .search-close-button").addEventListener("click", closeSearch);
+    document
+      .querySelector("#local-search .search-close-button")
+      .addEventListener("click", closeSearch);
     $searchMask.addEventListener("click", closeSearch);
-    if (GLOBAL_CONFIG.localSearch.preload) dataObj = fetchData(GLOBAL_CONFIG.localSearch.path);
+    if (GLOBAL_CONFIG.localSearch.preload)
+      dataObj = fetchData(GLOBAL_CONFIG.localSearch.path);
   };
 
   // check url is json or not
-  const isJson = url => {
+  const isJson = (url) => {
     const reg = /\.json$/;
     return reg.test(url);
   };
 
-  const fetchData = async path => {
+  const fetchData = async (path) => {
     let data = [];
     const response = await fetch(path);
     if (isJson(path)) {
@@ -60,14 +73,22 @@ window.addEventListener("load", () => {
       const t = await new window.DOMParser().parseFromString(res, "text/xml");
       const a = await t;
 
-      data = [...a.querySelectorAll("entry")].map(item => {
+      data = [...a.querySelectorAll("entry")].map((item) => {
         let tagsArr = [];
-        if (item.querySelector("tags") && item.querySelector("tags").getElementsByTagName("tag")) {
-          Array.prototype.forEach.call(item.querySelector("tags").getElementsByTagName("tag"), function (item, index) {
-            tagsArr.push(item.textContent);
-          });
+        if (
+          item.querySelector("tags") &&
+          item.querySelector("tags").getElementsByTagName("tag")
+        ) {
+          Array.prototype.forEach.call(
+            item.querySelector("tags").getElementsByTagName("tag"),
+            function (item, index) {
+              tagsArr.push(item.textContent);
+            },
+          );
         }
-        let content = item.querySelector("content") && item.querySelector("content").textContent;
+        let content =
+          item.querySelector("content") &&
+          item.querySelector("content").textContent;
         let imgReg = /<img.*?(?:>|\/>)/gi; //匹配图片中的img标签
         let srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i; // 匹配图片中的src
         let arr = content.match(imgReg); //筛选出所有的img
@@ -109,15 +130,16 @@ window.addEventListener("load", () => {
     $input.addEventListener("input", function () {
       const keywords = this.value.trim().toLowerCase().split(/[\s]+/);
       if (keywords[0] !== "")
-        $loadingStatus.innerHTML = '<i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i>';
+        $loadingStatus.innerHTML =
+          '<i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i>';
 
       $resultContent.innerHTML = "";
       let str = '<div class="search-result-list">';
       if (keywords.length <= 0) return;
       let count = 0;
       // perform local searching
-      dataObj.then(data => {
-        data.forEach(data => {
+      dataObj.then((data) => {
+        data.forEach((data) => {
           let isMatch = true;
           let dataTitle = data.title ? data.title.trim().toLowerCase() : "";
           let dataTags = data.tags;
@@ -128,7 +150,9 @@ window.addEventListener("load", () => {
                 .replace(/<[^>]+>/g, "")
                 .toLowerCase()
             : "";
-          const dataUrl = data.url.startsWith("/") ? data.url : GLOBAL_CONFIG.root + data.url;
+          const dataUrl = data.url.startsWith("/")
+            ? data.url
+            : GLOBAL_CONFIG.root + data.url;
           let indexTitle = -1;
           let indexContent = -1;
           let firstOccur = -1;
@@ -182,10 +206,16 @@ window.addEventListener("load", () => {
               let matchContent = dataContent.substring(start, end);
 
               // highlight all keywords
-              keywords.forEach(keyword => {
+              keywords.forEach((keyword) => {
                 const regS = new RegExp(keyword, "gi");
-                matchContent = matchContent.replace(regS, '<span class="search-keyword">' + keyword + "</span>");
-                dataTitle = dataTitle.replace(regS, '<span class="search-keyword">' + keyword + "</span>");
+                matchContent = matchContent.replace(
+                  regS,
+                  '<span class="search-keyword">' + keyword + "</span>",
+                );
+                dataTitle = dataTitle.replace(
+                  regS,
+                  '<span class="search-keyword">' + keyword + "</span>",
+                );
               });
 
               str += '<div class="local-search__hit-item">';
@@ -248,7 +278,10 @@ window.addEventListener("load", () => {
         if (count === 0) {
           str +=
             '<div id="local-search__hits-empty">' +
-            GLOBAL_CONFIG.localSearch.languages.hits_empty.replace(/\$\{query}/, this.value.trim()) +
+            GLOBAL_CONFIG.localSearch.languages.hits_empty.replace(
+              /\$\{query}/,
+              this.value.trim(),
+            ) +
             "</div>";
         }
         str += "</div>";

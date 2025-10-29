@@ -61,14 +61,22 @@
   line-height: 1.2;
 }
 
-#article-container .tag-Link .tag-link-bottom .tag-link-right .tag-link-sitename {
+#article-container
+  .tag-Link
+  .tag-link-bottom
+  .tag-link-right
+  .tag-link-sitename {
   font-size: 0.7rem;
   color: var(--anzhiyu-gray);
   font-weight: normal;
   margin-top: 4px;
 }
 
-#article-container .tag-Link:hover .tag-link-bottom .tag-link-right .tag-link-sitename {
+#article-container
+  .tag-Link:hover
+  .tag-link-bottom
+  .tag-link-right
+  .tag-link-sitename {
   color: var(--anzhiyu-white);
 }
 

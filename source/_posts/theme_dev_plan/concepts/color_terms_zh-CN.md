@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # 颜色术语
 
 ### 动态颜色
@@ -17,7 +18,7 @@ tags: DynamicColor
 
 ### 动态方案
 
-动态方案由颜色属性组成，这些属性以预定的方式组合，以满足用户上下文或偏好的需求。它本质上是将颜色角色映射到色调调色板中特定色调的颜色。例如，primary = *207H 80C 90T*，onPrimary = *207H 80C 40T*。
+动态方案由颜色属性组成，这些属性以预定的方式组合，以满足用户上下文或偏好的需求。它本质上是将颜色角色映射到色调调色板中特定色调的颜色。例如，primary = _207H 80C 90T_，onPrimary = _207H 80C 40T_。
 
 ### 方案变体
 
@@ -64,4 +65,5 @@ HCT 是色相、色度、色调的缩写。它是一个新的颜色空间的名�
 有关更多 Material 术语，请参阅 https://m3.material.io/foundations/glossary。
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

@@ -9,29 +9,38 @@ module.exports.config = {
    * @type ?Object|boolean
    */
   serviceWorker: {
-    cacheName: "AnZhiYuThemeCache"
+    cacheName: "AnZhiYuThemeCache",
   },
   register: {
-    onerror: undefined
+    onerror: undefined,
   },
   dom: {
     onsuccess: () => {
-      caches.match('https://id.v3/').then(function(response) {
-        if (response) {
-          // 如果找到了匹配的缓存响应
-          response.json().then(function(data) {
-            anzhiyuPopupManager && anzhiyuPopupManager.enqueuePopup('通知📢', `已刷新缓存，更新为${data.global + "." + data.local}版本最新内容`, null, 5000);
-          });
-        } else {
-          console.info('未找到匹配的缓存响应');
-        }
-      }).catch(function(error) {
-        console.error('缓存匹配出错:', error);
-      });
+      caches
+        .match("https://id.v3/")
+        .then(function (response) {
+          if (response) {
+            // 如果找到了匹配的缓存响应
+            response.json().then(function (data) {
+              anzhiyuPopupManager &&
+                anzhiyuPopupManager.enqueuePopup(
+                  "通知📢",
+                  `已刷新缓存，更新为${data.global + "." + data.local}版本最新内容`,
+                  null,
+                  5000,
+                );
+            });
+          } else {
+            console.info("未找到匹配的缓存响应");
+          }
+        })
+        .catch(function (error) {
+          console.error("缓存匹配出错:", error);
+        });
     },
   },
   json: {
-    merge: ['page', 'archives', 'categories', 'tags']
+    merge: ["page", "archives", "categories", "tags"],
   },
   external: {
     stable: [
@@ -39,25 +48,26 @@ module.exports.config = {
       /^https:\/\/cdn\.cbd\.int\/[^/@]+\@[^/@]+\/[^/]+\/[^/]+$/,
       /^https:\/\/cdn\.jsdelivr\.net\/npm\/[^/@]+\@[^/@]+\/[^/]+\/[^/]+$/,
     ],
-    replacer: srcUrl => {
-      if (srcUrl.startsWith('https://npm.elemecdn.com')) {
-        const url = new URL(srcUrl)
+    replacer: (srcUrl) => {
+      if (srcUrl.startsWith("https://npm.elemecdn.com")) {
+        const url = new URL(srcUrl);
         return [
-            srcUrl,
-            `https://cdn.cbd.int` + url.pathname,
-            `https://cdn.jsdelivr.net/npm` + url.pathname,
-            `https://cdn1.tianli0.top/npm` + url.pathname,
-            `https://fastly.jsdelivr.net/npm` + url.pathname
-        ]
+          srcUrl,
+          `https://cdn.cbd.int` + url.pathname,
+          `https://cdn.jsdelivr.net/npm` + url.pathname,
+          `https://cdn1.tianli0.top/npm` + url.pathname,
+          `https://fastly.jsdelivr.net/npm` + url.pathname,
+        ];
       } else {
-        return srcUrl
+        return srcUrl;
       }
     },
-  }
+  },
 };
 
 /** 跳过处理番剧封面 */
-module.exports.skipRequest = request => request.url.startsWith('https://i0.hdslb.com');
+module.exports.skipRequest = (request) =>
+  request.url.startsWith("https://i0.hdslb.com");
 
 /**
  * 缓存列表
@@ -76,7 +86,7 @@ module.exports.cacheRules = {
   },
   cdn: {
     clean: true,
-    match: url =>
+    match: (url) =>
       [
         "cdn.cbd.int",
         "lf26-cdn-tos.bytecdntp.com",
@@ -85,7 +95,8 @@ module.exports.cacheRules = {
         "lf9-cdn-tos.bytecdntp.com",
         "cdn.staticfile.org",
         "npm.elemecdn.com",
-      ].includes(url.host) && url.pathname.match(/\.(js|css|woff2|woff|ttf|cur)$/),
+      ].includes(url.host) &&
+      url.pathname.match(/\.(js|css|woff2|woff|ttf|cur)$/),
   },
 };
 
@@ -94,7 +105,7 @@ module.exports.cacheRules = {
  * @param srcUrl {string} 原始 URL
  * @return {{list: string[], timeout: number}} 返回 null 或不返回表示对该 URL 不启用该功能。timeout 为超时时间（ms），list 为 URL 列表，列表不包含原始 URL 表示去除原始访问
  */
-module.exports.getSpareUrls = srcUrl => {
+module.exports.getSpareUrls = (srcUrl) => {
   if (srcUrl.startsWith("https://npm.elemecdn.com")) {
     return {
       timeout: 3000,

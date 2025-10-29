@@ -1,152 +1,179 @@
-'use strict'
+"use strict";
 
-const { truncateContent, postDesc } = require('../common/postDesc')
-const { prettyUrls } = require('hexo-util')
-const crypto = require('crypto')
-const moment = require('moment-timezone')
+const { truncateContent, postDesc } = require("../common/postDesc");
+const { prettyUrls } = require("hexo-util");
+const crypto = require("crypto");
+const moment = require("moment-timezone");
 
-hexo.extend.helper.register('truncate', truncateContent)
+hexo.extend.helper.register("truncate", truncateContent);
 
-hexo.extend.helper.register('postDesc', data => {
-  return postDesc(data, hexo)
-})
+hexo.extend.helper.register("postDesc", (data) => {
+  return postDesc(data, hexo);
+});
 
-hexo.extend.helper.register('cloudTags', function (options = {}) {
-  const env = this
-  let { source, minfontsize, maxfontsize, limit, unit = 'px', orderby, order } = options
+hexo.extend.helper.register("cloudTags", function (options = {}) {
+  const env = this;
+  let {
+    source,
+    minfontsize,
+    maxfontsize,
+    limit,
+    unit = "px",
+    orderby,
+    order,
+  } = options;
 
   if (limit > 0) {
-    source = source.limit(limit)
+    source = source.limit(limit);
   }
 
-  const sizes = [...new Set(source.map(tag => tag.length).sort((a, b) => a - b))]
+  const sizes = [
+    ...new Set(source.map((tag) => tag.length).sort((a, b) => a - b)),
+  ];
 
   const getRandomColor = () => {
-    const randomColor = () => Math.floor(Math.random() * 201)
-    const r = randomColor()
-    const g = randomColor()
-    const b = randomColor()
-    return `rgb(${Math.max(r, 50)}, ${Math.max(g, 50)}, ${Math.max(b, 50)})`
-  }
+    const randomColor = () => Math.floor(Math.random() * 201);
+    const r = randomColor();
+    const g = randomColor();
+    const b = randomColor();
+    return `rgb(${Math.max(r, 50)}, ${Math.max(g, 50)}, ${Math.max(b, 50)})`;
+  };
 
   const generateStyle = (size, unit) =>
-    `font-size: ${parseFloat(size.toFixed(2)) + unit}; color: ${getRandomColor()};`
+    `font-size: ${parseFloat(size.toFixed(2)) + unit}; color: ${getRandomColor()};`;
 
-  const length = sizes.length - 1
-  const result = source.sort(orderby, order).map(tag => {
-    const ratio = length ? sizes.indexOf(tag.length) / length : 0
-    const size = minfontsize + ((maxfontsize - minfontsize) * ratio)
-    const style = generateStyle(size, unit)
-    return `<a href="${env.url_for(tag.path)}" style="${style}">${tag.name}</a>`
-  }).join('')
+  const length = sizes.length - 1;
+  const result = source
+    .sort(orderby, order)
+    .map((tag) => {
+      const ratio = length ? sizes.indexOf(tag.length) / length : 0;
+      const size = minfontsize + (maxfontsize - minfontsize) * ratio;
+      const style = generateStyle(size, unit);
+      return `<a href="${env.url_for(tag.path)}" style="${style}">${tag.name}</a>`;
+    })
+    .join("");
 
-  return result
-})
+  return result;
+});
 
-hexo.extend.helper.register('urlNoIndex', function (url = null, trailingIndex = false, trailingHtml = false) {
-  return prettyUrls(url || this.url, { trailing_index: trailingIndex, trailing_html: trailingHtml })
-})
+hexo.extend.helper.register(
+  "urlNoIndex",
+  function (url = null, trailingIndex = false, trailingHtml = false) {
+    return prettyUrls(url || this.url, {
+      trailing_index: trailingIndex,
+      trailing_html: trailingHtml,
+    });
+  },
+);
 
-hexo.extend.helper.register('md5', function (path) {
-  return crypto.createHash('md5').update(decodeURI(this.url_for(path))).digest('hex')
-})
+hexo.extend.helper.register("md5", function (path) {
+  return crypto
+    .createHash("md5")
+    .update(decodeURI(this.url_for(path)))
+    .digest("hex");
+});
 
-hexo.extend.helper.register('injectHtml', data => {
-  return data ? data.join('') : ''
-})
+hexo.extend.helper.register("injectHtml", (data) => {
+  return data ? data.join("") : "";
+});
 
-hexo.extend.helper.register('findArchivesTitle', function (page, menu, date) {
+hexo.extend.helper.register("findArchivesTitle", function (page, menu, date) {
   if (page.year) {
-    const dateStr = page.month ? `${page.year}-${page.month}` : `${page.year}`
-    const dateFormat = page.month ? hexo.theme.config.aside.card_archives.format : 'YYYY'
-    return date(dateStr, dateFormat)
+    const dateStr = page.month ? `${page.year}-${page.month}` : `${page.year}`;
+    const dateFormat = page.month
+      ? hexo.theme.config.aside.card_archives.format
+      : "YYYY";
+    return date(dateStr, dateFormat);
   }
 
-  const defaultTitle = this._p('page.archives')
-  if (!menu) return defaultTitle
+  const defaultTitle = this._p("page.archives");
+  if (!menu) return defaultTitle;
 
   const loop = (m) => {
     for (const key in m) {
-      if (typeof m[key] === 'object') {
-        const result = loop(m[key])
-        if (result) return result
+      if (typeof m[key] === "object") {
+        const result = loop(m[key]);
+        if (result) return result;
       }
 
       if (/\/archives\//.test(m[key])) {
-        return key
+        return key;
       }
     }
-  }
+  };
 
-  return loop(menu) || defaultTitle
-})
+  return loop(menu) || defaultTitle;
+});
 
-hexo.extend.helper.register('getBgPath', path => {
-  if (!path) return ''
+hexo.extend.helper.register("getBgPath", (path) => {
+  if (!path) return "";
 
-  const absoluteUrlPattern = /^(?:[a-z][a-z\d+.-]*:)?\/\//i
-  const relativeUrlPattern = /^(\.\/|\.\.\/|\/|[^/]+\/).*$/
-  const colorPattern = /^(#|rgb|rgba|hsl|hsla)/i
+  const absoluteUrlPattern = /^(?:[a-z][a-z\d+.-]*:)?\/\//i;
+  const relativeUrlPattern = /^(\.\/|\.\.\/|\/|[^/]+\/).*$/;
+  const colorPattern = /^(#|rgb|rgba|hsl|hsla)/i;
 
   if (colorPattern.test(path)) {
-    return `background-color: ${path};`
+    return `background-color: ${path};`;
   } else if (absoluteUrlPattern.test(path) || relativeUrlPattern.test(path)) {
-    return `background-image: url(${path});`
+    return `background-image: url(${path});`;
   } else {
-    return `background: ${path};`
+    return `background: ${path};`;
   }
-})
+});
 
-hexo.extend.helper.register('shuoshuoFN', (data, page) => {
-  const { limit } = page
-  let finalResult = ''
+hexo.extend.helper.register("shuoshuoFN", (data, page) => {
+  const { limit } = page;
+  let finalResult = "";
 
   // Check if limit.value is a valid date
-  const isValidDate = date => !isNaN(Date.parse(date))
+  const isValidDate = (date) => !isNaN(Date.parse(date));
 
   // order by date
-  const orderByDate = data => data.sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+  const orderByDate = (data) =>
+    data.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 
   // Apply number limit or time limit conditionally
-  const limitData = data => {
-    if (limit && limit.type === 'num' && limit.value > 0) {
-      return data.slice(0, limit.value)
-    } else if (limit && limit.type === 'date' && isValidDate(limit.value)) {
-      const limitDate = Date.parse(limit.value)
-      return data.filter(item => Date.parse(item.date) >= limitDate)
+  const limitData = (data) => {
+    if (limit && limit.type === "num" && limit.value > 0) {
+      return data.slice(0, limit.value);
+    } else if (limit && limit.type === "date" && isValidDate(limit.value)) {
+      const limitDate = Date.parse(limit.value);
+      return data.filter((item) => Date.parse(item.date) >= limitDate);
     }
 
-    return data
-  }
+    return data;
+  };
 
-  orderByDate(data)
-  finalResult = limitData(data)
+  orderByDate(data);
+  finalResult = limitData(data);
 
   // This is a hack method, because hexo treats time as UTC time
   // so you need to manually convert the time zone
-  finalResult.forEach(item => {
-    const utcDate = moment.utc(item.date).format('YYYY-MM-DD HH:mm:ss')
-    item.date = moment.tz(utcDate, hexo.config.timezone).format('YYYY-MM-DD HH:mm:ss')
-  })
+  finalResult.forEach((item) => {
+    const utcDate = moment.utc(item.date).format("YYYY-MM-DD HH:mm:ss");
+    item.date = moment
+      .tz(utcDate, hexo.config.timezone)
+      .format("YYYY-MM-DD HH:mm:ss");
+  });
 
-  return finalResult
-})
+  return finalResult;
+});
 
-hexo.extend.helper.register('getPageType', (page, isHome) => {
-  const { layout, tag, category, type, archive } = page
-  if (layout) return layout
-  if (tag) return 'tag'
-  if (category) return 'category'
-  if (archive) return 'archive'
+hexo.extend.helper.register("getPageType", (page, isHome) => {
+  const { layout, tag, category, type, archive } = page;
+  if (layout) return layout;
+  if (tag) return "tag";
+  if (category) return "category";
+  if (archive) return "archive";
   if (type) {
-    if (type === 'tags' || type === 'categories') return type
-    else return 'page'
+    if (type === "tags" || type === "categories") return type;
+    else return "page";
   }
-  if (isHome) return 'home'
-  return 'post'
-})
+  if (isHome) return "home";
+  return "post";
+});
 
-hexo.extend.helper.register('getVersion', () => {
-  const { version } = require('../../package.json')
-  return { hexo: hexo.version, theme: version }
-})
+hexo.extend.helper.register("getVersion", () => {
+  const { version } = require("../../package.json");
+  return { hexo: hexo.version, theme: version };
+});

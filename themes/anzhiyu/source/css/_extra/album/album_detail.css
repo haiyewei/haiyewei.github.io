@@ -234,29 +234,58 @@ body[data-type="album_detail"] #page .page-title {
 #album_detail .aplayer .aplayer-info .aplayer-controller .aplayer-time {
   position: initial;
 }
-#album_detail .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar {
+#album_detail
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-bar-wrap
+  .aplayer-bar {
   background: var(--anzhiyu-gray);
   height: 8px;
   border-radius: 12px;
   transition: 0.3s;
   overflow: hidden;
 }
-#album_detail .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-loaded {
+#album_detail
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-bar-wrap
+  .aplayer-bar
+  .aplayer-loaded {
   height: 100%;
   border-radius: 12px;
 }
-#album_detail .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played {
+#album_detail
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-bar-wrap
+  .aplayer-bar
+  .aplayer-played {
   height: 100%;
   border-radius: 12px;
 }
-#album_detail .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played .aplayer-thumb {
+#album_detail
+  .aplayer
+  .aplayer-info
+  .aplayer-controller
+  .aplayer-bar-wrap
+  .aplayer-bar
+  .aplayer-played
+  .aplayer-thumb {
   display: none;
 }
 #album_detail .aplayer .aplayer-info .aplayer-controller .aplayer-time {
   position: initial;
 }
 
-body[data-type="album_detail"] #page .author-content-item .card-content .banner-button-group .banner-button:hover {
+body[data-type="album_detail"]
+  #page
+  .author-content-item
+  .card-content
+  .banner-button-group
+  .banner-button:hover {
   color: var(--anzhiyu-white);
   border-radius: 20px !important;
 }

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = (hexo) => {
   if (hexo.theme.has_hello) {

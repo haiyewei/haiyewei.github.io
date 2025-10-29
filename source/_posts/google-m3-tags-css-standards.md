@@ -2,10 +2,10 @@
 title: Google Material Design 3 (M3) 常用标签及 CSS 标准
 date: 2023-10-27 10:00:00
 tags:
-- Material Design 3
-- M3
-- CSS
-- 前端开发
+  - Material Design 3
+  - M3
+  - CSS
+  - 前端开发
 ---
 
 ## 引言
@@ -73,8 +73,9 @@ md-dialog {
 
 ```css
 md-dialog {
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3),
-              0px 8px 12px 6px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0px 4px 4px 0px rgba(0, 0, 0, 0.3),
+    0px 8px 12px 6px rgba(0, 0, 0, 0.15);
 }
 ```
 
@@ -116,15 +117,15 @@ md-dialog {
   width: fit-content;
 }
 
-md-dialog slot[name='heading']::slotted(*) {
+md-dialog slot[name="heading"]::slotted(*) {
   padding: 24px 24px 0;
 }
 
-md-dialog slot[name='content']::slotted(*) {
+md-dialog slot[name="content"]::slotted(*) {
   padding: 24px;
 }
 
-md-dialog slot[name='actions']::slotted(*) {
+md-dialog slot[name="actions"]::slotted(*) {
   padding: 16px 24px 24px;
 }
 ```
@@ -169,8 +170,9 @@ md-fab {
 
 ```css
 md-elevated-button {
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3),
-              0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0px 1px 2px 0px rgba(0, 0, 0, 0.3),
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
 }
 ```
 
@@ -206,12 +208,12 @@ md-fab {
   padding: 0; /* FAB 没有内边距 */
 }
 
-md-button slot[name='icon']::slotted(*),
-md-text-button slot[name='icon']::slotted(*),
-md-elevated-button slot[name='icon']::slotted(*),
-md-filled-button slot[name='icon']::slotted(*),
-md-filled-tonal-button slot[name='icon']::slotted(*),
-md-outlined-button slot[name='icon']::slotted(*) {
+md-button slot[name="icon"]::slotted(*),
+md-text-button slot[name="icon"]::slotted(*),
+md-elevated-button slot[name="icon"]::slotted(*),
+md-filled-button slot[name="icon"]::slotted(*),
+md-filled-tonal-button slot[name="icon"]::slotted(*),
+md-outlined-button slot[name="icon"]::slotted(*) {
   margin-inline-end: 8px;
 }
 ```

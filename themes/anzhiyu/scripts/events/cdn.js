@@ -12,7 +12,10 @@ hexo.extend.filter.register("before_generate", () => {
   const themeConfig = hexo.theme.config;
   const { CDN } = themeConfig;
 
-  const thirdPartySrc = hexo.render.renderSync({ path: path.join(hexo.theme_dir, "/plugins.yml"), engine: "yaml" });
+  const thirdPartySrc = hexo.render.renderSync({
+    path: path.join(hexo.theme_dir, "/plugins.yml"),
+    engine: "yaml",
+  });
   const internalSrc = {
     main: {
       name: "hexo-theme-anzhiyu",
@@ -66,12 +69,12 @@ hexo.extend.filter.register("before_generate", () => {
     },
   };
 
-  const minFile = file => {
-    return file.replace(/(?<!\.min)\.(js|css)$/g, ext => ".min" + ext);
+  const minFile = (file) => {
+    return file.replace(/(?<!\.min)\.(js|css)$/g, (ext) => ".min" + ext);
   };
 
   const createCDNLink = (data, type, cond = "") => {
-    Object.keys(data).map(key => {
+    Object.keys(data).map((key) => {
       let { name, version, file, other_name } = data[key];
 
       const cdnjs_name = other_name || name;
@@ -99,7 +102,10 @@ hexo.extend.filter.register("before_generate", () => {
         onmicrosoft: `https://npm.onmicrosoft.cn/${name}${verType}/${file}`,
         cbd: `https://cdn.cbd.int/${name}${verType}/${file}`,
         anheyu: `https://cdn.anheyu.com/npm/${name}${verType}/${min_file}`,
-        custom: (CDN.custom_format || "").replace(/\$\{(.+?)\}/g, (match, $1) => value[$1]),
+        custom: (CDN.custom_format || "").replace(
+          /\$\{(.+?)\}/g,
+          (match, $1) => value[$1],
+        ),
       };
 
       data[key] = cdnSource[type];
@@ -110,7 +116,7 @@ hexo.extend.filter.register("before_generate", () => {
   };
 
   // delete null value
-  const deleteNullValue = obj => {
+  const deleteNullValue = (obj) => {
     if (!obj) return;
     for (const i in obj) {
       obj[i] === null && delete obj[i];
@@ -121,6 +127,6 @@ hexo.extend.filter.register("before_generate", () => {
   themeConfig.asset = Object.assign(
     createCDNLink(internalSrc, CDN.internal_provider, "internal"),
     createCDNLink(thirdPartySrc, CDN.third_party_provider),
-    deleteNullValue(CDN.option)
+    deleteNullValue(CDN.option),
   );
 });

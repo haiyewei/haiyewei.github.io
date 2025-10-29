@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # MCU Scheme Generation
 
 ## Requirements for Dynamic Scheme
@@ -73,9 +74,9 @@ Hue cannot reach the assigned Chroma at the assigned Tone.
 To revise such colors, MCU can adjust their tones using one of two possible
 "fidelity" behaviors.
 
--   Source: Adjust the color's tone to match that of the source color.
--   Reach Chroma: Adjust the color's tone until the color's chroma reaches that
-    specified by the Variant.
+- Source: Adjust the color's tone to match that of the source color.
+- Reach Chroma: Adjust the color's tone until the color's chroma reaches that
+  specified by the Variant.
 
 ### 4. Global tone constraints
 
@@ -97,4 +98,5 @@ reaches a contrast ratio of ~4.5:1. However, the targets will ensure that
 GAR/WCAAG minimum requirements are met.
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

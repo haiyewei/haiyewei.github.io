@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # Refining Contrast
 
 In this guide, you will learn how to manually refine color contrast using the
@@ -138,17 +139,17 @@ double lighterUnsafe = Contrast.lighterUnsafe(original, 7.0);  // 100.0
 ###### TypeScript
 
 ```typescript
-const original = ColorUtils.lstarFromArgb(0xFF00AA00);  // 60.56
+const original = ColorUtils.lstarFromArgb(0xff00aa00); // 60.56
 
-const darker = Contrast.darker(original, 3.0);  // 29.63
-const lighter = Contrast.lighter(original, 3.0);  // 98.93
-const darkerUnsafe = Contrast.darkerUnsafe(original, 3.0);  // 29.63
-const lighterUnsafe = Contrast.lighterUnsafe(original, 3.0);  // 98.93
+const darker = Contrast.darker(original, 3.0); // 29.63
+const lighter = Contrast.lighter(original, 3.0); // 98.93
+const darkerUnsafe = Contrast.darkerUnsafe(original, 3.0); // 29.63
+const lighterUnsafe = Contrast.lighterUnsafe(original, 3.0); // 98.93
 
-const darker = Contrast.darker(original, 7.0);  // -1.0
-const lighter = Contrast.lighter(original, 7.0);  // -1.0
-const darkerUnsafe = Contrast.darkerUnsafe(original, 7.0);  // 0.0
-const lighterUnsafe = Contrast.lighterUnsafe(original, 7.0);  // 100.0
+const darker = Contrast.darker(original, 7.0); // -1.0
+const lighter = Contrast.lighter(original, 7.0); // -1.0
+const darkerUnsafe = Contrast.darkerUnsafe(original, 7.0); // 0.0
+const lighterUnsafe = Contrast.lighterUnsafe(original, 7.0); // 100.0
 ```
 
 ###### C++
@@ -186,4 +187,5 @@ let lighterUnsafe = Contrast.lighterUnsafe(tone: original, ratio: 7.0)  // 100.0
 </section>
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)

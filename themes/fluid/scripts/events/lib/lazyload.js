@@ -1,17 +1,20 @@
-'use strict';
+"use strict";
 
-const urlJoin = require('../../utils/url-join');
+const urlJoin = require("../../utils/url-join");
 
 module.exports = (hexo) => {
   const config = hexo.theme.config;
-  const loadingImage = urlJoin(hexo.config.root, config.lazyload.loading_img
-    || urlJoin(config.static_prefix.internal_img, 'loading.gif'));
+  const loadingImage = urlJoin(
+    hexo.config.root,
+    config.lazyload.loading_img ||
+      urlJoin(config.static_prefix.internal_img, "loading.gif"),
+  );
   if (!config.lazyload || !config.lazyload.enable || !loadingImage) {
     return;
   }
   if (config.lazyload.onlypost) {
-    hexo.extend.filter.register('after_post_render', (page) => {
-      if (page.layout !== 'post' && !page.lazyload) {
+    hexo.extend.filter.register("after_post_render", (page) => {
+      if (page.layout !== "post" && !page.lazyload) {
         return;
       }
       if (page.lazyload !== false) {
@@ -21,7 +24,7 @@ module.exports = (hexo) => {
       return page;
     });
   } else {
-    hexo.extend.filter.register('after_render:html', (html, data) => {
+    hexo.extend.filter.register("after_render:html", (html, data) => {
       if (!data.page || data.page.lazyload !== false) {
         html = lazyImages(html, loadingImage);
         html = lazyComments(html);

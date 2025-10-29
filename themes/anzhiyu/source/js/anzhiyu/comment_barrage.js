@@ -14,12 +14,16 @@ if (document.querySelector(".comment-barrage")) {
   var commentInterval = null;
   var hoverOnCommentBarrage = false;
 
-  document.querySelector(".comment-barrage").addEventListener("mouseenter", function () {
-    hoverOnCommentBarrage = true;
-  });
-  document.querySelector(".comment-barrage").addEventListener("mouseleave", function () {
-    hoverOnCommentBarrage = false;
-  });
+  document
+    .querySelector(".comment-barrage")
+    .addEventListener("mouseenter", function () {
+      hoverOnCommentBarrage = true;
+    });
+  document
+    .querySelector(".comment-barrage")
+    .addEventListener("mouseleave", function () {
+      hoverOnCommentBarrage = false;
+    });
 
   function initCommentBarrage() {
     if (!commentBarrageConfig.dom) return;
@@ -33,7 +37,9 @@ if (document.querySelector(".comment-barrage")) {
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4 && this.responseText) {
-        commentBarrageConfig.barrageList = commentLinkFilter(JSON.parse(this.responseText).data);
+        commentBarrageConfig.barrageList = commentLinkFilter(
+          JSON.parse(this.responseText).data,
+        );
         commentBarrageConfig.dom.innerHTML = "";
       }
     });
@@ -46,13 +52,17 @@ if (document.querySelector(".comment-barrage")) {
 
     commentInterval = setInterval(() => {
       if (commentBarrageConfig.barrageList.length && !hoverOnCommentBarrage) {
-        popCommentBarrage(commentBarrageConfig.barrageList[commentBarrageConfig.barrageIndex]);
+        popCommentBarrage(
+          commentBarrageConfig.barrageList[commentBarrageConfig.barrageIndex],
+        );
         commentBarrageConfig.barrageIndex += 1;
-        commentBarrageConfig.barrageIndex %= commentBarrageConfig.barrageList.length;
+        commentBarrageConfig.barrageIndex %=
+          commentBarrageConfig.barrageList.length;
       }
       if (
         commentBarrageConfig.barrageTimer.length >
-          (commentBarrageConfig.barrageList.length > commentBarrageConfig.maxBarrage
+          (commentBarrageConfig.barrageList.length >
+          commentBarrageConfig.maxBarrage
             ? commentBarrageConfig.maxBarrage
             : commentBarrageConfig.barrageList.length) &&
         !hoverOnCommentBarrage
@@ -67,7 +77,7 @@ if (document.querySelector(".comment-barrage")) {
       return a.created - b.created;
     });
     let newData = [];
-    data.forEach(item => {
+    data.forEach((item) => {
       newData.push(...getCommentReplies(item));
     });
     return newData;
@@ -76,7 +86,7 @@ if (document.querySelector(".comment-barrage")) {
   function getCommentReplies(item) {
     if (item.replies) {
       let replies = [item];
-      item.replies.forEach(item => {
+      item.replies.forEach((item) => {
         replies.push(...getCommentReplies(item));
       });
       return replies;
@@ -91,7 +101,9 @@ if (document.querySelector(".comment-barrage")) {
     barrage.innerHTML = `
           <div class="barrageHead">
             <a class="barrageTitle ${
-              data.mailMd5 === commentBarrageConfig.mailMd5 ? "barrageBloggerTitle" : ""
+              data.mailMd5 === commentBarrageConfig.mailMd5
+                ? "barrageBloggerTitle"
+                : ""
             }" href="javascript:anzhiyu.scrollTo('#post-comment')"">
               ${data.mailMd5 === commentBarrageConfig.mailMd5 ? "博主" : "热评"}
             </a>
@@ -108,7 +120,7 @@ if (document.querySelector(".comment-barrage")) {
     let anzhiyuPres = barrage.querySelectorAll("anzhiyu pre");
 
     // 遍历每个pre元素，将其替换为"【代码】"
-    anzhiyuPres.forEach(pre => {
+    anzhiyuPres.forEach((pre) => {
       let codePlaceholder = document.createElement("span");
       codePlaceholder.innerText = "【代码】";
       pre.parentNode.replaceChild(codePlaceholder, pre);
@@ -118,7 +130,7 @@ if (document.querySelector(".comment-barrage")) {
     let anzhiyuImages = barrage.querySelectorAll("anzhiyu img");
 
     // 遍历每个图片元素，将其替换为"【图片】"，但排除带有class=tk-owo-emotion的图片
-    anzhiyuImages.forEach(image => {
+    anzhiyuImages.forEach((image) => {
       if (!image.classList.contains("tk-owo-emotion")) {
         image.style.display = "none"; // 隐藏图片
         let placeholder = document.createElement("span");
@@ -134,20 +146,25 @@ if (document.querySelector(".comment-barrage")) {
     barrage.className = "comment-barrage-item out";
 
     setTimeout(() => {
-      if (commentBarrageConfig.dom && commentBarrageConfig.dom.contains(barrage)) {
+      if (
+        commentBarrageConfig.dom &&
+        commentBarrageConfig.dom.contains(barrage)
+      ) {
         commentBarrageConfig.dom.removeChild(barrage);
       }
     }, 1000);
   }
 
   // 自动隐藏
-  const commentEntryCallback = entries => {
+  const commentEntryCallback = (entries) => {
     const commentBarrage = document.querySelector(".comment-barrage");
     const postComment = document.getElementById("post-comment");
 
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (postComment && commentBarrage && document.body.clientWidth > 768) {
-        commentBarrage.style.bottom = entry.isIntersecting ? `-${commentBarrageConfig.maxBarrage * 200}px` : "0";
+        commentBarrage.style.bottom = entry.isIntersecting
+          ? `-${commentBarrageConfig.maxBarrage * 200}px`
+          : "0";
       }
     });
   };
@@ -167,10 +184,12 @@ if (document.querySelector(".comment-barrage")) {
 
   if (localStorage.getItem("commentBarrageSwitch") !== "false") {
     document.querySelector(".comment-barrage").style.display = "flex";
-    document.querySelector(".menu-commentBarrage-text").textContent = "关闭热评";
+    document.querySelector(".menu-commentBarrage-text").textContent =
+      "关闭热评";
   } else {
     document.querySelector(".comment-barrage").style.display = "none";
-    document.querySelector(".menu-commentBarrage-text").textContent = "显示热评";
+    document.querySelector(".menu-commentBarrage-text").textContent =
+      "显示热评";
   }
 
   document.addEventListener("pjax:send", function () {

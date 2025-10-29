@@ -156,7 +156,7 @@ git pull
 
 将本地更改推送到远程仓库：
 
-```bash
+````bash
 git push origin <分支名>
 
 ## 常用高级功能
@@ -167,7 +167,7 @@ git push origin <分支名>
 
 ```bash
 git rebase &lt;目标分支&gt;
-```
+````
 
 **示例：** 将当前分支的更改 rebase 到 `main` 分支上。
 

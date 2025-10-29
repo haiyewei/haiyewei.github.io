@@ -16,7 +16,14 @@ function gallery(args, content) {
   let rowHeight, limit, lazyload, type, dataStr, lazyloadBtn;
 
   if (args[0] === "url") {
-    [type, dataStr, lazyload, rowHeight = 220, limit = 10, lazyloadBtn = false] = args; // url,[link],[lazyload],[rowHeight],[limit]
+    [
+      type,
+      dataStr,
+      lazyload,
+      rowHeight = 220,
+      limit = 10,
+      lazyloadBtn = false,
+    ] = args; // url,[link],[lazyload],[rowHeight],[limit]
     rowHeight = rowHeight == "" ? 220 : rowHeight;
     limit = limit == "" ? 10 : limit;
     lazyloadBtn = lazyloadBtn == false ? false : lazyloadBtn;
@@ -44,7 +51,8 @@ function gallery(args, content) {
   }
 
   type = type ? " url" : " data";
-  const lazyloadClass = lazyload === "true" ? "lazyload btn_album_detail_lazyload" : "";
+  const lazyloadClass =
+    lazyload === "true" ? "lazyload btn_album_detail_lazyload" : "";
   const pageImgLazyloadClass = lazyloadBtn == true ? "" : "page_img_lazyload ";
   let html = `<div class="gallery">
   <div class="fj-gallery ${

@@ -38,11 +38,11 @@ search:
   load_data: 正在加載數據庫
   input_placeholder: 搜尋文章
   algolia_search:
-    hits_empty: '未找到相關內容：${query}'
-    hits_stats: '找到 ${hits} 條結果，耗時 ${time} 毫秒'
+    hits_empty: "未找到相關內容：${query}"
+    hits_stats: "找到 ${hits} 條結果，耗時 ${time} 毫秒"
   local_search:
-    hits_empty: '未找到相關內容：${query}'
-    hits_stats: '找到 ${hits} 篇文章'
+    hits_empty: "未找到相關內容：${query}"
+    hits_stats: "找到 ${hits} 篇文章"
 
 pagination:
   prev: 上一頁

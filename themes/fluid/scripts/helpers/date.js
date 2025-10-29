@@ -1,11 +1,11 @@
 /* global hexo */
 
-'use strict';
+"use strict";
 
-const moment = require('moment');
+const moment = require("moment");
 const { isMoment } = moment;
 
-hexo.extend.helper.register('compare_date', function(date1, date2) {
+hexo.extend.helper.register("compare_date", function (date1, date2) {
   if (!date1) {
     return -1;
   }

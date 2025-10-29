@@ -4,8 +4,12 @@
 
 "use strict";
 
-hexo.extend.filter.register("stylus:renderer", style => {
-  const { syntax_highlighter: syntaxHighlighter, highlight, prismjs } = hexo.config;
+hexo.extend.filter.register("stylus:renderer", (style) => {
+  const {
+    syntax_highlighter: syntaxHighlighter,
+    highlight,
+    prismjs,
+  } = hexo.config;
   let { enable: highlightEnable, line_number: highlightLineNumber } = highlight;
   let { enable: prismjsEnable, line_number: prismjsLineNumber } = prismjs;
 

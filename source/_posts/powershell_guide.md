@@ -21,25 +21,25 @@ PowerShell (pwsh) 是微软开发的一种跨平台的任务自动化和配置�
 
 ### PowerShell 的历史和发展
 
-*   **Monad (2003-2006)**：PowerShell 最初代号为 "Monad"，旨在提供一种更强大、更一致的命令行体验。
-*   **Windows PowerShell 1.0 (2006)**：随 Windows Vista 和 Windows Server 2008 发布，引入了核心概念，如 Cmdlet、管道和对象。
-*   **Windows PowerShell 2.0 (2009)**：随 Windows 7 和 Windows Server 2008 R2 发布，引入了远程处理 (Remoting)、后台作业 (Background Jobs)、脚本调试和模块化等重要功能。
-*   **Windows PowerShell 3.0 (2012)**：随 Windows 8 和 Windows Server 2012 发布，改进了工作流、IntelliSense、模块自动加载等。
-*   **Windows PowerShell 4.0 (2013)**：随 Windows 8.1 和 Windows Server 2012 R2 发布，引入了 Desired State Configuration (DSC)。
-*   **Windows PowerShell 5.0/5.1 (2015/2016)**：随 Windows 10 和 Windows Server 2016 发布，增强了安全性、类定义、调试和 DSC 功能。
-*   **PowerShell Core 6.x (2016-2019)**：基于 .NET Core，实现了跨平台（Windows, Linux, macOS），并开源。名称从 "Windows PowerShell" 变为 "PowerShell Core"。
-*   **PowerShell 7.x (2020-至今)**：统一了 Windows PowerShell 和 PowerShell Core 的发展路径，基于最新的 .NET 版本，继续增强跨平台兼容性、性能和功能。名称简化为 "PowerShell"。
+- **Monad (2003-2006)**：PowerShell 最初代号为 "Monad"，旨在提供一种更强大、更一致的命令行体验。
+- **Windows PowerShell 1.0 (2006)**：随 Windows Vista 和 Windows Server 2008 发布，引入了核心概念，如 Cmdlet、管道和对象。
+- **Windows PowerShell 2.0 (2009)**：随 Windows 7 和 Windows Server 2008 R2 发布，引入了远程处理 (Remoting)、后台作业 (Background Jobs)、脚本调试和模块化等重要功能。
+- **Windows PowerShell 3.0 (2012)**：随 Windows 8 和 Windows Server 2012 发布，改进了工作流、IntelliSense、模块自动加载等。
+- **Windows PowerShell 4.0 (2013)**：随 Windows 8.1 和 Windows Server 2012 R2 发布，引入了 Desired State Configuration (DSC)。
+- **Windows PowerShell 5.0/5.1 (2015/2016)**：随 Windows 10 和 Windows Server 2016 发布，增强了安全性、类定义、调试和 DSC 功能。
+- **PowerShell Core 6.x (2016-2019)**：基于 .NET Core，实现了跨平台（Windows, Linux, macOS），并开源。名称从 "Windows PowerShell" 变为 "PowerShell Core"。
+- **PowerShell 7.x (2020-至今)**：统一了 Windows PowerShell 和 PowerShell Core 的发展路径，基于最新的 .NET 版本，继续增强跨平台兼容性、性能和功能。名称简化为 "PowerShell"。
 
 ### PowerShell 的核心优势
 
-*   **面向对象**：处理结构化数据（对象），而不是纯文本，便于数据提取和操作。
-*   **一致性**：Cmdlet 遵循 `动词-名词` 的命名规范，易于学习和预测。
-*   **可扩展性**：通过模块可以轻松添加新的命令和功能。
-*   **脚本能力**：强大的脚本语言，支持函数、循环、条件判断、错误处理等。
-*   **远程管理**：内置强大的远程处理能力，可以管理多台计算机。
-*   **集成性**：与 .NET、WMI、CIM、COM、Active Directory、REST API 等多种技术无缝集成。
-*   **跨平台**：PowerShell 7+ 可在 Windows、Linux 和 macOS 上运行。
-*   **自动化**：非常适合自动化重复性任务和复杂的管理流程。
+- **面向对象**：处理结构化数据（对象），而不是纯文本，便于数据提取和操作。
+- **一致性**：Cmdlet 遵循 `动词-名词` 的命名规范，易于学习和预测。
+- **可扩展性**：通过模块可以轻松添加新的命令和功能。
+- **脚本能力**：强大的脚本语言，支持函数、循环、条件判断、错误处理等。
+- **远程管理**：内置强大的远程处理能力，可以管理多台计算机。
+- **集成性**：与 .NET、WMI、CIM、COM、Active Directory、REST API 等多种技术无缝集成。
+- **跨平台**：PowerShell 7+ 可在 Windows、Linux 和 macOS 上运行。
+- **自动化**：非常适合自动化重复性任务和复杂的管理流程。
 
 ## 基础概念
 
@@ -49,10 +49,10 @@ PowerShell (pwsh) 是微软开发的一种跨平台的任务自动化和配置�
 
 Cmdlet（发音 "command-let"）是 PowerShell 的原生命令。它们是轻量级的 .NET 类实例，执行特定的操作。Cmdlet 的命名遵循 `动词-名词` 的模式，例如：
 
-*   `Get-Process`：获取当前运行的进程。
-*   `Stop-Service`：停止一个服务。
-*   `New-Item`：创建一个新项（如文件或目录）。
-*   `Set-Content`：设置文件内容。
+- `Get-Process`：获取当前运行的进程。
+- `Stop-Service`：停止一个服务。
+- `New-Item`：创建一个新项（如文件或目录）。
+- `Set-Content`：设置文件内容。
 
 这种命名规范使得命令的功能易于理解和发现。动词表示操作（Get, Set, New, Remove, Start, Stop 等），名词表示操作的对象（Process, Service, Item, Content 等）。
 
@@ -126,14 +126,14 @@ Write-Host $value.GetType().Name # 输出 String
 
 别名是 Cmdlet 或命令的替代名称，通常更短，便于快速输入。PowerShell 提供了许多内置别名，尤其是为了兼容 Unix/Linux 和 `cmd.exe` 用户。
 
-*   `ls` 或 `dir` 是 `Get-ChildItem` 的别名。
-*   `cd` 是 `Set-Location` 的别名。
-*   `ps` 是 `Get-Process` 的别名。
-*   `kill` 是 `Stop-Process` 的别名。
-*   `cat` 或 `type` 是 `Get-Content` 的别名。
-*   `echo` 是 `Write-Host` 或 `Write-Output` 的别名。
-*   `cp` 或 `copy` 是 `Copy-Item` 的别名。
-*   `rm` 或 `del` 是 `Remove-Item` 的别名。
+- `ls` 或 `dir` 是 `Get-ChildItem` 的别名。
+- `cd` 是 `Set-Location` 的别名。
+- `ps` 是 `Get-Process` 的别名。
+- `kill` 是 `Stop-Process` 的别名。
+- `cat` 或 `type` 是 `Get-Content` 的别名。
+- `echo` 是 `Write-Host` 或 `Write-Output` 的别名。
+- `cp` 或 `copy` 是 `Copy-Item` 的别名。
+- `rm` 或 `del` 是 `Remove-Item` 的别名。
 
 可以使用 `Get-Alias` 查看所有别名，`New-Alias` 创建自定义别名。
 
@@ -143,13 +143,13 @@ Write-Host $value.GetType().Name # 输出 String
 
 PowerShell Provider 允许像访问文件系统一样访问不同的数据存储。例如：
 
-*   `FileSystem`：访问文件和目录 (C:, D:)。
-*   `Registry`：访问 Windows 注册表 (HKLM:, HKCU:)。
-*   `Environment`：访问环境变量 (Env:)。
-*   `Variable`：访问当前会话的变量 (Variable:)。
-*   `Function`：访问当前会话的函数 (Function:)。
-*   `Alias`：访问当前会话的别名 (Alias:)。
-*   `Certificate`：访问证书存储 (Cert:)。
+- `FileSystem`：访问文件和目录 (C:, D:)。
+- `Registry`：访问 Windows 注册表 (HKLM:, HKCU:)。
+- `Environment`：访问环境变量 (Env:)。
+- `Variable`：访问当前会话的变量 (Variable:)。
+- `Function`：访问当前会话的函数 (Function:)。
+- `Alias`：访问当前会话的别名 (Alias:)。
+- `Certificate`：访问证书存储 (Cert:)。
 
 可以使用 `Get-PSProvider` 查看所有可用的提供程序。通过提供程序，可以使用标准的 `Item` Cmdlet（如 `Get-Item`, `Set-Item`, `Get-ChildItem`）来操作这些不同的数据源。
 
@@ -175,12 +175,12 @@ $env:PATH
 
 常见的策略级别：
 
-*   **Restricted**：默认策略（Windows 客户端）。不允许运行任何脚本。只允许交互式命令。
-*   **AllSigned**：只允许运行由受信任发布者签名的脚本。
-*   **RemoteSigned**：默认策略（Windows 服务器）。允许运行本地创建的脚本；从网络下载的脚本必须由受信任发布者签名。
-*   **Unrestricted**：允许运行所有脚本，但对来自网络的未签名脚本会提示确认。
-*   **Bypass**：不阻止任何操作，也没有警告或提示。
-*   **Undefined**：没有定义执行策略。
+- **Restricted**：默认策略（Windows 客户端）。不允许运行任何脚本。只允许交互式命令。
+- **AllSigned**：只允许运行由受信任发布者签名的脚本。
+- **RemoteSigned**：默认策略（Windows 服务器）。允许运行本地创建的脚本；从网络下载的脚本必须由受信任发布者签名。
+- **Unrestricted**：允许运行所有脚本，但对来自网络的未签名脚本会提示确认。
+- **Bypass**：不阻止任何操作，也没有警告或提示。
+- **Undefined**：没有定义执行策略。
 
 ```powershell
 # 查看当前策略
@@ -198,236 +198,237 @@ Get-ExecutionPolicy -List # 查看所有作用域的策略
 
 ### 文件和目录操作
 
-*   **`Get-ChildItem` (alias: `ls`, `dir`, `gci`)**: 列出目录内容或文件信息。
-    ```powershell
-    Get-ChildItem C:\Windows
-    Get-ChildItem -Path C:\Users -Directory # 只列出目录
-    Get-ChildItem -Path C:\Logs -Filter *.log -Recurse # 递归查找 .log 文件
-    Get-ChildItem -Path . -File | Where-Object {$_.LastWriteTime -lt (Get-Date).AddDays(-30)} # 查找30天前修改的文件
-    ```
-*   **`Copy-Item` (alias: `cp`, `copy`, `cpi`)**: 复制文件或目录。
-    ```powershell
-    Copy-Item -Path C:\source.txt -Destination D:\backup\
-    Copy-Item -Path C:\MyFolder -Destination D:\BackupFolder -Recurse # 复制目录及其内容
-    ```
-*   **`Remove-Item` (alias: `rm`, `del`, `erase`, `rd`, `ri`)**: 删除文件或目录。
-    ```powershell
-    Remove-Item -Path C:\temp\oldfile.txt
-    Remove-Item -Path C:\Temp\* -Recurse -Force # 强制递归删除 Temp 目录下所有内容
-    ```
-*   **`New-Item` (alias: `ni`, `md`, `mkdir`)**: 创建新项（文件、目录等）。
-    ```powershell
-    New-Item -Path C:\MyNewFolder -ItemType Directory
-    New-Item -Path C:\MyNewFile.txt -ItemType File -Value "Initial content"
-    ```
-*   **`Set-Location` (alias: `cd`, `sl`)**: 更改当前工作目录。
-    ```powershell
-    Set-Location C:\Windows\System32
-    cd .. # 返回上一级目录
-    cd ~   # 返回用户主目录
-    ```
-*   **`Get-Content` (alias: `cat`, `type`, `gc`)**: 获取文件内容。
-    ```powershell
-    Get-Content -Path C:\config.ini
-    Get-Content -Path C:\log.txt -Tail 10 # 获取最后 10 行
-    Get-Content -Path C:\largefile.log -TotalCount 100 # 获取前 100 行
-    (Get-Content -Path C:\users.json) | ConvertFrom-Json # 读取 JSON 文件并转换为对象
-    ```
-*   **`Set-Content` (alias: `sc`)**: 设置（覆盖）文件内容。
-    ```powershell
-    Set-Content -Path C:\status.txt -Value "Process Complete"
-    Get-Process | Out-String | Set-Content -Path C:\processes.txt # 将进程列表写入文件
-    ```
-*   **`Add-Content` (alias: `ac`)**: 向文件追加内容。
-    ```powershell
-    Add-Content -Path C:\app.log -Value "$(Get-Date): Application started."
-    ```
+- **`Get-ChildItem` (alias: `ls`, `dir`, `gci`)**: 列出目录内容或文件信息。
+  ```powershell
+  Get-ChildItem C:\Windows
+  Get-ChildItem -Path C:\Users -Directory # 只列出目录
+  Get-ChildItem -Path C:\Logs -Filter *.log -Recurse # 递归查找 .log 文件
+  Get-ChildItem -Path . -File | Where-Object {$_.LastWriteTime -lt (Get-Date).AddDays(-30)} # 查找30天前修改的文件
+  ```
+- **`Copy-Item` (alias: `cp`, `copy`, `cpi`)**: 复制文件或目录。
+  ```powershell
+  Copy-Item -Path C:\source.txt -Destination D:\backup\
+  Copy-Item -Path C:\MyFolder -Destination D:\BackupFolder -Recurse # 复制目录及其内容
+  ```
+- **`Remove-Item` (alias: `rm`, `del`, `erase`, `rd`, `ri`)**: 删除文件或目录。
+  ```powershell
+  Remove-Item -Path C:\temp\oldfile.txt
+  Remove-Item -Path C:\Temp\* -Recurse -Force # 强制递归删除 Temp 目录下所有内容
+  ```
+- **`New-Item` (alias: `ni`, `md`, `mkdir`)**: 创建新项（文件、目录等）。
+  ```powershell
+  New-Item -Path C:\MyNewFolder -ItemType Directory
+  New-Item -Path C:\MyNewFile.txt -ItemType File -Value "Initial content"
+  ```
+- **`Set-Location` (alias: `cd`, `sl`)**: 更改当前工作目录。
+  ```powershell
+  Set-Location C:\Windows\System32
+  cd .. # 返回上一级目录
+  cd ~   # 返回用户主目录
+  ```
+- **`Get-Content` (alias: `cat`, `type`, `gc`)**: 获取文件内容。
+  ```powershell
+  Get-Content -Path C:\config.ini
+  Get-Content -Path C:\log.txt -Tail 10 # 获取最后 10 行
+  Get-Content -Path C:\largefile.log -TotalCount 100 # 获取前 100 行
+  (Get-Content -Path C:\users.json) | ConvertFrom-Json # 读取 JSON 文件并转换为对象
+  ```
+- **`Set-Content` (alias: `sc`)**: 设置（覆盖）文件内容。
+  ```powershell
+  Set-Content -Path C:\status.txt -Value "Process Complete"
+  Get-Process | Out-String | Set-Content -Path C:\processes.txt # 将进程列表写入文件
+  ```
+- **`Add-Content` (alias: `ac`)**: 向文件追加内容。
+  ```powershell
+  Add-Content -Path C:\app.log -Value "$(Get-Date): Application started."
+  ```
 
 ### 进程管理
 
-*   **`Get-Process` (alias: `ps`, `gps`)**: 获取正在运行的进程。
-    ```powershell
-    Get-Process
-    Get-Process -Name notepad, chrome
-    Get-Process | Sort-Object -Property CPU -Descending | Select-Object -First 5 # CPU 占用最高的 5 个进程
-    ```
-*   **`Stop-Process` (alias: `kill`, `spps`)**: 停止一个或多个进程。
-    ```powershell
-    Stop-Process -Name notepad
-    Get-Process -Name "badapp*" | Stop-Process -Force -WhatIf
-    Stop-Process -Id 1234
-    ```
-*   **`Start-Process` (alias: `start`, `saps`)**: 启动一个新进程。
-    ```powershell
-    Start-Process notepad.exe
-    Start-Process C:\MyApp\run.bat
-    Start-Process https://www.microsoft.com # 打开默认浏览器访问 URL
-    Start-Process powershell -Verb RunAs # 以管理员身份启动 PowerShell
-    ```
+- **`Get-Process` (alias: `ps`, `gps`)**: 获取正在运行的进程。
+  ```powershell
+  Get-Process
+  Get-Process -Name notepad, chrome
+  Get-Process | Sort-Object -Property CPU -Descending | Select-Object -First 5 # CPU 占用最高的 5 个进程
+  ```
+- **`Stop-Process` (alias: `kill`, `spps`)**: 停止一个或多个进程。
+  ```powershell
+  Stop-Process -Name notepad
+  Get-Process -Name "badapp*" | Stop-Process -Force -WhatIf
+  Stop-Process -Id 1234
+  ```
+- **`Start-Process` (alias: `start`, `saps`)**: 启动一个新进程。
+  ```powershell
+  Start-Process notepad.exe
+  Start-Process C:\MyApp\run.bat
+  Start-Process https://www.microsoft.com # 打开默认浏览器访问 URL
+  Start-Process powershell -Verb RunAs # 以管理员身份启动 PowerShell
+  ```
 
 ### 服务管理
 
-*   **`Get-Service` (alias: `gsv`)**: 获取系统服务。
-    ```powershell
-    Get-Service
-    Get-Service -Name WinRM, Spooler
-    Get-Service -DisplayName "*Network*" # 按显示名称查找
-    Get-Service | Where-Object {$_.Status -eq 'Running'} # 获取正在运行的服务
-    ```
-*   **`Start-Service` (alias: `sasv`)**: 启动服务。
-    ```powershell
-    Start-Service -Name Spooler
-    Get-Service -Name BITS | Start-Service
-    ```
-*   **`Stop-Service` (alias: `spsv`)**: 停止服务。
-    ```powershell
-    Stop-Service -Name Spooler -Force
-    Get-Service -Name "MyCustomService" | Stop-Service -WhatIf
-    ```
-*   **`Restart-Service` (alias: `rsv`)**: 重启服务。
-    ```powershell
-    Restart-Service -Name WinRM -Force
-    ```
-*   **`Set-Service`**: 修改服务属性（如启动类型）。
-    ```powershell
-    Set-Service -Name MyService -StartupType Automatic
-    Get-Service -Name UnwantedSvc | Set-Service -StartupType Disabled
-    ```
+- **`Get-Service` (alias: `gsv`)**: 获取系统服务。
+  ```powershell
+  Get-Service
+  Get-Service -Name WinRM, Spooler
+  Get-Service -DisplayName "*Network*" # 按显示名称查找
+  Get-Service | Where-Object {$_.Status -eq 'Running'} # 获取正在运行的服务
+  ```
+- **`Start-Service` (alias: `sasv`)**: 启动服务。
+  ```powershell
+  Start-Service -Name Spooler
+  Get-Service -Name BITS | Start-Service
+  ```
+- **`Stop-Service` (alias: `spsv`)**: 停止服务。
+  ```powershell
+  Stop-Service -Name Spooler -Force
+  Get-Service -Name "MyCustomService" | Stop-Service -WhatIf
+  ```
+- **`Restart-Service` (alias: `rsv`)**: 重启服务。
+  ```powershell
+  Restart-Service -Name WinRM -Force
+  ```
+- **`Set-Service`**: 修改服务属性（如启动类型）。
+  ```powershell
+  Set-Service -Name MyService -StartupType Automatic
+  Get-Service -Name UnwantedSvc | Set-Service -StartupType Disabled
+  ```
 
 ### 网络操作
 
-*   **`Test-Connection` (alias: `ping`, `tcon`)**: 向远程计算机发送 ICMP Echo 请求。
-    ```powershell
-    Test-Connection -ComputerName google.com
-    Test-Connection -ComputerName server01, server02 -Count 1 -Quiet # 只返回 True/False
-    ```
-*   **`Resolve-DnsName`**: 执行 DNS 查询。
-    ```powershell
-    Resolve-DnsName -Name www.google.com
-    Resolve-DnsName -Name 8.8.8.8 # 反向查询
-    Resolve-DnsName -Name _sip._tcp.example.com -Type SRV # 查询 SRV 记录
-    ```
-*   **`Invoke-WebRequest` (alias: `iwr`, `wget`, `curl`)**: 向 Web 服务发送 HTTP/HTTPS 请求（返回详细响应对象）。
-    ```powershell
-    Invoke-WebRequest -Uri https://api.github.com
-    $response = Invoke-WebRequest -Uri http://example.com/login -Method Post -Body @{user='admin'; pass='password'} -SessionVariable websession
-    Invoke-WebRequest -Uri http://example.com/data -WebSession $websession
-    Invoke-WebRequest -Uri ftp://example.com/file.zip -OutFile C:\downloads\file.zip
-    ```
-*   **`Invoke-RestMethod` (alias: `irm`)**: 向 RESTful Web 服务发送 HTTP/HTTPS 请求（自动处理响应，如 JSON/XML）。
-    ```powershell
-    $weather = Invoke-RestMethod -Uri "https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=London"
-    Write-Host "Current temperature in London: $($weather.current.temp_c)°C"
+- **`Test-Connection` (alias: `ping`, `tcon`)**: 向远程计算机发送 ICMP Echo 请求。
+  ```powershell
+  Test-Connection -ComputerName google.com
+  Test-Connection -ComputerName server01, server02 -Count 1 -Quiet # 只返回 True/False
+  ```
+- **`Resolve-DnsName`**: 执行 DNS 查询。
+  ```powershell
+  Resolve-DnsName -Name www.google.com
+  Resolve-DnsName -Name 8.8.8.8 # 反向查询
+  Resolve-DnsName -Name _sip._tcp.example.com -Type SRV # 查询 SRV 记录
+  ```
+- **`Invoke-WebRequest` (alias: `iwr`, `wget`, `curl`)**: 向 Web 服务发送 HTTP/HTTPS 请求（返回详细响应对象）。
+  ```powershell
+  Invoke-WebRequest -Uri https://api.github.com
+  $response = Invoke-WebRequest -Uri http://example.com/login -Method Post -Body @{user='admin'; pass='password'} -SessionVariable websession
+  Invoke-WebRequest -Uri http://example.com/data -WebSession $websession
+  Invoke-WebRequest -Uri ftp://example.com/file.zip -OutFile C:\downloads\file.zip
+  ```
+- **`Invoke-RestMethod` (alias: `irm`)**: 向 RESTful Web 服务发送 HTTP/HTTPS 请求（自动处理响应，如 JSON/XML）。
 
-    $data = @{ name = "New Item"; value = 123 } | ConvertTo-Json
-    Invoke-RestMethod -Uri "https://myapi.com/items" -Method Post -Body $data -ContentType "application/json"
-    ```
+  ```powershell
+  $weather = Invoke-RestMethod -Uri "https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=London"
+  Write-Host "Current temperature in London: $($weather.current.temp_c)°C"
+
+  $data = @{ name = "New Item"; value = 123 } | ConvertTo-Json
+  Invoke-RestMethod -Uri "https://myapi.com/items" -Method Post -Body $data -ContentType "application/json"
+  ```
 
 ### 系统信息
 
-*   **`Get-ComputerInfo`**: 获取本地计算机的详细系统信息。
-    ```powershell
-    Get-ComputerInfo
-    Get-ComputerInfo -Property OsName, OsVersion, CsProcessors, PhysiscalMemorySize
-    ```
-*   **`Get-WmiObject` (alias: `gwmi`)**: (旧版) 使用 WMI 获取管理信息。
-    ```powershell
-    Get-WmiObject -Class Win32_OperatingSystem | Select-Object -Property Caption, Version, OSArchitecture
-    Get-WmiObject -Class Win32_LogicalDisk -Filter "DriveType=3" # 获取本地硬盘
-    Get-WmiObject -Class Win32_Product | Where-Object {$_.Name -like "*Office*"} # 查找已安装的 Office 产品 (可能较慢)
-    ```
-*   **`Get-CimInstance` (alias: `gcim`)**: (新版, 推荐) 使用 CIM (基于 WS-Management) 获取管理信息，更现代且支持远程。
-    ```powershell
-    Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object -Property Caption, Version, OSArchitecture
-    Get-CimInstance -ClassName Win32_LogicalDisk -Filter "DriveType=3"
-    Get-CimInstance -ClassName Win32_BIOS -ComputerName server01 # 获取远程计算机的 BIOS 信息
-    ```
+- **`Get-ComputerInfo`**: 获取本地计算机的详细系统信息。
+  ```powershell
+  Get-ComputerInfo
+  Get-ComputerInfo -Property OsName, OsVersion, CsProcessors, PhysiscalMemorySize
+  ```
+- **`Get-WmiObject` (alias: `gwmi`)**: (旧版) 使用 WMI 获取管理信息。
+  ```powershell
+  Get-WmiObject -Class Win32_OperatingSystem | Select-Object -Property Caption, Version, OSArchitecture
+  Get-WmiObject -Class Win32_LogicalDisk -Filter "DriveType=3" # 获取本地硬盘
+  Get-WmiObject -Class Win32_Product | Where-Object {$_.Name -like "*Office*"} # 查找已安装的 Office 产品 (可能较慢)
+  ```
+- **`Get-CimInstance` (alias: `gcim`)**: (新版, 推荐) 使用 CIM (基于 WS-Management) 获取管理信息，更现代且支持远程。
+  ```powershell
+  Get-CimInstance -ClassName Win32_OperatingSystem | Select-Object -Property Caption, Version, OSArchitecture
+  Get-CimInstance -ClassName Win32_LogicalDisk -Filter "DriveType=3"
+  Get-CimInstance -ClassName Win32_BIOS -ComputerName server01 # 获取远程计算机的 BIOS 信息
+  ```
 
 ### 帮助系统
 
-*   **`Get-Help` (alias: `help`, `man`)**: 显示 Cmdlet 或概念的帮助信息。
-    ```powershell
-    Get-Help Get-Process
-    Get-Help Get-Process -Examples # 查看示例
-    Get-Help Get-Process -Full # 查看完整帮助
-    Get-Help Get-Process -Parameter Name # 查看特定参数的帮助
-    Get-Help about_Operators # 查看关于运算符的概念性帮助
-    help Copy-Item # 简写形式
-    Copy-Item -? # 另一种获取帮助的方式
-    ```
-*   **`Update-Help`**: 下载并安装最新的帮助文件（需要管理员权限和网络连接）。
-    ```powershell
-    Update-Help
-    Update-Help -Module ActiveDirectory -Force # 更新特定模块的帮助
-    ```
+- **`Get-Help` (alias: `help`, `man`)**: 显示 Cmdlet 或概念的帮助信息。
+  ```powershell
+  Get-Help Get-Process
+  Get-Help Get-Process -Examples # 查看示例
+  Get-Help Get-Process -Full # 查看完整帮助
+  Get-Help Get-Process -Parameter Name # 查看特定参数的帮助
+  Get-Help about_Operators # 查看关于运算符的概念性帮助
+  help Copy-Item # 简写形式
+  Copy-Item -? # 另一种获取帮助的方式
+  ```
+- **`Update-Help`**: 下载并安装最新的帮助文件（需要管理员权限和网络连接）。
+  ```powershell
+  Update-Help
+  Update-Help -Module ActiveDirectory -Force # 更新特定模块的帮助
+  ```
 
 ### 格式化输出
 
 PowerShell 默认会根据对象类型选择合适的格式化方式，但你也可以手动控制。
 
-*   **`Format-Table` (alias: `ft`)**: 将输出格式化为表格。
-    ```powershell
-    Get-Process | Format-Table -Property ProcessName, Id, CPU, WorkingSet -AutoSize
-    Get-Service | Format-Table -GroupBy Status
-    ```
-*   **`Format-List` (alias: `fl`)**: 将输出的每个对象的属性格式化为列表。
-    ```powershell
-    Get-Process -Name powershell | Format-List -Property * # 显示所有属性
-    Get-Service -Name WinRM | fl *
-    ```
-*   **`Out-GridView` (alias: `ogv`)**: 将输出发送到一个可交互的网格视图窗口（支持排序和筛选）。
-    ```powershell
-    Get-Process | Out-GridView -Title "Running Processes"
-    Get-Service | Where-Object {$_.Status -eq 'Stopped'} | Out-GridView
-    ```
-*   **`Out-File`**: 将输出发送到文件。
-    ```powershell
-    Get-Process | Out-File -FilePath C:\processes.txt
-    ```
-*   **`Out-String`**: 将对象转换为字符串。
-    ```powershell
-    $processInfo = Get-Process -Name explorer | Out-String
-    Write-Host $processInfo
-    ```
+- **`Format-Table` (alias: `ft`)**: 将输出格式化为表格。
+  ```powershell
+  Get-Process | Format-Table -Property ProcessName, Id, CPU, WorkingSet -AutoSize
+  Get-Service | Format-Table -GroupBy Status
+  ```
+- **`Format-List` (alias: `fl`)**: 将输出的每个对象的属性格式化为列表。
+  ```powershell
+  Get-Process -Name powershell | Format-List -Property * # 显示所有属性
+  Get-Service -Name WinRM | fl *
+  ```
+- **`Out-GridView` (alias: `ogv`)**: 将输出发送到一个可交互的网格视图窗口（支持排序和筛选）。
+  ```powershell
+  Get-Process | Out-GridView -Title "Running Processes"
+  Get-Service | Where-Object {$_.Status -eq 'Stopped'} | Out-GridView
+  ```
+- **`Out-File`**: 将输出发送到文件。
+  ```powershell
+  Get-Process | Out-File -FilePath C:\processes.txt
+  ```
+- **`Out-String`**: 将对象转换为字符串。
+  ```powershell
+  $processInfo = Get-Process -Name explorer | Out-String
+  Write-Host $processInfo
+  ```
 
 ### 对象操作
 
 这些 Cmdlet 通常用于管道中，对传递的对象进行筛选、选择、排序等操作。
 
-*   **`Select-Object` (alias: `select`)**: 选择对象的特定属性，或从对象集合中选择特定数量的对象。
-    ```powershell
-    Get-Process | Select-Object -Property ProcessName, Id, MainWindowTitle
-    Get-ChildItem | Select-Object -First 5 # 获取前 5 个项
-    Get-ChildItem | Select-Object -Last 5 # 获取后 5 个项
-    Get-Process | Select-Object -Property Name, @{Name='MemoryMB';Expression={$_.WorkingSet64 / 1MB}} # 计算属性
-    Get-Content file.txt | Select-Object -Unique # 获取唯一行
-    ```
-*   **`Where-Object` (alias: `where`, `?`)**: 根据指定的条件筛选对象。
-    ```powershell
-    Get-Process | Where-Object {$_.CPU -gt 100} # CPU 时间大于 100 的进程
-    Get-Service | Where-Object {$_.Status -eq 'Running' -and $_.DisplayName -like '*SQL*'} # 运行中且名称包含 SQL 的服务
-    Get-ChildItem -Recurse | Where-Object {$_.Length -gt 1GB} # 大于 1GB 的文件
-    # 简化语法 (PowerShell 3.0+)
-    Get-Process | Where CPU -gt 100
-    Get-Service | Where Status -eq 'Running'
-    ```
-*   **`Sort-Object` (alias: `sort`)**: 对对象进行排序。
-    ```powershell
-    Get-Process | Sort-Object -Property CPU -Descending # 按 CPU 降序排序
-    Get-ChildItem | Sort-Object -Property Length # 按文件大小升序排序
-    Get-Service | Sort-Object -Property Status, DisplayName # 先按状态，再按名称排序
-    ```
-*   **`Measure-Object` (alias: `measure`)**: 计算对象的数值属性（计数、总和、平均值、最大值、最小值）。
-    ```powershell
-    Get-ChildItem -Filter *.exe | Measure-Object -Property Length -Sum -Average -Maximum
-    Get-Content C:\log.txt | Measure-Object -Line -Word -Character # 统计行数、单词数、字符数
-    ```
-*   **`Group-Object` (alias: `group`)**: 根据指定的属性对对象进行分组。
-    ```powershell
-    Get-Process | Group-Object -Property Company
-    Get-ChildItem | Group-Object -Property Extension # 按文件扩展名分组
-    Get-Service | Group-Object -Property Status # 按服务状态分组
-    ```
+- **`Select-Object` (alias: `select`)**: 选择对象的特定属性，或从对象集合中选择特定数量的对象。
+  ```powershell
+  Get-Process | Select-Object -Property ProcessName, Id, MainWindowTitle
+  Get-ChildItem | Select-Object -First 5 # 获取前 5 个项
+  Get-ChildItem | Select-Object -Last 5 # 获取后 5 个项
+  Get-Process | Select-Object -Property Name, @{Name='MemoryMB';Expression={$_.WorkingSet64 / 1MB}} # 计算属性
+  Get-Content file.txt | Select-Object -Unique # 获取唯一行
+  ```
+- **`Where-Object` (alias: `where`, `?`)**: 根据指定的条件筛选对象。
+  ```powershell
+  Get-Process | Where-Object {$_.CPU -gt 100} # CPU 时间大于 100 的进程
+  Get-Service | Where-Object {$_.Status -eq 'Running' -and $_.DisplayName -like '*SQL*'} # 运行中且名称包含 SQL 的服务
+  Get-ChildItem -Recurse | Where-Object {$_.Length -gt 1GB} # 大于 1GB 的文件
+  # 简化语法 (PowerShell 3.0+)
+  Get-Process | Where CPU -gt 100
+  Get-Service | Where Status -eq 'Running'
+  ```
+- **`Sort-Object` (alias: `sort`)**: 对对象进行排序。
+  ```powershell
+  Get-Process | Sort-Object -Property CPU -Descending # 按 CPU 降序排序
+  Get-ChildItem | Sort-Object -Property Length # 按文件大小升序排序
+  Get-Service | Sort-Object -Property Status, DisplayName # 先按状态，再按名称排序
+  ```
+- **`Measure-Object` (alias: `measure`)**: 计算对象的数值属性（计数、总和、平均值、最大值、最小值）。
+  ```powershell
+  Get-ChildItem -Filter *.exe | Measure-Object -Property Length -Sum -Average -Maximum
+  Get-Content C:\log.txt | Measure-Object -Line -Word -Character # 统计行数、单词数、字符数
+  ```
+- **`Group-Object` (alias: `group`)**: 根据指定的属性对对象进行分组。
+  ```powershell
+  Get-Process | Group-Object -Property Company
+  Get-ChildItem | Group-Object -Property Extension # 按文件扩展名分组
+  Get-Service | Group-Object -Property Status # 按服务状态分组
+  ```
 
 ## 脚本编写
 
@@ -437,6 +438,7 @@ PowerShell 不仅仅是一个 shell，还是一种强大的脚本语言。PowerS
 
 1.  **创建脚本**：使用文本编辑器（如 VS Code、Notepad++ 或 ISE）创建一个文件，例如 `MyScript.ps1`。
 2.  **编写代码**：在文件中写入 PowerShell 命令和逻辑。
+
     ```powershell
     # MyScript.ps1
     param(
@@ -447,27 +449,29 @@ PowerShell 不仅仅是一个 shell，还是一种强大的脚本语言。PowerS
     $date = Get-Date
     Write-Host "The current date and time is: $date"
     ```
+
 3.  **运行脚本**：
-    *   确保执行策略允许运行脚本（例如 `RemoteSigned` 或 `Unrestricted`）。
-    *   在 PowerShell 控制台中，使用完整路径或相对路径执行脚本：
-        ```powershell
-        # 使用相对路径 (如果脚本在当前目录)
-        .\MyScript.ps1
+    - 确保执行策略允许运行脚本（例如 `RemoteSigned` 或 `Unrestricted`）。
+    - 在 PowerShell 控制台中，使用完整路径或相对路径执行脚本：
 
-        # 使用绝对路径
-        C:\Scripts\MyScript.ps1
+      ```powershell
+      # 使用相对路径 (如果脚本在当前目录)
+      .\MyScript.ps1
 
-        # 传递参数
-        .\MyScript.ps1 -Name "PowerShell User"
-        ```
+      # 使用绝对路径
+      C:\Scripts\MyScript.ps1
+
+      # 传递参数
+      .\MyScript.ps1 -Name "PowerShell User"
+      ```
 
 ### 变量和数据类型
 
 PowerShell 支持多种数据类型：
 
-*   **基本类型**: `[string]`, `[int]`, `[long]`, `[double]`, `[bool]` (`$true`, `$false`), `[datetime]`, `[char]`
-*   **集合类型**: `[array]`, `[hashtable]` (哈希表/字典)
-*   **特殊类型**: `[null]`, `[scriptblock]`, `[type]`, `[xml]`, `[adsi]`
+- **基本类型**: `[string]`, `[int]`, `[long]`, `[double]`, `[bool]` (`$true`, `$false`), `[datetime]`, `[char]`
+- **集合类型**: `[array]`, `[hashtable]` (哈希表/字典)
+- **特殊类型**: `[null]`, `[scriptblock]`, `[type]`, `[xml]`, `[adsi]`
 
 ```powershell
 # 字符串
@@ -503,21 +507,21 @@ $user.Email = "alice@example.com" # 添加键值对
 
 PowerShell 提供了丰富的运算符：
 
-*   **算术**: `+`, `-`, `*`, `/`, `%` (取模)
-*   **赋值**: `=`, `+=`, `-=`, `*=`, `/=`, `%=`
-*   **比较**:
-    *   `-eq` (等于), `-ne` (不等于)
-    *   `-gt` (大于), `-ge` (大于等于)
-    *   `-lt` (小于), `-le` (小于等于)
-    *   `-like` (通配符匹配, `*`, `?`), `-notlike`
-    *   `-match` (正则表达式匹配), `-notmatch`
-    *   `-contains` (集合包含某值), `-notcontains`
-    *   `-in` (某值在集合中), `-notin`
-    *   **注意**: 比较运算符默认不区分大小写。使用区分大小写的版本，在前面加 `c` (e.g., `-ceq`, `-clike`, `-cmatch`)。使用不区分大小写的版本（默认），可以在前面加 `i` (e.g., `-ieq`, `-ilike`, `-imatch`)。
-*   **逻辑**: `-and`, `-or`, `-xor`, `-not` (`!`)
-*   **类型**: `-is`, `-isnot`
-*   **位**: `-band`, `-bor`, `-bxor`, `-bnot`, `-shl` (左移), `-shr` (右移)
-*   **其他**: `.` (成员访问), `::` (静态成员访问), `..` (范围), `-join` (连接数组元素), `-split` (分割字符串), `-replace` (替换字符串), `-f` (格式化)
+- **算术**: `+`, `-`, `*`, `/`, `%` (取模)
+- **赋值**: `=`, `+=`, `-=`, `*=`, `/=`, `%=`
+- **比较**:
+  - `-eq` (等于), `-ne` (不等于)
+  - `-gt` (大于), `-ge` (大于等于)
+  - `-lt` (小于), `-le` (小于等于)
+  - `-like` (通配符匹配, `*`, `?`), `-notlike`
+  - `-match` (正则表达式匹配), `-notmatch`
+  - `-contains` (集合包含某值), `-notcontains`
+  - `-in` (某值在集合中), `-notin`
+  - **注意**: 比较运算符默认不区分大小写。使用区分大小写的版本，在前面加 `c` (e.g., `-ceq`, `-clike`, `-cmatch`)。使用不区分大小写的版本（默认），可以在前面加 `i` (e.g., `-ieq`, `-ilike`, `-imatch`)。
+- **逻辑**: `-and`, `-or`, `-xor`, `-not` (`!`)
+- **类型**: `-is`, `-isnot`
+- **位**: `-band`, `-bor`, `-bxor`, `-bnot`, `-shl` (左移), `-shr` (右移)
+- **其他**: `.` (成员访问), `::` (静态成员访问), `..` (范围), `-join` (连接数组元素), `-split` (分割字符串), `-replace` (替换字符串), `-f` (格式化)
 
 ```powershell
 $a = 10
@@ -539,78 +543,78 @@ Write-Host ($words -join ", ") # 用逗号连接
 
 ### 控制流
 
-*   **`if / elseif / else`**: 条件执行。
-    ```powershell
-    $score = 75
-    if ($score -ge 90) {
-        Write-Host "Grade A"
-    } elseif ($score -ge 80) {
-        Write-Host "Grade B"
-    } elseif ($score -ge 70) {
-        Write-Host "Grade C"
-    } else {
-        Write-Host "Grade D or F"
-    }
-    ```
-*   **`switch`**: 多条件分支。
-    ```powershell
-    $day = (Get-Date).DayOfWeek
-    switch ($day) {
-        "Monday" { Write-Host "Start of the week" }
-        "Friday" { Write-Host "Almost weekend!" }
-        "Saturday"
-        "Sunday" { Write-Host "Weekend!" }
-        Default { Write-Host "Weekday" }
-    }
-    # switch 支持通配符和正则表达式
-    switch -Wildcard ("apple") {
-        "a*" { Write-Host "Starts with a" }
-        "b*" { Write-Host "Starts with b" }
-    }
-    ```
-*   **`for`**: 固定次数循环。
-    ```powershell
-    for ($i = 1; $i -le 5; $i++) {
-        Write-Host "Iteration $i"
-    }
-    ```
-*   **`foreach`**: 遍历集合中的每个元素。
-    ```powershell
-    $colors = "Red", "Green", "Blue"
-    foreach ($color in $colors) {
-        Write-Host "Color: $color"
-    }
-    # 也可以用于管道
-    Get-Process | foreach { Write-Host "Process $($_.Name) has ID $($_.Id)" }
-    # 简化写法 (ForEach-Object alias: foreach, %)
-    Get-Process | % { Write-Host "Process $($_.Name) has ID $($_.Id)" }
-    ```
-*   **`while`**: 当条件为真时循环。
-    ```powershell
-    $count = 0
-    while ($count -lt 3) {
-        Write-Host "Count is $count"
-        $count++
-    }
-    ```
-*   **`do / while`**: 先执行一次，然后当条件为真时循环。
-    ```powershell
-    $num = 0
-    do {
-        $input = Read-Host "Enter a number (0 to exit)"
-        $num = [int]$input
-        Write-Host "You entered $num"
-    } while ($num -ne 0)
-    ```
-*   **`do / until`**: 先执行一次，然后当条件为假时循环。
-    ```powershell
-    $response = ""
-    do {
-        $response = Read-Host "Do you want to continue? (yes/no)"
-    } until ($response -eq "no")
-    ```
-*   **`break`**: 跳出当前循环 (for, foreach, while, do, switch)。
-*   **`continue`**: 跳过当前循环的剩余部分，进入下一次迭代。
+- **`if / elseif / else`**: 条件执行。
+  ```powershell
+  $score = 75
+  if ($score -ge 90) {
+      Write-Host "Grade A"
+  } elseif ($score -ge 80) {
+      Write-Host "Grade B"
+  } elseif ($score -ge 70) {
+      Write-Host "Grade C"
+  } else {
+      Write-Host "Grade D or F"
+  }
+  ```
+- **`switch`**: 多条件分支。
+  ```powershell
+  $day = (Get-Date).DayOfWeek
+  switch ($day) {
+      "Monday" { Write-Host "Start of the week" }
+      "Friday" { Write-Host "Almost weekend!" }
+      "Saturday"
+      "Sunday" { Write-Host "Weekend!" }
+      Default { Write-Host "Weekday" }
+  }
+  # switch 支持通配符和正则表达式
+  switch -Wildcard ("apple") {
+      "a*" { Write-Host "Starts with a" }
+      "b*" { Write-Host "Starts with b" }
+  }
+  ```
+- **`for`**: 固定次数循环。
+  ```powershell
+  for ($i = 1; $i -le 5; $i++) {
+      Write-Host "Iteration $i"
+  }
+  ```
+- **`foreach`**: 遍历集合中的每个元素。
+  ```powershell
+  $colors = "Red", "Green", "Blue"
+  foreach ($color in $colors) {
+      Write-Host "Color: $color"
+  }
+  # 也可以用于管道
+  Get-Process | foreach { Write-Host "Process $($_.Name) has ID $($_.Id)" }
+  # 简化写法 (ForEach-Object alias: foreach, %)
+  Get-Process | % { Write-Host "Process $($_.Name) has ID $($_.Id)" }
+  ```
+- **`while`**: 当条件为真时循环。
+  ```powershell
+  $count = 0
+  while ($count -lt 3) {
+      Write-Host "Count is $count"
+      $count++
+  }
+  ```
+- **`do / while`**: 先执行一次，然后当条件为真时循环。
+  ```powershell
+  $num = 0
+  do {
+      $input = Read-Host "Enter a number (0 to exit)"
+      $num = [int]$input
+      Write-Host "You entered $num"
+  } while ($num -ne 0)
+  ```
+- **`do / until`**: 先执行一次，然后当条件为假时循环。
+  ```powershell
+  $response = ""
+  do {
+      $response = Read-Host "Do you want to continue? (yes/no)"
+  } until ($response -eq "no")
+  ```
+- **`break`**: 跳出当前循环 (for, foreach, while, do, switch)。
+- **`continue`**: 跳过当前循环的剩余部分，进入下一次迭代。
 
 ### 函数
 
@@ -663,10 +667,10 @@ Send-Notification -Message "Rebooting server" -Recipient "All Users" -WhatIf # �
 
 作用域决定了变量、函数、别名等的可访问性。
 
-*   **Global**: PowerShell 启动时创建，会话结束时销毁。全局变量在任何地方都可访问。
-*   **Local**: 当前作用域。可以是全局作用域、脚本作用域或函数作用域。默认情况下，变量在此作用域创建。
-*   **Script**: 脚本文件运行时创建的作用域。脚本中的代码默认在此作用域运行。
-*   **Private**: 变量仅在当前作用域可见，子作用域不可见。
+- **Global**: PowerShell 启动时创建，会话结束时销毁。全局变量在任何地方都可访问。
+- **Local**: 当前作用域。可以是全局作用域、脚本作用域或函数作用域。默认情况下，变量在此作用域创建。
+- **Script**: 脚本文件运行时创建的作用域。脚本中的代码默认在此作用域运行。
+- **Private**: 变量仅在当前作用域可见，子作用域不可见。
 
 可以使用作用域修饰符访问或修改不同作用域的变量：`$global:var`, `$script:var`, `$local:var`。
 
@@ -687,16 +691,16 @@ Write-Host "Outside function: Global variable is $global:appVersion"
 
 ### 注释
 
-*   单行注释：`# This is a comment`
-*   多行注释：
-    ```powershell
-    <#
-    This is a
-    multi-line comment block.
-    It can span multiple lines.
-    #>
-    ```
-*   基于块的注释通常用于函数或脚本的帮助文档（Comment-Based Help）。
+- 单行注释：`# This is a comment`
+- 多行注释：
+  ```powershell
+  <#
+  This is a
+  multi-line comment block.
+  It can span multiple lines.
+  #>
+  ```
+- 基于块的注释通常用于函数或脚本的帮助文档（Comment-Based Help）。
 
 ## 模块管理
 
@@ -767,6 +771,7 @@ Get-Module -ListAvailable
 
 1.  **创建目录**: 例如 `C:\Users\YourUser\Documents\PowerShell\Modules\MyCustomModule`
 2.  **创建脚本模块文件 (`.psm1`)**: `MyCustomModule.psm1`
+
     ```powershell
     # MyCustomModule.psm1
     function Get-MyData {
@@ -785,6 +790,7 @@ Get-Module -ListAvailable
     # 导出希望公开的函数
     Export-ModuleMember -Function Get-MyData, Set-MyConfig
     ```
+
 3.  **(可选) 创建模块清单文件 (`.psd1`)**: `MyCustomModule.psd1`。清单文件包含模块的元数据（版本、作者、依赖项、要导出的成员等）。使用 `New-ModuleManifest` 创建。
     ```powershell
     New-ModuleManifest -Path .\MyCustomModule.psd1 -RootModule MyCustomModule.psm1 -Author "Your Name" -Description "My custom utility module." -FunctionsToExport 'Get-MyData', 'Set-MyConfig'
@@ -802,48 +808,50 @@ PowerShell Remoting 允许你在远程计算机上运行命令，就像在本地
 
 ### 启用和配置 WinRM
 
-*   **服务器端**: 在要管理的远程计算机上，以管理员身份运行 PowerShell 并执行：
-    ```powershell
-    Enable-PSRemoting -Force
-    ```
-    此命令会：
-    *   启动 WinRM 服务并设置为自动启动。
-    *   创建防火墙规则以允许入站连接。
-    *   创建用于接受远程连接的监听器。
-*   **客户端**: 通常无需特殊配置，但需要确保网络连接正常，并且防火墙允许出站连接。客户端和服务器需要能够相互认证（通常通过 Active Directory 或提供凭据）。
+- **服务器端**: 在要管理的远程计算机上，以管理员身份运行 PowerShell 并执行：
+  ```powershell
+  Enable-PSRemoting -Force
+  ```
+  此命令会：
+  - 启动 WinRM 服务并设置为自动启动。
+  - 创建防火墙规则以允许入站连接。
+  - 创建用于接受远程连接的监听器。
+- **客户端**: 通常无需特殊配置，但需要确保网络连接正常，并且防火墙允许出站连接。客户端和服务器需要能够相互认证（通常通过 Active Directory 或提供凭据）。
 
 可以使用 `Test-WSMan` 测试连接：
+
 ```powershell
 Test-WSMan -ComputerName RemoteServerName
 ```
 
 ### 建立远程会话
 
-*   **`Enter-PSSession`**: 启动一个交互式远程会话。你的提示符会改变，之后输入的命令将在远程计算机上执行。
-    ```powershell
-    Enter-PSSession -ComputerName Server01
-    # [Server01]: PS C:\Users\Admin\Documents> hostname  # 命令在 Server01 上执行
-    # [Server01]: PS C:\Users\Admin\Documents> Get-Process -Name explorer
-    # [Server01]: PS C:\Users\Admin\Documents> exit      # 退出远程会话
-    ```
-*   **`New-PSSession`**: 创建一个持久的 PSSession 对象，可以在后续命令中重用。适用于需要多次连接或管理多个会话的场景。
-    ```powershell
-    # 创建到一台服务器的会话
-    $session = New-PSSession -ComputerName Server01
+- **`Enter-PSSession`**: 启动一个交互式远程会话。你的提示符会改变，之后输入的命令将在远程计算机上执行。
+  ```powershell
+  Enter-PSSession -ComputerName Server01
+  # [Server01]: PS C:\Users\Admin\Documents> hostname  # 命令在 Server01 上执行
+  # [Server01]: PS C:\Users\Admin\Documents> Get-Process -Name explorer
+  # [Server01]: PS C:\Users\Admin\Documents> exit      # 退出远程会话
+  ```
+- **`New-PSSession`**: 创建一个持久的 PSSession 对象，可以在后续命令中重用。适用于需要多次连接或管理多个会话的场景。
 
-    # 创建到多台服务器的会话
-    $servers = "Server01", "Server02", "WebSrv03"
-    $sessions = New-PSSession -ComputerName $servers
+  ```powershell
+  # 创建到一台服务器的会话
+  $session = New-PSSession -ComputerName Server01
 
-    # 查看会话
-    Get-PSSession
+  # 创建到多台服务器的会话
+  $servers = "Server01", "Server02", "WebSrv03"
+  $sessions = New-PSSession -ComputerName $servers
 
-    # 使用会话 (见 Invoke-Command)
+  # 查看会话
+  Get-PSSession
 
-    # 关闭会话
-    Remove-PSSession -Session $session
-    Get-PSSession | Remove-PSSession # 关闭所有会话
-    ```
+  # 使用会话 (见 Invoke-Command)
+
+  # 关闭会话
+  Remove-PSSession -Session $session
+  Get-PSSession | Remove-PSSession # 关闭所有会话
+  ```
 
 ### 在远程计算机上执行命令 (`Invoke-Command`)
 
@@ -978,6 +986,7 @@ Remove-Variable excel, workbook, sheet
 [GC]::Collect()
 [GC]::WaitForPendingFinalizers()
 ```
+
 **注意**: COM 自动化可能比较复杂且容易出错，尤其是在资源释放方面。
 
 ### Active Directory
@@ -1054,11 +1063,11 @@ $Error.Clear()
 
 这个变量决定了 PowerShell 遇到非终止性错误时的默认行为。
 
-*   **Continue**: (默认值) 显示错误消息并继续执行。
-*   **SilentlyContinue**: 不显示错误消息，继续执行。错误仍会添加到 `$Error`。
-*   **Stop**: 显示错误消息并停止执行脚本（将非终止性错误提升为终止性错误）。这是 `Try/Catch` 块捕获错误所必需的。
-*   **Inquire**: 显示错误消息并提示用户是否继续。
-*   **Ignore**: (PowerShell 3.0+) 不显示错误消息，不添加到 `$Error`，继续执行。应谨慎使用。
+- **Continue**: (默认值) 显示错误消息并继续执行。
+- **SilentlyContinue**: 不显示错误消息，继续执行。错误仍会添加到 `$Error`。
+- **Stop**: 显示错误消息并停止执行脚本（将非终止性错误提升为终止性错误）。这是 `Try/Catch` 块捕获错误所必需的。
+- **Inquire**: 显示错误消息并提示用户是否继续。
+- **Ignore**: (PowerShell 3.0+) 不显示错误消息，不添加到 `$Error`，继续执行。应谨慎使用。
 
 可以在脚本或函数级别设置，或在单个命令上使用 `-ErrorAction` ( `-EA` ) 通用参数。
 
@@ -1145,40 +1154,41 @@ function Test-Trap {
 
 Test-Trap
 ```
+
 `Try/Catch` 通常是更推荐的现代错误处理方式，因为它提供了更结构化和灵活的控制。
 
 ## 最佳实践
 
 遵循最佳实践可以使你的 PowerShell 脚本更可靠、可读、可维护和安全。
 
-*   **命名规范**:
-    *   函数/脚本使用批准的动词 (`Get`, `Set`, `New`, `Remove`, `Invoke`, `Test` 等) 和清晰的名词，遵循 `动词-名词` 模式。
-    *   变量使用清晰、描述性的名称，通常采用驼峰式 (`$userName`, `$logFilePath`) 或帕斯卡式 (`$UserName`, `$LogFilePath`)。
-    *   参数名称使用帕斯卡式 (`-ComputerName`, `-FilePath`)。
-*   **代码注释和文档**:
-    *   使用 `#` 添加行内注释解释复杂逻辑。
-    *   使用 `<# ... #>` 块注释提供脚本或函数的摘要、描述、参数说明、示例等（Comment-Based Help），以便 `Get-Help` 可以读取。
-*   **错误处理策略**:
-    *   使用 `Try/Catch/Finally` 处理预期可能发生的错误。
-    *   设置合适的 `$ErrorActionPreference` 或使用 `-ErrorAction`。
-    *   提供有意义的错误消息。
-    *   考虑脚本失败时的回滚或清理操作。
-*   **模块化设计**:
-    *   将可重用的函数组织到模块中。
-    *   保持函数和脚本的单一职责。
-*   **使用详细输出 (`Write-Verbose`)**:
-    *   在脚本中添加 `Write-Verbose` 语句来提供执行过程中的详细信息。用户可以通过 `-Verbose` 参数启用这些消息，便于调试和理解脚本行为。
-    *   函数需要添加 `[CmdletBinding()]` 才能响应 `-Verbose`。
-*   **避免使用别名 (在脚本中)**:
-    *   在交互式 shell 中使用别名可以提高效率，但在脚本中应使用完整的 Cmdlet 名称，以提高清晰度和可维护性。`ls` 不如 `Get-ChildItem` 清晰。
-*   **安全性考虑**:
-    *   不要在脚本中硬编码凭据。使用 `Get-Credential` 或安全的方式（如 Windows Credential Manager、Azure Key Vault）来处理敏感信息。
-    *   注意执行策略，对来自不可信来源的脚本保持警惕。
-    *   使用 `SupportsShouldProcess` (`-WhatIf`, `-Confirm`) 来实现可能产生破坏性更改的操作，给用户预览和确认的机会。
-    *   验证和清理外部输入。
-*   **代码格式化**: 保持一致的缩进和代码风格。
-*   **参数验证**: 使用参数属性 (`[Parameter(Mandatory=$true)]`, `[ValidateSet(...)]`, `[ValidateRange(...)]`, `[ValidatePattern(...)]`) 来验证函数或脚本的输入。
-*   **管道支持**: 设计函数以接受管道输入 (`ValueFromPipeline`, `ValueFromPipelineByPropertyName`) 并产生可供管道使用的对象输出。
+- **命名规范**:
+  - 函数/脚本使用批准的动词 (`Get`, `Set`, `New`, `Remove`, `Invoke`, `Test` 等) 和清晰的名词，遵循 `动词-名词` 模式。
+  - 变量使用清晰、描述性的名称，通常采用驼峰式 (`$userName`, `$logFilePath`) 或帕斯卡式 (`$UserName`, `$LogFilePath`)。
+  - 参数名称使用帕斯卡式 (`-ComputerName`, `-FilePath`)。
+- **代码注释和文档**:
+  - 使用 `#` 添加行内注释解释复杂逻辑。
+  - 使用 `<# ... #>` 块注释提供脚本或函数的摘要、描述、参数说明、示例等（Comment-Based Help），以便 `Get-Help` 可以读取。
+- **错误处理策略**:
+  - 使用 `Try/Catch/Finally` 处理预期可能发生的错误。
+  - 设置合适的 `$ErrorActionPreference` 或使用 `-ErrorAction`。
+  - 提供有意义的错误消息。
+  - 考虑脚本失败时的回滚或清理操作。
+- **模块化设计**:
+  - 将可重用的函数组织到模块中。
+  - 保持函数和脚本的单一职责。
+- **使用详细输出 (`Write-Verbose`)**:
+  - 在脚本中添加 `Write-Verbose` 语句来提供执行过程中的详细信息。用户可以通过 `-Verbose` 参数启用这些消息，便于调试和理解脚本行为。
+  - 函数需要添加 `[CmdletBinding()]` 才能响应 `-Verbose`。
+- **避免使用别名 (在脚本中)**:
+  - 在交互式 shell 中使用别名可以提高效率，但在脚本中应使用完整的 Cmdlet 名称，以提高清晰度和可维护性。`ls` 不如 `Get-ChildItem` 清晰。
+- **安全性考虑**:
+  - 不要在脚本中硬编码凭据。使用 `Get-Credential` 或安全的方式（如 Windows Credential Manager、Azure Key Vault）来处理敏感信息。
+  - 注意执行策略，对来自不可信来源的脚本保持警惕。
+  - 使用 `SupportsShouldProcess` (`-WhatIf`, `-Confirm`) 来实现可能产生破坏性更改的操作，给用户预览和确认的机会。
+  - 验证和清理外部输入。
+- **代码格式化**: 保持一致的缩进和代码风格。
+- **参数验证**: 使用参数属性 (`[Parameter(Mandatory=$true)]`, `[ValidateSet(...)]`, `[ValidateRange(...)]`, `[ValidatePattern(...)]`) 来验证函数或脚本的输入。
+- **管道支持**: 设计函数以接受管道输入 (`ValueFromPipeline`, `ValueFromPipelineByPropertyName`) 并产生可供管道使用的对象输出。
 
 ## 总结
 

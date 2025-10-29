@@ -1,8 +1,8 @@
 /* global hexo */
 
-'use strict';
+"use strict";
 
-hexo.extend.helper.register('prev_post', function prev_post(post) {
+hexo.extend.helper.register("prev_post", function prev_post(post) {
   const prev = post.prev;
   if (!prev) {
     return null;
@@ -13,7 +13,7 @@ hexo.extend.helper.register('prev_post', function prev_post(post) {
   return prev;
 });
 
-hexo.extend.helper.register('next_post', function next_post(post) {
+hexo.extend.helper.register("next_post", function next_post(post) {
   const next = post.next;
   if (!next) {
     return null;

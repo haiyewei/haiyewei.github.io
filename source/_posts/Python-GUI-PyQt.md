@@ -9,6 +9,7 @@ tags: [python, GUI, frontend, PyQt]
 ## <center>Python PyQt GUI基础内容
 
 ### 创建空窗口
+
 ```Python
 import sys
 from PyQt6.QtWidgets import (
@@ -19,8 +20,8 @@ class EmptyWindow(QWidget):
     def __init__(self):
         super().__init__()  #继承Qwidget父类init属性
         self._initialize()
-    
-    def _initialize(self):  
+
+    def _initialize(self):
         #初始化窗口的位置和标题并显示
         self.setGeometry(位置x, 位置y, 大小x, 大小y)
         self.setWindowTitle("标题")

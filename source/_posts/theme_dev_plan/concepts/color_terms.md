@@ -5,6 +5,7 @@ author: DDLG
 categories: DynamicColor
 tags: DynamicColor
 ---
+
 # Color terms
 
 ### Dynamic Color
@@ -26,7 +27,7 @@ scheme.
 The Dynamic Scheme is comprised of color attributes that are combined in a
 predetermined way to meet the needs of a user context or preference. It is
 essentially a mapping of color roles to color at specific tone in a tonal
-palette. For example, primary = *207H 80C 90T*, onPrimary = *207H 80C 40T*.
+palette. For example, primary = _207H 80C 90T_, onPrimary = _207H 80C 40T_.
 
 ### Scheme Variant
 
@@ -96,4 +97,5 @@ ratio ≥ 3.0; a difference of 50 in tone guarantees a contrast ratio ≥ 4.5.
 See https://m3.material.io/foundations/glossary for more Material terms.
 
 ## 引用
+
 - [Dynamic Color](https://github.com/material-foundation/material-color-utilities)
