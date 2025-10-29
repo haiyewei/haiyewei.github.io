@@ -290,6 +290,9 @@ CONTINUE 继续
 |指令原型|含义|
 |:---:|:---:|
 |PEEK(area:=byte_in, dbNumber:=dint_in, byteOffset:=dint_in)|存储器读指令|
+|PEEK_BOOL(area:=byte_in, dbNumber:=dint_in, byteOffset:=dint_in, bitOffset:=int_in)|存储器位读指令|
 |POKE(area:=byte_in, dbNumber:=dint_in, byteOffset:=dint_in, value:=byte_in)|存储器写指令|
+|POKE_BOOL(area:=byte_in, dbNumber:=dint_in, byteOffset:=dint_in, bitOffset:=int_in, value:=bool_in)|存储器位写指令|
+|POKE_BLK(area_src:=byte_in, dbNumber:=dint_in, byteOffset_src:=dint_in, area_dest:=byte_in, dbNumber_dest:=dint_in, byteOffset_dest:=dint_in, count:=dint_in)|存储器块写指令|
 
 </center>
