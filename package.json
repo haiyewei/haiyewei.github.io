@@ -29,5 +29,8 @@
     "hexo-theme-landscape": "^1.0.0",
     "hexo-theme-solitude": "^3.0.19",
     "katex": "^0.16.22"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
   }
 }
