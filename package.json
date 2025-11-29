@@ -32,6 +32,6 @@
     "katex": "^0.16.22"
   },
   "devDependencies": {
-    "prettier": "3.7.0"
+    "prettier": "3.7.1"
   }
 }
