@@ -29,7 +29,7 @@
     "hexo-theme-fluid": "^1.9.8",
     "hexo-theme-landscape": "^1.0.0",
     "hexo-theme-solitude": "^3.0.19",
-    "katex": "^0.16.22"
+    "katex": "^0.16.27"
   },
   "devDependencies": {
     "prettier": "3.7.3"
