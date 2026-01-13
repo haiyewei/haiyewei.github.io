@@ -1,0 +1,251 @@
+---
+/**
+ * PostList 组件
+ * 文章列表，支持多种布局模式
+ */
+import type { CollectionEntry } from 'astro:content';
+import PostCard from './PostCard.astro';
+import { getCoverImage, type PostLayout } from '../../utils/config';
+
+interface Props {
+  /** 文章集合 */
+  posts: CollectionEntry<'posts'>[];
+  /** 布局变体（传统模式） */
+  variant?: 'grid' | 'list';
+  /** 布局类型（新模式） */
+  layout?: PostLayout;
+  /** 网格列数 */
+  columns?: 1 | 2 | 3;
+  /** 是否显示分类 */
+  showCategory?: boolean;
+  /** 是否显示标签 */
+  showTags?: boolean;
+  /** 是否显示图片 */
+  showImage?: boolean;
+  /** 摘要长度 */
+  excerptLength?: number;
+  /** 自定义类名 */
+  class?: string;
+  /** 上下文类型（用于翻页导航） */
+  context?: 'all' | 'category' | 'tag';
+  /** 上下文值（分类 slug 或标签名） */
+  contextValue?: string;
+}
+
+const {
+  posts,
+  variant = 'grid',
+  layout,
+  columns = 2,
+  showCategory = true,
+  showTags = true,
+  showImage = true,
+  excerptLength = 150,
+  class: className = '',
+  context = 'all',
+  contextValue
+} = Astro.props;
+
+// 根据 layout 确定实际使用的布局模式
+function getEffectiveLayout(): 'cms' | 'blog' | 'image-blog' | 'grid' | 'list' {
+  if (layout) return layout;
+  return variant;
+}
+
+const effectiveLayout = getEffectiveLayout();
+
+// 根据布局确定列数
+function getEffectiveColumns(): 1 | 2 | 3 {
+  if (effectiveLayout === 'cms') return 1;
+  if (effectiveLayout === 'image-blog') return 3;
+  return columns;
+}
+
+const effectiveColumns = getEffectiveColumns();
+
+// 根据布局变体确定卡片变体（传统模式兼容）
+const cardVariant = variant === 'list' ? 'compact' : 'default';
+---
+
+{posts.length > 0 ? (
+  <div
+    class:list={[
+      'post-list',
+      `post-list--${effectiveLayout}`,
+      `post-list--cols-${effectiveColumns}`,
+      className
+    ]}
+  >
+    {posts.map((post, index) => (
+      <PostCard
+        title={post.data.title}
+        description={post.data.description}
+        pubDate={post.data.pubDate}
+        updatedDate={post.data.updatedDate}
+        coverImage={getCoverImage(post.body || '')}
+        category={showCategory ? post.data.category : undefined}
+        tags={showTags ? post.data.tags : undefined}
+        slug={post.slug}
+        variant={cardVariant}
+        layout={layout}
+        showImage={showImage}
+        excerptLength={excerptLength}
+        context={context}
+        contextValue={contextValue}
+      />
+    ))}
+  </div>
+) : (
+  <div class="post-list__empty">
+    <svg class="post-list__empty-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+    </svg>
+    <p class="post-list__empty-text">暂无文章</p>
+  </div>
+)}
+
+<style>
+  /* ========================================
+     基础样式
+     ======================================== */
+  .post-list {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  /* ========================================
+     网格布局（传统模式）
+     ======================================== */
+  .post-list--grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post-list--grid.post-list--cols-2 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .post-list--grid.post-list--cols-3 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: 640px) {
+    .post-list--grid.post-list--cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .post-list--grid.post-list--cols-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .post-list--grid.post-list--cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ========================================
+     列表布局（传统模式）
+     ======================================== */
+  .post-list--list {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  /* ========================================
+     CMS 布局 - 单列紧凑列表
+     ======================================== */
+  .post-list--cms {
+    grid-template-columns: 1fr;
+    gap: 0;
+    background: var(--md-surface-container-low);
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .post-list--cms > :last-child {
+    border-bottom: none;
+  }
+
+  /* ========================================
+     博客布局 - 单列列表视图
+     ======================================== */
+  .post-list--blog {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  /* ========================================
+     图片博客布局 - 瀑布流/网格
+     ======================================== */
+  .post-list--image-blog {
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .post-list--image-blog {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .post-list--image-blog {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* 图片博客布局的瀑布流效果（可选） */
+  .post-list--image-blog.post-list--masonry {
+    display: block;
+    column-count: 1;
+    column-gap: var(--space-4);
+  }
+
+  .post-list--image-blog.post-list--masonry > * {
+    break-inside: avoid;
+    margin-bottom: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .post-list--image-blog.post-list--masonry {
+      column-count: 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .post-list--image-blog.post-list--masonry {
+      column-count: 3;
+    }
+  }
+
+  /* ========================================
+     空状态
+     ======================================== */
+  .post-list__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-16) var(--space-4);
+    text-align: center;
+    color: var(--md-outline);
+  }
+
+  .post-list__empty-icon {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: var(--space-4);
+    opacity: 0.5;
+  }
+
+  .post-list__empty-text {
+    font-size: var(--text-lg);
+    margin: 0;
+  }
+</style>

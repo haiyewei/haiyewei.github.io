@@ -1,0 +1,144 @@
+---
+/**
+ * RelatedPosts 相关文章组件
+ * 根据当前文章的分类和标签推荐相关文章
+ */
+import PostCard from './PostCard.astro';
+import { getCoverImage } from '../../utils/config';
+
+interface Post {
+  slug: string;
+  body?: string;
+  data: {
+    title: string;
+    description: string;
+    pubDate: Date;
+    updatedDate?: Date;
+    category?: string;
+    tags?: string[];
+    draft?: boolean;
+  };
+}
+
+interface Props {
+  /** 当前文章 slug（用于排除） */
+  currentSlug: string;
+  /** 当前文章分类 */
+  category?: string;
+  /** 当前文章标签 */
+  tags?: string[];
+  /** 所有文章列表 */
+  allPosts: Post[];
+  /** 显示数量 */
+  limit?: number;
+  /** 自定义类名 */
+  class?: string;
+}
+
+const {
+  currentSlug,
+  category,
+  tags = [],
+  allPosts,
+  limit = 3,
+  class: className = '',
+} = Astro.props;
+
+/**
+ * 计算文章相关性分数
+ * - 同分类：+3 分
+ * - 每个相同标签：+1 分
+ */
+function calculateRelevanceScore(post: Post): number {
+  let score = 0;
+  
+  // 同分类加分
+  if (category && post.data.category === category) {
+    score += 3;
+  }
+  
+  // 相同标签加分
+  if (tags.length > 0 && post.data.tags) {
+    const commonTags = tags.filter(tag => post.data.tags?.includes(tag));
+    score += commonTags.length;
+  }
+  
+  return score;
+}
+
+// 过滤并排序相关文章
+const relatedPosts = allPosts
+  // 排除当前文章和草稿
+  .filter(post => post.slug !== currentSlug && post.data.draft !== true)
+  // 计算相关性分数
+  .map(post => ({
+    post,
+    score: calculateRelevanceScore(post),
+  }))
+  // 只保留有相关性的文章（分数 > 0）
+  .filter(item => item.score > 0)
+  // 按分数降序排列，分数相同则按日期降序
+  .sort((a, b) => {
+    if (b.score !== a.score) {
+      return b.score - a.score;
+    }
+    return b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf();
+  })
+  // 取前 N 篇
+  .slice(0, limit)
+  .map(item => item.post);
+
+// 如果没有相关文章，不渲染组件
+const hasRelatedPosts = relatedPosts.length > 0;
+---
+
+{hasRelatedPosts && (
+  <section class:list={['related-posts', className]}>
+    <h2 class="related-posts__title">相关文章</h2>
+    <div class="related-posts__grid">
+      {relatedPosts.map((post) => (
+        <PostCard
+          title={post.data.title}
+          description={post.data.description}
+          pubDate={post.data.pubDate}
+          coverImage={getCoverImage(post.body || '')}
+          category={post.data.category}
+          tags={post.data.tags}
+          slug={post.slug}
+          variant="compact"
+          showImage={false}
+          excerptLength={80}
+        />
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .related-posts {
+    margin-top: var(--space-8);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--md-outline-variant);
+  }
+
+  .related-posts__title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--md-on-background);
+    margin: 0 0 var(--space-6) 0;
+  }
+
+  .related-posts__grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .related-posts__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+  }
+</style>

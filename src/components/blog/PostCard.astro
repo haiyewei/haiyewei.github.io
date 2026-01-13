@@ -1,0 +1,772 @@
+---
+/**
+ * PostCard 组件
+ * 文章卡片，支持多种变体和布局
+ */
+import CategoryBadge from './CategoryBadge.astro';
+import TagList from './TagList.astro';
+import type { PostLayout } from '../../utils/config';
+
+interface Props {
+  /** 文章标题 */
+  title: string;
+  /** 文章描述 */
+  description: string;
+  /** 发布日期 */
+  pubDate: Date;
+  /** 更新日期 */
+  updatedDate?: Date;
+  /** 封面图片（从文章内容提取或使用默认图片） */
+  coverImage?: string;
+  /** 分类 slug */
+  category?: string;
+  /** 标签数组 */
+  tags?: string[];
+  /** 文章 slug */
+  slug: string;
+  /** 卡片变体（传统模式） */
+  variant?: 'default' | 'compact' | 'featured';
+  /** 布局类型（新模式） */
+  layout?: PostLayout;
+  /** 是否显示图片 */
+  showImage?: boolean;
+  /** 摘要长度 */
+  excerptLength?: number;
+  /** 自定义类名 */
+  class?: string;
+  /** 上下文类型（用于翻页导航） */
+  context?: 'all' | 'category' | 'tag';
+  /** 上下文值（分类 slug 或标签名） */
+  contextValue?: string;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  coverImage,
+  category,
+  tags = [],
+  slug,
+  variant = 'default',
+  layout,
+  showImage = true,
+  excerptLength = 150,
+  class: className = '',
+  context = 'all',
+  contextValue
+} = Astro.props;
+
+// 根据 layout 确定实际使用的变体
+function getEffectiveVariant(): 'default' | 'compact' | 'featured' | 'cms' | 'blog' | 'image-blog' {
+  if (layout === 'cms') return 'cms';
+  if (layout === 'blog') return 'blog';
+  if (layout === 'image-blog') return 'image-blog';
+  return variant;
+}
+
+const effectiveVariant = getEffectiveVariant();
+
+// 截断描述文字
+function truncateDescription(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength).trim() + '...';
+}
+
+const truncatedDescription = truncateDescription(description, excerptLength);
+
+// 是否应该显示图片
+const shouldShowImage = layout === 'image-blog' || (layout !== 'cms' && showImage && coverImage);
+
+/**
+ * 格式化日期为中文格式
+ */
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+// 文章链接（根据上下文生成）
+function getPostUrl(): string {
+  const baseUrl = `/post/${slug}`;
+  if (context === 'all' || !contextValue) return baseUrl;
+  if (context === 'category') return `${baseUrl}?from=category&value=${encodeURIComponent(contextValue)}`;
+  if (context === 'tag') return `${baseUrl}?from=tag&value=${encodeURIComponent(contextValue)}`;
+  return baseUrl;
+}
+
+const postUrl = getPostUrl();
+
+// 默认占位图片
+const placeholderImage = '/placeholder-image.svg';
+---
+
+<article class:list={['post-card', `post-card--${effectiveVariant}`, className]}>
+  <a href={postUrl} class="post-card__link">
+    {/* CMS 布局 - 紧凑的单行列表 */}
+    {effectiveVariant === 'cms' && (
+      <div class="post-card__cms-row">
+        <span class="post-card__cms-icon" aria-hidden="true"></span>
+        <h3 class="post-card__title">{title}</h3>
+        <div class="post-card__cms-meta">
+          {category && (
+            <span class="post-card__cms-category">
+              <CategoryBadge category={category} size="sm" />
+            </span>
+          )}
+          <time datetime={pubDate.toISOString()} class="post-card__date">
+            {formatDate(pubDate)}
+          </time>
+        </div>
+        {/* 悬停时显示的摘要 */}
+        <div class="post-card__cms-tooltip">
+          <p>{truncatedDescription}</p>
+        </div>
+      </div>
+    )}
+
+    {/* Blog 布局 - 列表视图 */}
+    {effectiveVariant === 'blog' && (
+      <div class="post-card__blog-row">
+        {/* 可选图片 */}
+        {shouldShowImage && (
+          <div class="post-card__blog-image">
+            <img
+              src={coverImage || placeholderImage}
+              alt={title}
+              class="post-card__image"
+              loading="lazy"
+            />
+          </div>
+        )}
+        {/* 内容区域 */}
+        <div class="post-card__blog-content">
+          <h3 class="post-card__title">{title}</h3>
+          <p class="post-card__description">{truncatedDescription}</p>
+          <div class="post-card__blog-meta">
+            <time datetime={pubDate.toISOString()} class="post-card__date">
+              {formatDate(pubDate)}
+            </time>
+            {category && (
+              <span class="post-card__blog-category">
+                · <CategoryBadge category={category} size="sm" />
+              </span>
+            )}
+            {tags.length > 0 && (
+              <span class="post-card__blog-tags">
+                · <TagList tags={tags} size="sm" limit={3} />
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Image-Blog 布局 - 大图卡片 */}
+    {effectiveVariant === 'image-blog' && (
+      <>
+        <div class="post-card__image-wrapper post-card__image-wrapper--full">
+          <img
+            src={coverImage || placeholderImage}
+            alt={title}
+            class="post-card__image"
+            loading="lazy"
+          />
+          {/* 渐变遮罩和标题覆盖 */}
+          <div class="post-card__image-overlay">
+            <div class="post-card__overlay-content">
+              {category && (
+                <div class="post-card__category">
+                  <CategoryBadge category={category} size="sm" />
+                </div>
+              )}
+              <h3 class="post-card__title">{title}</h3>
+              <time datetime={pubDate.toISOString()} class="post-card__date">
+                {formatDate(pubDate)}
+              </time>
+            </div>
+          </div>
+        </div>
+      </>
+    )}
+
+    {/* 默认布局 */}
+    {effectiveVariant !== 'cms' && effectiveVariant !== 'blog' && effectiveVariant !== 'image-blog' && (
+      <>
+        {/* 封面图片 */}
+        {shouldShowImage && (
+          <div class="post-card__image-wrapper">
+            <img
+              src={coverImage || placeholderImage}
+              alt={title}
+              class="post-card__image"
+              loading="lazy"
+            />
+            {effectiveVariant === 'featured' && updatedDate && (
+              <span class="post-card__updated-badge">已更新</span>
+            )}
+          </div>
+        )}
+        
+        {/* 内容区域 */}
+        <div class="post-card__content">
+          {/* 分类徽章 */}
+          {category && effectiveVariant !== 'compact' && (
+            <div class="post-card__category">
+              <CategoryBadge category={category} size="sm" />
+            </div>
+          )}
+          
+          {/* 标题 */}
+          <h3 class="post-card__title">{title}</h3>
+          
+          {/* 描述 */}
+          {effectiveVariant !== 'compact' && (
+            <p class="post-card__description">{truncatedDescription}</p>
+          )}
+          
+          {/* 元信息 */}
+          <div class="post-card__meta">
+            <time datetime={pubDate.toISOString()} class="post-card__date">
+              {formatDate(pubDate)}
+            </time>
+            {effectiveVariant === 'compact' && updatedDate && (
+              <span class="post-card__updated-indicator" title={`更新于 ${formatDate(updatedDate)}`}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                </svg>
+              </span>
+            )}
+          </div>
+          
+          {/* 标签 */}
+          {tags.length > 0 && effectiveVariant !== 'compact' && (
+            <div class="post-card__tags">
+              <TagList tags={tags} size="sm" limit={3} />
+            </div>
+          )}
+        </div>
+      </>
+    )}
+  </a>
+</article>
+
+<style>
+  .post-card {
+    background: var(--md-surface-container-low);
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+  }
+
+  .post-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .post-card__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* 图片区域 */
+  .post-card__image-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-card__image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .post-card:hover .post-card__image {
+    transform: scale(1.02);
+  }
+
+  .post-card__updated-badge {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    padding: 0.25rem 0.5rem;
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    border-radius: var(--radius-sm);
+  }
+
+  /* 内容区域 */
+  .post-card__content {
+    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .post-card__category {
+    display: flex;
+  }
+
+  .post-card__title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--md-on-surface);
+    margin: 0;
+    line-height: var(--leading-snug);
+    transition: color var(--transition-fast);
+  }
+
+  .post-card:hover .post-card__title {
+    color: var(--md-primary);
+  }
+
+  .post-card__description {
+    font-size: var(--text-sm);
+    color: var(--md-on-surface-variant);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-card__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .post-card__date {
+    font-size: var(--text-xs);
+    color: var(--md-outline);
+  }
+
+  .post-card__updated-indicator {
+    display: flex;
+    align-items: center;
+    color: var(--md-primary);
+  }
+
+  .post-card__updated-indicator svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .post-card__tags {
+    margin-top: auto;
+  }
+
+  /* ========================================
+     变体样式：Default
+     ======================================== */
+  .post-card--default .post-card__image {
+    height: 180px;
+  }
+
+  /* ========================================
+     变体样式：Compact
+     ======================================== */
+  .post-card--compact {
+    display: flex;
+  }
+
+  .post-card--compact .post-card__link {
+    display: flex;
+    width: 100%;
+  }
+
+  .post-card--compact .post-card__image-wrapper {
+    flex-shrink: 0;
+    width: 100px;
+  }
+
+  .post-card--compact .post-card__image {
+    width: 100px;
+    height: 100%;
+    min-height: 80px;
+  }
+
+  .post-card--compact .post-card__content {
+    flex: 1;
+    padding: var(--space-3);
+    gap: var(--space-2);
+    justify-content: center;
+  }
+
+  .post-card--compact .post-card__title {
+    font-size: var(--text-base);
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ========================================
+     变体样式：Featured
+     ======================================== */
+  .post-card--featured {
+    border: 2px solid var(--md-primary);
+  }
+
+  .post-card--featured .post-card__image {
+    height: 240px;
+  }
+
+  .post-card--featured .post-card__content {
+    padding: var(--space-6);
+    gap: var(--space-4);
+  }
+
+  .post-card--featured .post-card__title {
+    font-size: var(--text-xl);
+  }
+
+  .post-card--featured .post-card__description {
+    font-size: var(--text-base);
+    -webkit-line-clamp: 3;
+  }
+
+  /* ========================================
+     变体样式：CMS（紧凑列表）
+     ======================================== */
+  .post-card--cms {
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--md-outline-variant);
+  }
+
+  .post-card--cms:hover {
+    background: var(--md-surface-container-low);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .post-card--cms .post-card__link {
+    display: block;
+  }
+
+  .post-card--cms .post-card__cms-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    position: relative;
+  }
+
+  .post-card--cms .post-card__cms-icon {
+    flex-shrink: 0;
+    font-size: var(--text-base);
+    opacity: 0.6;
+  }
+
+  .post-card--cms .post-card__title {
+    flex: 1;
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .post-card--cms .post-card__cms-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .post-card--cms .post-card__cms-category {
+    display: flex;
+  }
+
+  .post-card--cms .post-card__date {
+    font-size: var(--text-sm);
+    color: var(--md-outline);
+    white-space: nowrap;
+  }
+
+  /* CMS 悬停提示 */
+  .post-card--cms .post-card__cms-tooltip {
+    display: none;
+    position: absolute;
+    left: var(--space-4);
+    right: var(--space-4);
+    top: 100%;
+    z-index: 10;
+    padding: var(--space-3);
+    background: var(--md-surface-container-high);
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  .post-card--cms .post-card__cms-tooltip p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--md-on-surface-variant);
+    line-height: var(--leading-relaxed);
+  }
+
+  .post-card--cms:hover .post-card__cms-tooltip {
+    display: block;
+  }
+
+  /* ========================================
+     变体样式：Blog（列表视图）
+     ======================================== */
+  .post-card--blog {
+    border-radius: var(--radius-lg);
+    background: var(--md-surface-container-low);
+    border: 1px solid var(--md-outline-variant);
+  }
+
+  .post-card--blog:hover {
+    background: var(--md-surface-container);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .post-card--blog .post-card__link {
+    display: block;
+  }
+
+  .post-card--blog .post-card__blog-row {
+    display: flex;
+    gap: var(--space-6);
+    padding: 2rem;
+  }
+
+  .post-card--blog .post-card__blog-image {
+    flex-shrink: 0;
+    width: 280px;
+    height: 200px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .post-card--blog .post-card__blog-image .post-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .post-card--blog .post-card__blog-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  .post-card--blog .post-card__title {
+    font-size: 1.5rem;
+    font-weight: var(--font-semibold);
+    color: var(--md-on-surface);
+    margin: 0;
+    line-height: var(--leading-snug);
+  }
+
+  .post-card--blog .post-card__description {
+    font-size: var(--text-base);
+    color: var(--md-on-surface-variant);
+    margin: 0;
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .post-card--blog .post-card__blog-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--md-outline);
+    margin-top: 1.25rem;
+  }
+
+  .post-card--blog .post-card__date {
+    font-size: var(--text-sm);
+    color: var(--md-outline);
+  }
+
+  .post-card--blog .post-card__blog-category {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .post-card--blog .post-card__blog-tags {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  /* ========================================
+     变体样式：Image-Blog（图片博客）
+     ======================================== */
+  .post-card--image-blog {
+    border: none;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .post-card--image-blog:hover {
+    transform: translateY(-4px);
+  }
+
+  .post-card--image-blog .post-card__image-wrapper--full {
+    position: relative;
+    aspect-ratio: 4 / 3;
+  }
+
+  .post-card--image-blog .post-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .post-card--image-blog .post-card__image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.4) 40%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--space-4);
+  }
+
+  .post-card--image-blog .post-card__overlay-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .post-card--image-blog .post-card__title {
+    color: #ffffff;
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  .post-card--image-blog:hover .post-card__title {
+    color: #ffffff;
+  }
+
+  .post-card--image-blog .post-card__date {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: var(--text-xs);
+  }
+
+  .post-card--image-blog .post-card__category {
+    margin-bottom: var(--space-1);
+  }
+
+  /* ========================================
+     响应式
+     ======================================== */
+  @media (max-width: 640px) {
+    /* Blog 响应式 - 移动端垂直堆叠 */
+    .post-card--blog .post-card__blog-row {
+      flex-direction: column;
+      gap: var(--space-4);
+      padding: 1.5rem;
+    }
+
+    .post-card--blog .post-card__blog-image {
+      width: 100%;
+      height: 200px;
+    }
+
+    .post-card--blog .post-card__title {
+      font-size: var(--text-lg);
+    }
+
+    .post-card--blog .post-card__blog-meta {
+      font-size: var(--text-xs);
+      margin-top: var(--space-3);
+    }
+
+    .post-card--compact .post-card__link {
+      flex-direction: column;
+    }
+
+    .post-card--compact .post-card__image-wrapper {
+      width: 100%;
+    }
+
+    .post-card--compact .post-card__image {
+      width: 100%;
+      height: 120px;
+    }
+
+    .post-card--featured .post-card__image {
+      height: 180px;
+    }
+
+    .post-card--featured .post-card__content {
+      padding: var(--space-4);
+    }
+
+    .post-card--featured .post-card__title {
+      font-size: var(--text-lg);
+    }
+
+    /* CMS 响应式 */
+    .post-card--cms .post-card__cms-row {
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .post-card--cms .post-card__title {
+      flex-basis: 100%;
+      order: 1;
+      white-space: normal;
+      -webkit-line-clamp: 2;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .post-card--cms .post-card__cms-icon {
+      order: 0;
+    }
+
+    .post-card--cms .post-card__cms-meta {
+      order: 2;
+      margin-left: calc(var(--text-base) + var(--space-3));
+    }
+
+    .post-card--cms .post-card__cms-tooltip {
+      display: none !important;
+    }
+
+    /* Image-Blog 响应式 */
+    .post-card--image-blog .post-card__image-wrapper--full {
+      aspect-ratio: 16 / 9;
+    }
+
+    .post-card--image-blog .post-card__title {
+      font-size: var(--text-base);
+    }
+  }
+</style>

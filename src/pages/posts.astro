@@ -1,0 +1,141 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import PostList from '../components/blog/PostList.astro';
+import CategoryBadge from '../components/blog/CategoryBadge.astro';
+import { getCategories, getPostLayout, shouldShowPostImage, getExcerptLength } from '../utils/config';
+
+// 获取帖子配置
+const postLayout = getPostLayout();
+const showImage = shouldShowPostImage();
+const excerptLength = getExcerptLength();
+
+// 获取所有博客文章，过滤草稿
+const allPosts = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+
+// 按发布日期降序排列
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// 获取所有分类
+const categories = getCategories();
+---
+
+<PageLayout
+  title="博客文章"
+  description={`共 ${posts.length} 篇文章`}
+  containerSize="lg"
+>
+
+    {/* 分类筛选 */}
+    {categories.length > 0 && (
+      <nav class="category-nav" aria-label="文章分类">
+        <span class="category-nav__label">分类：</span>
+        <div class="category-nav__list">
+          <a href="/posts" class="category-nav__item category-nav__item--active">
+            全部
+          </a>
+          {categories.map((cat) => (
+            <a 
+              href={`/category/${cat.slug}`} 
+              class="category-nav__item"
+              style={`--category-color: ${cat.color}`}
+            >
+              {cat.name}
+            </a>
+          ))}
+        </div>
+      </nav>
+    )}
+
+  <section class="posts-section">
+    <PostList
+      posts={posts}
+      layout={postLayout}
+      columns={2}
+      showCategory={true}
+      showTags={true}
+      showImage={showImage}
+      excerptLength={excerptLength}
+      context="all"
+    />
+  </section>
+</PageLayout>
+
+<style>
+  /* 分类导航 */
+  .category-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+    padding: var(--space-4);
+    background-color: var(--md-surface-container-low);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+  }
+
+  .category-nav__label {
+    font-size: var(--text-sm);
+    color: var(--md-on-surface-variant);
+    font-weight: var(--font-medium);
+    white-space: nowrap;
+  }
+
+  .category-nav__list {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .category-nav__item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 0.875rem;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--md-on-surface-variant);
+    background-color: var(--md-surface);
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .category-nav__item:hover {
+    color: var(--md-on-surface);
+    border-color: var(--md-outline);
+  }
+
+  .category-nav__item--active {
+    color: var(--md-on-primary);
+    background-color: var(--md-primary);
+    border-color: var(--md-primary);
+  }
+
+  .category-nav__item--active:hover {
+    color: var(--md-on-primary);
+    background-color: var(--md-primary);
+    border-color: var(--md-primary);
+    opacity: 0.9;
+  }
+
+  .posts-section {
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 640px) {
+    .category-nav {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+      padding: var(--space-3);
+    }
+
+    .category-nav__list {
+      width: 100%;
+    }
+  }
+</style>

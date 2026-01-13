@@ -1,0 +1,288 @@
+---
+/**
+ * 标签列表页
+ * 显示所有标签及其文章数量
+ */
+import { getCollection } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+
+// 获取所有博客文章，过滤草稿
+const allPosts = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+
+// 统计每个标签的文章数量
+const tagCounts = new Map<string, number>();
+allPosts.forEach((post) => {
+  if (post.data.tags) {
+    post.data.tags.forEach((tag) => {
+      tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+    });
+  }
+});
+
+// 转换为数组并按文章数量降序排列
+const sortedTags = Array.from(tagCounts.entries())
+  .sort((a, b) => b[1] - a[1])
+  .map(([tag, count]) => ({ tag, count }));
+
+// 计算标签大小（用于标签云效果）
+const maxCount = Math.max(...sortedTags.map((t) => t.count));
+const minCount = Math.min(...sortedTags.map((t) => t.count));
+
+function getTagSize(count: number): 'sm' | 'md' | 'lg' | 'xl' {
+  if (maxCount === minCount) return 'md';
+  const ratio = (count - minCount) / (maxCount - minCount);
+  if (ratio < 0.25) return 'sm';
+  if (ratio < 0.5) return 'md';
+  if (ratio < 0.75) return 'lg';
+  return 'xl';
+}
+---
+
+<PageLayout
+  title="所有标签"
+  description={`共 ${sortedTags.length} 个标签`}
+  containerSize="lg"
+>
+  <nav class="tags-breadcrumb" aria-label="面包屑导航">
+    <a href="/posts" class="tags-breadcrumb__link">文章</a>
+    <span class="tags-breadcrumb__separator" aria-hidden="true">/</span>
+    <span class="tags-breadcrumb__current">标签</span>
+  </nav>
+
+  {sortedTags.length > 0 ? (
+    <section class="tags-cloud" aria-label="标签云">
+      {sortedTags.map(({ tag, count }) => (
+        <a
+          href={`/tag/${encodeURIComponent(tag)}`}
+          class:list={['tag-item', `tag-item--${getTagSize(count)}`]}
+        >
+          <span class="tag-item__hash" aria-hidden="true">#</span>
+          <span class="tag-item__name">{tag}</span>
+          <span class="tag-item__count">{count}</span>
+        </a>
+      ))}
+    </section>
+  ) : (
+    <div class="tags-empty">
+      <svg class="tags-empty__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+      </svg>
+      <p class="tags-empty__text">暂无标签</p>
+    </div>
+  )}
+
+  {/* 标签统计 */}
+  <aside class="tags-stats">
+    <h2 class="tags-stats__title">统计信息</h2>
+    <dl class="tags-stats__list">
+      <div class="tags-stats__item">
+        <dt class="tags-stats__label">标签总数</dt>
+        <dd class="tags-stats__value">{sortedTags.length}</dd>
+      </div>
+      <div class="tags-stats__item">
+        <dt class="tags-stats__label">文章总数</dt>
+        <dd class="tags-stats__value">{allPosts.length}</dd>
+      </div>
+      {sortedTags.length > 0 && (
+        <div class="tags-stats__item">
+          <dt class="tags-stats__label">最热门标签</dt>
+          <dd class="tags-stats__value">
+            <a href={`/tag/${encodeURIComponent(sortedTags[0].tag)}`}>
+              {sortedTags[0].tag}
+            </a>
+          </dd>
+        </div>
+      )}
+    </dl>
+  </aside>
+</PageLayout>
+
+<style>
+  /* 面包屑导航 */
+  .tags-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    font-size: var(--text-sm);
+  }
+
+  .tags-breadcrumb__link {
+    color: var(--md-on-surface-variant);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .tags-breadcrumb__link:hover {
+    color: var(--md-primary);
+  }
+
+  .tags-breadcrumb__separator {
+    color: var(--md-outline);
+  }
+
+  .tags-breadcrumb__current {
+    color: var(--md-on-surface);
+    font-weight: var(--font-medium);
+  }
+
+  /* 标签云 */
+  .tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8);
+    background-color: var(--md-surface-container-low);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-8);
+  }
+
+  /* 标签项 */
+  .tag-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .tag-item:hover {
+    background-color: var(--md-secondary);
+    color: var(--md-on-secondary);
+    transform: translateY(-2px);
+  }
+
+  /* 标签大小变体 */
+  .tag-item--sm {
+    font-size: var(--text-xs);
+    padding: 0.25rem 0.5rem;
+  }
+
+  .tag-item--md {
+    font-size: var(--text-sm);
+    padding: 0.375rem 0.75rem;
+  }
+
+  .tag-item--lg {
+    font-size: var(--text-base);
+    padding: 0.5rem 1rem;
+    font-weight: var(--font-medium);
+  }
+
+  .tag-item--xl {
+    font-size: var(--text-lg);
+    padding: 0.625rem 1.25rem;
+    font-weight: var(--font-semibold);
+  }
+
+  .tag-item__hash {
+    opacity: 0.6;
+  }
+
+  .tag-item__name {
+    line-height: 1;
+  }
+
+  .tag-item__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25em;
+    padding: 0.125rem 0.375rem;
+    background-color: color-mix(in srgb, var(--md-on-secondary-container) 10%, transparent);
+    border-radius: var(--radius-full);
+    font-size: 0.75em;
+    line-height: 1;
+  }
+
+  /* 空状态 */
+  .tags-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-16) var(--space-4);
+    text-align: center;
+    color: var(--md-outline);
+  }
+
+  .tags-empty__icon {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: var(--space-4);
+    opacity: 0.5;
+  }
+
+  .tags-empty__text {
+    font-size: var(--text-lg);
+    margin: 0;
+  }
+
+  /* 统计信息 */
+  .tags-stats {
+    padding: var(--space-6);
+    background-color: var(--md-surface-container-low);
+    border-radius: var(--radius-lg);
+  }
+
+  .tags-stats__title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--md-on-surface);
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .tags-stats__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+  }
+
+  .tags-stats__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .tags-stats__label {
+    font-size: var(--text-sm);
+    color: var(--md-on-surface-variant);
+  }
+
+  .tags-stats__value {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--md-on-surface);
+    margin: 0;
+  }
+
+  .tags-stats__value a {
+    color: var(--md-primary);
+    text-decoration: none;
+  }
+
+  .tags-stats__value a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .tags-cloud {
+      padding: var(--space-4);
+      gap: var(--space-2);
+    }
+
+    .tags-stats__list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

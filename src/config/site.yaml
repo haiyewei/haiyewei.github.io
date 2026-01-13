@@ -1,0 +1,90 @@
+# 网站基本信息
+site:
+  title: 海野味
+  description: 分享技术、想法和生活
+  author: Your Name
+  language: zh-CN
+  url: https://example.com
+
+# 导航菜单（已移至页脚，此处保留空配置以兼容旧代码）
+navigation: []
+
+# 博客分类
+categories:
+  - slug: tech
+    name: 技术
+    description: 技术相关文章
+    color: "#3b82f6"
+  - slug: life
+    name: 生活
+    description: 生活随笔
+    color: "#10b981"
+  - slug: tutorial
+    name: 教程
+    description: 教程和指南
+    color: "#f59e0b"
+
+# 社交链接
+social:
+  github: https://github.com/username
+  twitter: https://twitter.com/username
+  email: email@example.com
+
+# 页脚配置
+footer:
+  copyright: "©HAIYEWEI.COM 2025. All rights reserved."
+  links:
+    - name: RSS
+      href: /rss.xml
+    - name: 站点地图
+      href: /sitemap.xml
+
+# 功能开关
+features:
+  darkMode: true
+  search: true
+  comments: false
+  analytics: false
+
+# 帖子显示配置
+posts:
+  # 布局样式: "cms" | "blog" | "image-blog"
+  # cms: 紧凑的列表样式，无图片，适合内容管理系统风格
+  # blog: 标准博客卡片样式，可选图片
+  # image-blog: 以图片为主的瀑布流/网格样式
+  layout: "blog"
+  # 是否显示封面图片（仅对 blog 布局有效，image-blog 始终显示图片）
+  showImage: false
+  # 每页显示数量
+  postsPerPage: 10
+  # 摘要长度（字符数）
+  excerptLength: 150
+
+# Hero 区域配置
+hero:
+  # 是否启用 hero 区域（全屏首屏）
+  enabled: true
+  # 可选标题，为空则不显示
+  title: ""
+  # 可选副标题，为空则不显示
+  subtitle: ""
+  # 可选背景图片 URL
+  background: ""
+  # 是否显示向下滚动指示器
+  showScrollIndicator: true
+
+# 作者配置
+authors:
+  - id: "admin"
+    name: "管理员"
+    email: "admin@example.com"
+    bio: "网站管理员"
+  - id: "guest"
+    name: "访客作者"
+    email: "guest@example.com"
+
+# 主题配置
+theme:
+  # 种子颜色 - Material Design 3 会从这个颜色生成完整的调色板
+  # 默认使用 Material Design 3 的紫色，可自定义为任何颜色
+  seedColor: "#007FFF"

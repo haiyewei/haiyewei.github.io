@@ -1,0 +1,277 @@
+---
+/**
+ * ImageLightbox 图片灯箱组件
+ * 为 Markdown 内容中的图片提供点击放大查看功能
+ * 
+ * 功能特性：
+ * - 点击图片打开灯箱
+ * - 支持 ESC 键关闭
+ * - 支持点击遮罩层关闭
+ * - 支持点击关闭按钮关闭
+ * - 防止滚动穿透
+ * - 平滑的淡入淡出动画
+ * - 完整的无障碍支持
+ */
+---
+
+<div 
+  id="image-lightbox" 
+  class="lightbox" 
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label="图片预览"
+>
+  <div class="lightbox-overlay" aria-hidden="true"></div>
+  <div class="lightbox-content">
+    <button 
+      class="lightbox-close" 
+      aria-label="关闭图片预览"
+      type="button"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="24" 
+        height="24" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <img class="lightbox-image" src="" alt="" />
+  </div>
+</div>
+
+<style>
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-normal), visibility var(--transition-normal);
+  }
+
+  .lightbox[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .lightbox-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: color-mix(in srgb, var(--md-scrim) 80%, transparent);
+    cursor: pointer;
+  }
+
+  .lightbox-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90vw;
+    max-height: 90vh;
+    z-index: 1;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--md-surface-container-high);
+    color: var(--md-on-surface);
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+    z-index: 2;
+  }
+
+  .lightbox-close:hover {
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    transform: scale(1.1);
+  }
+
+  .lightbox-close:focus-visible {
+    outline: 2px solid var(--md-primary);
+    outline-offset: 2px;
+  }
+
+  .lightbox-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    transform: scale(0.95);
+    transition: transform var(--transition-normal);
+  }
+
+  .lightbox[aria-hidden="false"] .lightbox-image {
+    transform: scale(1);
+  }
+
+  /* 移动端适配 */
+  @media (max-width: 640px) {
+    .lightbox-close {
+      top: var(--space-2);
+      right: var(--space-2);
+      width: 40px;
+      height: 40px;
+    }
+
+    .lightbox-close svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .lightbox-image {
+      max-width: 95vw;
+      max-height: 85vh;
+      border-radius: var(--radius-md);
+    }
+  }
+</style>
+
+<script>
+  /**
+   * 图片灯箱客户端逻辑
+   */
+  class ImageLightbox {
+    private lightbox: HTMLElement;
+    private lightboxImage: HTMLImageElement;
+    private closeButton: HTMLButtonElement;
+    private overlay: HTMLElement;
+    private previousActiveElement: HTMLElement | null = null;
+
+    constructor() {
+      this.lightbox = document.getElementById('image-lightbox')!;
+      this.lightboxImage = this.lightbox.querySelector('.lightbox-image')!;
+      this.closeButton = this.lightbox.querySelector('.lightbox-close')!;
+      this.overlay = this.lightbox.querySelector('.lightbox-overlay')!;
+
+      this.init();
+    }
+
+    private init(): void {
+      // 监听文章内容区域的图片点击事件
+      this.bindImageClicks();
+
+      // 绑定关闭事件
+      this.closeButton.addEventListener('click', () => this.close());
+      this.overlay.addEventListener('click', () => this.close());
+
+      // 绑定键盘事件
+      document.addEventListener('keydown', (e) => this.handleKeydown(e));
+    }
+
+    private bindImageClicks(): void {
+      // 选择文章内容区域的图片
+      const articleContent = document.querySelector('.article-content');
+      if (!articleContent) return;
+
+      const images = articleContent.querySelectorAll('img');
+      images.forEach((img) => {
+        // 添加可点击样式
+        img.style.cursor = 'zoom-in';
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', `点击放大查看图片: ${img.alt || '图片'}`);
+
+        // 点击事件
+        img.addEventListener('click', () => this.open(img));
+
+        // 键盘事件（Enter 和 Space）
+        img.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.open(img);
+          }
+        });
+      });
+    }
+
+    private open(img: HTMLImageElement): void {
+      // 保存当前焦点元素
+      this.previousActiveElement = document.activeElement as HTMLElement;
+
+      // 设置灯箱图片
+      this.lightboxImage.src = img.src;
+      this.lightboxImage.alt = img.alt || '放大的图片';
+
+      // 显示灯箱
+      this.lightbox.setAttribute('aria-hidden', 'false');
+
+      // 防止滚动穿透
+      document.body.style.overflow = 'hidden';
+
+      // 聚焦到关闭按钮
+      setTimeout(() => {
+        this.closeButton.focus();
+      }, 100);
+    }
+
+    private close(): void {
+      // 隐藏灯箱
+      this.lightbox.setAttribute('aria-hidden', 'true');
+
+      // 恢复滚动
+      document.body.style.overflow = '';
+
+      // 清空图片源
+      setTimeout(() => {
+        this.lightboxImage.src = '';
+        this.lightboxImage.alt = '';
+      }, 200);
+
+      // 恢复焦点
+      if (this.previousActiveElement) {
+        this.previousActiveElement.focus();
+        this.previousActiveElement = null;
+      }
+    }
+
+    private handleKeydown(e: KeyboardEvent): void {
+      // 只在灯箱打开时处理
+      if (this.lightbox.getAttribute('aria-hidden') === 'true') return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        this.close();
+      }
+
+      // Tab 键焦点陷阱
+      if (e.key === 'Tab') {
+        // 灯箱内只有关闭按钮可聚焦，保持焦点在关闭按钮上
+        e.preventDefault();
+        this.closeButton.focus();
+      }
+    }
+  }
+
+  // 页面加载后初始化
+  document.addEventListener('DOMContentLoaded', () => {
+    new ImageLightbox();
+  });
+
+  // 支持 Astro View Transitions
+  document.addEventListener('astro:page-load', () => {
+    new ImageLightbox();
+  });
+</script>

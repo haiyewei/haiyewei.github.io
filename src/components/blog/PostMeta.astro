@@ -1,0 +1,205 @@
+---
+/**
+ * PostMeta 组件
+ * 显示文章元信息：发布日期、更新日期、作者、分类、标签、阅读时间
+ */
+import { Icon } from 'astro-icon/components';
+import CategoryBadge from './CategoryBadge.astro';
+import TagList from './TagList.astro';
+import { getAuthorName } from '../../utils/config';
+
+interface Props {
+  /** 发布日期 */
+  pubDate: Date;
+  /** 更新日期 */
+  updatedDate?: Date;
+  /** 作者 ID */
+  author?: string;
+  /** 分类 slug */
+  category?: string;
+  /** 标签数组 */
+  tags?: string[];
+  /** 阅读时间（分钟） */
+  readingTime?: number;
+  /** 是否显示作者 */
+  showAuthor?: boolean;
+  /** 是否显示分类 */
+  showCategory?: boolean;
+  /** 是否显示标签 */
+  showTags?: boolean;
+  /** 自定义类名 */
+  class?: string;
+}
+
+const {
+  pubDate,
+  updatedDate,
+  author,
+  category,
+  tags = [],
+  readingTime,
+  showAuthor = true,
+  showCategory = true,
+  showTags = true,
+  class: className = ''
+} = Astro.props;
+
+// 获取作者名称
+const authorName = author ? getAuthorName(author) : undefined;
+
+/**
+ * 格式化日期为中文格式
+ */
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<div class:list={['post-meta', className]}>
+  {/* 第一行：基本信息（作者、日期、阅读时间） */}
+  <div class="meta-row meta-primary">
+    {showAuthor && author && authorName && (
+      <span class="meta-item meta-author">
+        <Icon name="material-symbols:person" class="meta-icon" aria-hidden="true" />
+        <a href={`/author/${author}`} class="author-link">{authorName}</a>
+      </span>
+    )}
+    
+    <span class="meta-item">
+      <Icon name="material-symbols:calendar-today" class="meta-icon" aria-hidden="true" />
+      <time datetime={pubDate.toISOString()}>
+        {formatDate(pubDate)}
+      </time>
+    </span>
+    
+    {updatedDate && (
+      <span class="meta-item meta-updated">
+        <Icon name="material-symbols:refresh" class="meta-icon" aria-hidden="true" />
+        <time datetime={updatedDate.toISOString()}>
+          更新于 {formatDate(updatedDate)}
+        </time>
+      </span>
+    )}
+    
+    {readingTime && (
+      <span class="meta-item">
+        <Icon name="material-symbols:schedule" class="meta-icon" aria-hidden="true" />
+        <span>{readingTime} 分钟阅读</span>
+      </span>
+    )}
+    
+    {showCategory && category && (
+      <span class="meta-item meta-category-inline">
+        <CategoryBadge category={category} size="sm" />
+      </span>
+    )}
+  </div>
+  
+  {/* 第二行：标签列表 */}
+  {showTags && tags.length > 0 && (
+    <div class="meta-row meta-tags">
+      <Icon name="material-symbols:sell" class="meta-icon tags-icon" aria-hidden="true" />
+      <TagList tags={tags} size="sm" />
+    </div>
+  )}
+</div>
+
+<style>
+  .post-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    color: var(--md-on-surface-variant);
+  }
+
+  .meta-icon {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  .meta-updated {
+    color: var(--md-outline);
+  }
+
+  .meta-author .author-link {
+    color: var(--md-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .meta-author .author-link:hover {
+    color: var(--md-primary-container);
+    text-decoration: underline;
+  }
+
+  /* 第一行：基本信息 */
+  .meta-primary {
+    flex-wrap: wrap;
+    row-gap: var(--space-2);
+  }
+
+  /* 第一行内的分隔符 */
+  .meta-primary .meta-item:not(:last-child)::after {
+    content: '·';
+    margin-left: var(--space-3);
+    color: var(--md-outline);
+  }
+
+  /* 分类徽章不需要分隔符后缀 */
+  .meta-category-inline::after {
+    display: none !important;
+  }
+
+  /* 第二行：标签 */
+  .meta-tags {
+    padding-top: var(--space-1);
+    gap: var(--space-2);
+  }
+
+  .tags-icon {
+    color: var(--md-on-surface-variant);
+    align-self: flex-start;
+    margin-top: 0.125rem;
+  }
+
+  /* 移动端响应式 */
+  @media (max-width: 640px) {
+    .post-meta {
+      gap: var(--space-3);
+    }
+
+    .meta-primary .meta-item:not(:last-child)::after {
+      display: none;
+    }
+
+    .meta-primary {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+
+    .meta-tags {
+      padding-top: 0;
+    }
+  }
+</style>

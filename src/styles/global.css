@@ -1,0 +1,606 @@
+/**
+ * 全局样式文件
+ * 包含 CSS 变量系统、CSS reset 和全局排版样式
+ *
+ * 注意：Material Design 3 主题变量现在通过 BaseLayout.astro 内联注入
+ */
+
+/* ========================================
+   1. CSS 变量系统（非颜色变量）
+   ======================================== */
+
+:root {
+  /* ---- 字体族 ---- */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
+  --font-serif: Georgia, 'Times New Roman', 'Noto Serif SC', serif;
+  --font-mono: 'Fira Code', 'JetBrains Mono', Consolas, 'Liberation Mono',
+    monospace;
+
+  /* ---- 字体大小 ---- */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem; /* 36px */
+  --text-5xl: 3rem; /* 48px */
+
+  /* ---- 行高 ---- */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* ---- 字重 ---- */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ---- 间距比例（基于 4px 基准） ---- */
+  --space-0: 0;
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+  --space-20: 5rem; /* 80px */
+  --space-24: 6rem; /* 96px */
+
+  /* ---- 布局变量 ---- */
+  /* 容器宽度 */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-prose: 65ch; /* 文章最佳阅读宽度 */
+  --max-width: 800px;
+
+  /* 导航高度 */
+  --nav-height: 64px;
+  --nav-height-mobile: 56px;
+
+  /* 边框圆角 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* 阴影 - 使用 MD3 shadow 变量 */
+  --shadow-sm: 0 1px 2px 0 color-mix(in srgb, var(--md-shadow) 5%, transparent);
+  --shadow-md: 0 4px 6px -1px color-mix(in srgb, var(--md-shadow) 10%, transparent), 0 2px 4px -2px color-mix(in srgb, var(--md-shadow) 10%, transparent);
+  --shadow-lg: 0 10px 15px -3px color-mix(in srgb, var(--md-shadow) 10%, transparent),
+    0 4px 6px -4px color-mix(in srgb, var(--md-shadow) 10%, transparent);
+  --shadow-xl: 0 20px 25px -5px color-mix(in srgb, var(--md-shadow) 10%, transparent),
+    0 8px 10px -6px color-mix(in srgb, var(--md-shadow) 10%, transparent);
+
+  /* 过渡 */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* Z-index 层级 */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-tooltip: 600;
+}
+
+/* ========================================
+   3. 深色模式阴影覆盖
+   ======================================== */
+
+/* 深色模式下阴影更微妙 - 使用 MD3 shadow 变量 */
+:root.dark {
+  --shadow-sm: 0 1px 2px 0 color-mix(in srgb, var(--md-shadow) 30%, transparent);
+  --shadow-md: 0 4px 6px -1px color-mix(in srgb, var(--md-shadow) 40%, transparent), 0 2px 4px -2px color-mix(in srgb, var(--md-shadow) 30%, transparent);
+  --shadow-lg: 0 10px 15px -3px color-mix(in srgb, var(--md-shadow) 40%, transparent),
+    0 4px 6px -4px color-mix(in srgb, var(--md-shadow) 30%, transparent);
+  --shadow-xl: 0 20px 25px -5px color-mix(in srgb, var(--md-shadow) 50%, transparent),
+    0 8px 10px -6px color-mix(in srgb, var(--md-shadow) 40%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(.dark) {
+    --shadow-sm: 0 1px 2px 0 color-mix(in srgb, var(--md-shadow) 30%, transparent);
+    --shadow-md: 0 4px 6px -1px color-mix(in srgb, var(--md-shadow) 40%, transparent),
+      0 2px 4px -2px color-mix(in srgb, var(--md-shadow) 30%, transparent);
+    --shadow-lg: 0 10px 15px -3px color-mix(in srgb, var(--md-shadow) 40%, transparent),
+      0 4px 6px -4px color-mix(in srgb, var(--md-shadow) 30%, transparent);
+    --shadow-xl: 0 20px 25px -5px color-mix(in srgb, var(--md-shadow) 50%, transparent),
+      0 8px 10px -6px color-mix(in srgb, var(--md-shadow) 40%, transparent);
+  }
+}
+
+/* ========================================
+   4. CSS Reset
+   ======================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--md-background);
+  color: var(--md-on-background);
+  transition: background-color var(--transition-normal),
+    color var(--transition-normal);
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* ========================================
+   5. 全局排版样式
+   ======================================== */
+
+/* 链接 */
+a {
+  color: var(--md-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--md-tertiary);
+}
+
+/* 标题 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  color: var(--md-on-background);
+}
+
+h1 {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-6);
+}
+
+h2 {
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-5);
+}
+
+h3 {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-4);
+}
+
+h4 {
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-3);
+}
+
+h5 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+}
+
+h6 {
+  font-size: var(--text-base);
+  margin-bottom: var(--space-2);
+}
+
+/* 段落 */
+p {
+  margin-bottom: var(--space-4);
+  color: var(--md-on-background);
+}
+
+/* 列表 */
+ul,
+ol {
+  padding-left: var(--space-6);
+  margin-bottom: var(--space-4);
+}
+
+li {
+  margin-bottom: var(--space-2);
+}
+
+/* 引用 */
+blockquote {
+  border-left: 4px solid var(--md-primary);
+  padding-left: var(--space-4);
+  margin: var(--space-6) 0;
+  color: var(--md-on-surface-variant);
+  font-style: italic;
+}
+
+/* 行内代码样式（非代码块） */
+:not(pre) > code,
+:not(.expressive-code) code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background-color: var(--md-surface-container);
+  color: var(--md-on-surface);
+  padding: 0.2em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+/* Expressive Code 代码块内的 code 不应用行内样式 */
+.expressive-code code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ========================================
+   Expressive Code 样式覆盖
+   适配 Material Design 3 主题
+   ======================================== */
+
+/* 代码块容器 */
+.expressive-code {
+  margin: var(--space-6) 0;
+}
+
+/* 代码块框架 */
+.expressive-code .frame {
+  border-color: var(--md-outline-variant) !important;
+  background-color: var(--md-surface-container) !important;
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+}
+
+/* 代码块 pre 元素背景 */
+.expressive-code pre {
+  background-color: var(--md-surface-container) !important;
+}
+
+/* 代码块 code 元素 */
+.expressive-code code {
+  color: var(--md-on-surface) !important;
+}
+
+/* ---- 标题栏/语言标签样式 ---- */
+
+/* 编辑器标签栏（显示文件名或语言） */
+.expressive-code .frame .header {
+  background-color: var(--md-surface-container-high) !important;
+  border-bottom: 1px solid var(--md-outline-variant) !important;
+}
+
+/* 标签文字样式 */
+.expressive-code .frame .header .title {
+  color: var(--md-on-surface) !important;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+/* 活动标签样式 */
+.expressive-code .frame .header .tab.is-active {
+  background-color: var(--md-surface-container-highest) !important;
+  color: var(--md-on-surface) !important;
+}
+
+/* 活动标签顶部指示器 */
+.expressive-code .frame .header .tab.is-active::before {
+  background-color: var(--md-primary) !important;
+}
+
+/* ---- 复制按钮样式 ---- */
+
+.expressive-code .copy button {
+  color: var(--md-on-surface-variant) !important;
+  background-color: var(--md-surface-container-high) !important;
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid var(--md-outline-variant) !important;
+  transition: all var(--transition-fast);
+}
+
+.expressive-code .copy button:hover {
+  color: var(--md-on-surface) !important;
+  background-color: var(--md-surface-container-highest) !important;
+  border-color: var(--md-outline) !important;
+}
+
+/* 复制成功状态 */
+.expressive-code .copy button.copied,
+.expressive-code .copy button[data-copied="true"] {
+  color: var(--md-primary) !important;
+  background-color: var(--md-primary-container) !important;
+  border-color: var(--md-primary) !important;
+}
+
+/* ---- 行号样式 ---- */
+
+.expressive-code .line-numbers .line::before,
+.expressive-code .ec-line .line-number {
+  color: var(--md-on-surface-variant) !important;
+  opacity: 0.5;
+}
+
+/* ---- 高亮行样式 ---- */
+
+.expressive-code .highlight,
+.expressive-code .ec-line.mark {
+  background-color: color-mix(in srgb, var(--md-primary) 15%, transparent) !important;
+  border-left-color: var(--md-primary) !important;
+}
+
+/* 插入行样式（绿色） */
+.expressive-code .ins,
+.expressive-code .ec-line.ins {
+  background-color: color-mix(in srgb, var(--md-tertiary) 15%, transparent) !important;
+  border-left-color: var(--md-tertiary) !important;
+}
+
+/* 删除行样式（红色） */
+.expressive-code .del,
+.expressive-code .ec-line.del {
+  background-color: color-mix(in srgb, var(--md-error) 15%, transparent) !important;
+  border-left-color: var(--md-error) !important;
+}
+
+/* ---- 标记文本样式 ---- */
+
+.expressive-code mark,
+.expressive-code .ec-line mark {
+  background-color: color-mix(in srgb, var(--md-secondary) 30%, transparent) !important;
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.2em;
+}
+
+/* ---- 终端窗口样式 ---- */
+
+.expressive-code .frame.is-terminal .header {
+  background-color: var(--md-surface-container-high) !important;
+}
+
+.expressive-code .frame.is-terminal .header .title {
+  color: var(--md-on-surface-variant) !important;
+}
+
+/* 终端窗口按钮 */
+.expressive-code .frame.is-terminal .header .window-buttons span {
+  background-color: var(--md-outline-variant) !important;
+}
+
+/* ---- 滚动条样式 ---- */
+
+.expressive-code pre::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.expressive-code pre::-webkit-scrollbar-track {
+  background-color: var(--md-surface-container);
+  border-radius: var(--radius-sm);
+}
+
+.expressive-code pre::-webkit-scrollbar-thumb {
+  background-color: var(--md-outline-variant);
+  border-radius: var(--radius-sm);
+}
+
+.expressive-code pre::-webkit-scrollbar-thumb:hover {
+  background-color: var(--md-outline);
+}
+
+/* Firefox 滚动条 */
+.expressive-code pre {
+  scrollbar-width: thin;
+  scrollbar-color: var(--md-outline-variant) var(--md-surface-container);
+}
+
+/* ---- 差异视图样式 ---- */
+
+.expressive-code .diff .line-number {
+  color: var(--md-on-surface-variant) !important;
+}
+
+/* ---- 焦点样式 ---- */
+
+.expressive-code .frame:focus-within {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+/* 水平线 */
+hr {
+  border: none;
+  border-top: 1px solid var(--md-outline-variant);
+  margin: var(--space-8) 0;
+}
+
+/* 表格 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-6) 0;
+}
+
+th,
+td {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--md-outline-variant);
+  text-align: left;
+}
+
+th {
+  background-color: var(--md-surface-container);
+  font-weight: var(--font-semibold);
+}
+
+/* 图片 */
+img {
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+/* 选中文本 */
+::selection {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+/* 焦点样式 */
+:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   6. 工具类
+   ======================================== */
+
+/* 屏幕阅读器专用 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* 容器 */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+}
+
+/* ========================================
+   7. 标题锚点链接样式
+   ======================================== */
+
+/* 标题锚点链接 - 整个标题作为链接 */
+.heading-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+/* 悬停时显示主题色和下划线 */
+.heading-link:hover {
+  color: var(--md-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--md-primary);
+  text-underline-offset: 0.2em;
+}
+
+/* 焦点样式 */
+.heading-link:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ========================================
+   8. 外部链接图标样式
+   ======================================== */
+
+/* 外部链接图标 */
+.external-link-icon {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 0.2em;
+  vertical-align: middle;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm-2 16H5V7h7V5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7h-2v7a2 2 0 0 1-2 2H5z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+/* 悬停时图标更明显 */
+a:hover .external-link-icon {
+  opacity: 1;
+}
+
+/* 浅色主题下使用主题色 */
+:root .external-link-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236750A4'%3E%3Cpath d='M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm-2 16H5V7h7V5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7h-2v7a2 2 0 0 1-2 2H5z'/%3E%3C/svg%3E");
+}
+
+/* 深色主题下使用浅色主题色 */
+:root.dark .external-link-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D0BCFF'%3E%3Cpath d='M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm-2 16H5V7h7V5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7h-2v7a2 2 0 0 1-2 2H5z'/%3E%3C/svg%3E");
+}
+
+/* 系统深色模式偏好 */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light):not(.dark) .external-link-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D0BCFF'%3E%3Cpath d='M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm-2 16H5V7h7V5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7h-2v7a2 2 0 0 1-2 2H5z'/%3E%3C/svg%3E");
+  }
+}

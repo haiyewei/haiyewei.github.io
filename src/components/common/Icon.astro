@@ -1,0 +1,43 @@
+---
+/**
+ * Icon 图标组件
+ * 封装 astro-icon 的使用，提供统一的图标接口
+ */
+import { Icon as IconifyIcon } from 'astro-icon/components';
+
+interface Props {
+  /** 图标名称，格式为 "set:icon"，如 "material-symbols:search" */
+  name: string;
+  /** 图标大小，可以是数字（像素）或字符串（如 "1em", "24px"） */
+  size?: string | number;
+  /** 自定义类名 */
+  class?: string;
+  /** 无障碍标签 */
+  'aria-label'?: string;
+  /** 是否隐藏（用于装饰性图标） */
+  'aria-hidden'?: boolean | 'true' | 'false';
+}
+
+const { 
+  name, 
+  size = '1em', 
+  class: className,
+  'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden = true,
+  ...rest 
+} = Astro.props;
+
+// 处理 size 参数
+const width = typeof size === 'number' ? size : size;
+const height = typeof size === 'number' ? size : size;
+---
+
+<IconifyIcon 
+  name={name} 
+  width={width} 
+  height={height} 
+  class={className}
+  aria-label={ariaLabel}
+  aria-hidden={ariaHidden}
+  {...rest}
+/>

@@ -1,0 +1,202 @@
+---
+/**
+ * 分类详情页
+ * 显示特定分类下的所有文章
+ */
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import PostList from '../../components/blog/PostList.astro';
+import { getCategories, getCategory, getPostLayout, shouldShowPostImage, getExcerptLength } from '../../utils/config';
+
+// 获取帖子配置
+const postLayout = getPostLayout();
+const showImage = shouldShowPostImage();
+const excerptLength = getExcerptLength();
+
+export async function getStaticPaths() {
+  // 从 YAML 配置获取所有分类
+  const categories = getCategories();
+  
+  // 获取所有博客文章
+  const allPosts = await getCollection('posts', ({ data }) => {
+    return data.draft !== true;
+  });
+
+  // 为每个分类生成路径
+  return categories.map((category) => {
+    // 过滤出该分类的文章
+    const filteredPosts = allPosts.filter(
+      (post) => post.data.category === category.slug
+    );
+    
+    // 按发布日期降序排列
+    const sortedPosts = filteredPosts.sort(
+      (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    );
+
+    return {
+      params: { slug: category.slug },
+      props: { 
+        posts: sortedPosts, 
+        category 
+      },
+    };
+  });
+}
+
+interface Props {
+  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>;
+  category: {
+    slug: string;
+    name: string;
+    description: string;
+    color: string;
+  };
+}
+
+const { posts, category } = Astro.props;
+---
+
+<PageLayout
+  title={`分类: ${category.name}`}
+  description={`共 ${posts.length} 篇文章属于「${category.name}」分类 - ${category.description}`}
+  containerSize="lg"
+>
+  <nav class="category-breadcrumb" aria-label="面包屑导航">
+    <a href="/posts" class="category-breadcrumb__link">文章</a>
+    <span class="category-breadcrumb__separator" aria-hidden="true">/</span>
+    <a href="/categories" class="category-breadcrumb__link">分类</a>
+    <span class="category-breadcrumb__separator" aria-hidden="true">/</span>
+    <span class="category-breadcrumb__current">{category.name}</span>
+  </nav>
+
+  <div class="category-info" style={`--category-color: ${category.color}`}>
+    <div class="category-info__header">
+      <span class="category-info__badge">
+        <span class="category-info__icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z" clip-rule="evenodd" />
+            <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
+          </svg>
+        </span>
+        {category.name}
+      </span>
+      <span class="category-info__count">{posts.length} 篇文章</span>
+    </div>
+    {category.description && (
+      <p class="category-info__description">{category.description}</p>
+    )}
+  </div>
+
+  <section class="category-posts">
+    <PostList
+      posts={posts}
+      layout={postLayout}
+      columns={2}
+      showCategory={false}
+      showTags={true}
+      showImage={showImage}
+      excerptLength={excerptLength}
+      context="category"
+      contextValue={category.slug}
+    />
+  </section>
+</PageLayout>
+
+<style>
+  /* 面包屑导航 */
+  .category-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    font-size: var(--text-sm);
+  }
+
+  .category-breadcrumb__link {
+    color: var(--md-on-surface-variant);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .category-breadcrumb__link:hover {
+    color: var(--md-primary);
+  }
+
+  .category-breadcrumb__separator {
+    color: var(--md-outline);
+  }
+
+  .category-breadcrumb__current {
+    color: var(--md-on-surface);
+    font-weight: var(--font-medium);
+  }
+
+  /* 分类信息 */
+  .category-info {
+    margin-bottom: var(--space-8);
+    padding: var(--space-6);
+    background-color: var(--md-surface-container-low);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--category-color);
+  }
+
+  .category-info__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-2);
+  }
+
+  .category-info__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background-color: color-mix(in srgb, var(--category-color) 15%, transparent);
+    color: var(--category-color);
+    border-radius: var(--radius-md);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+  }
+
+  .category-info__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .category-info__icon svg {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  .category-info__count {
+    color: var(--md-on-surface-variant);
+    font-size: var(--text-sm);
+  }
+
+  .category-info__description {
+    color: var(--md-on-surface-variant);
+    font-size: var(--text-base);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* 文章列表区域 */
+  .category-posts {
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 640px) {
+    .category-info {
+      padding: var(--space-4);
+    }
+
+    .category-info__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+  }
+</style>

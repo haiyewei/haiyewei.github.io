@@ -1,0 +1,115 @@
+---
+/**
+ * TagList 组件
+ * 显示标签列表，支持限制显示数量
+ */
+
+interface Props {
+  /** 标签数组 */
+  tags: string[];
+  /** 标签大小 */
+  size?: 'sm' | 'md';
+  /** 最多显示数量 */
+  limit?: number;
+  /** 自定义类名 */
+  class?: string;
+}
+
+const { 
+  tags, 
+  size = 'md', 
+  limit,
+  class: className = '' 
+} = Astro.props;
+
+// 根据 limit 截取标签
+const displayTags = limit ? tags.slice(0, limit) : tags;
+const remainingCount = limit && tags.length > limit ? tags.length - limit : 0;
+
+// 根据大小设置样式类
+const sizeClasses = {
+  sm: 'tag-sm',
+  md: 'tag-md',
+};
+---
+
+{tags.length > 0 && (
+  <div class:list={['tag-list', className]}>
+    {displayTags.map((tag) => (
+      <a
+        href={`/tag/${encodeURIComponent(tag)}`}
+        class:list={['tag', sizeClasses[size]]}
+      >
+        <span class="tag-hash" aria-hidden="true">#</span>
+        <span class="tag-text">{tag}</span>
+      </a>
+    ))}
+    {remainingCount > 0 && (
+      <span class:list={['tag-more', sizeClasses[size]]}>
+        +{remainingCount}
+      </span>
+    )}
+  </div>
+)}
+
+<style>
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .tag:hover {
+    background-color: var(--md-secondary);
+    color: var(--md-on-secondary);
+  }
+
+  /* 大小变体 */
+  .tag-sm {
+    padding: 0.125rem 0.5rem;
+    font-size: var(--text-xs);
+  }
+
+  .tag-md {
+    padding: 0.25rem 0.75rem;
+    font-size: var(--text-sm);
+  }
+
+  /* 标签符号 */
+  .tag-hash {
+    opacity: 0.6;
+    margin-right: 0.125rem;
+  }
+
+  .tag-text {
+    line-height: 1;
+  }
+
+  /* 更多标签提示 */
+  .tag-more {
+    display: inline-flex;
+    align-items: center;
+    color: var(--md-outline);
+    font-weight: var(--font-medium);
+  }
+
+  .tag-more.tag-sm {
+    font-size: var(--text-xs);
+  }
+
+  .tag-more.tag-md {
+    font-size: var(--text-sm);
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+/**
+ * BaseLayout 基础布局组件
+ * 提供页面的基本 HTML 结构，包含 Header、主内容区和 Footer
+ * 所有其他布局组件都应该继承此布局
+ */
+import '../styles/global.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import SEO from '../components/seo/SEO.astro';
+import { siteConfig } from '../utils/config';
+import { generateFullThemeCss, getSeedColorFromConfig } from '../utils/theme';
+
+// 在构建时生成主题 CSS
+const seedColor = getSeedColorFromConfig();
+const themeCss = generateFullThemeCss(seedColor);
+
+interface Props {
+  /** 页面标题 */
+  title?: string;
+  /** 页面描述（用于 SEO） */
+  description?: string;
+  /** OG 图片 URL */
+  image?: string;
+  /** 页面类型 */
+  type?: 'website' | 'article';
+  /** 文章发布时间 */
+  publishedTime?: Date;
+  /** 文章修改时间 */
+  modifiedTime?: Date;
+  /** 文章作者 */
+  author?: string;
+  /** 文章标签 */
+  tags?: string[];
+  /** 是否禁止索引 */
+  noindex?: boolean;
+  /** 是否禁止跟踪链接 */
+  nofollow?: boolean;
+  /** 规范 URL */
+  canonical?: string;
+  /** 自定义 body 类名 */
+  class?: string;
+}
+
+const {
+  title,
+  description = siteConfig.site.description,
+  image,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
+  tags,
+  noindex = false,
+  nofollow = false,
+  canonical,
+  class: className = '',
+} = Astro.props;
+
+// 从 YAML 配置读取网站信息
+const siteTitle = title || siteConfig.site.title;
+---
+
+<!doctype html>
+<html lang={siteConfig.site.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO 组件 -->
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      author={author}
+      tags={tags}
+      noindex={noindex}
+      nofollow={nofollow}
+      canonical={canonical}
+    />
+    
+    <!-- Material Design 3 主题 CSS（构建时内联生成） -->
+    <style is:inline set:html={themeCss}></style>
+    
+    <!-- RSS 和 Sitemap 链接 -->
+    <link rel="alternate" type="application/rss+xml" title={siteConfig.site.title} href="/rss.xml" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    
+    <!-- 防闪烁脚本：在页面渲染前应用正确的主题 -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (theme === 'dark' || (theme === 'system' && systemDark) || (!theme && systemDark)) {
+          document.documentElement.classList.add('dark');
+        } else if (theme === 'light') {
+          document.documentElement.classList.add('light');
+        }
+      })();
+    </script>
+    
+    <!-- 额外的 head 内容插槽 -->
+    <slot name="head" />
+  </head>
+  <body class:list={[className]}>
+    <Header />
+    
+    <main class="main">
+      <slot />
+    </main>
+    
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .main {
+    flex: 1;
+  }
+
+  /* 非主页时添加 padding */
+  body:not(.home-page) .main {
+    padding: var(--space-8) 0;
+  }
+
+  @media (max-width: 640px) {
+    body:not(.home-page) .main {
+      padding: var(--space-6) 0;
+    }
+  }
+</style>

@@ -1,0 +1,49 @@
+---
+/**
+ * TwitterCard 组件
+ * 生成 Twitter Card meta 标签，用于 Twitter 分享
+ */
+import { siteConfig } from '../../utils/config';
+
+interface Props {
+  /** 页面标题 */
+  title: string;
+  /** 页面描述 */
+  description: string;
+  /** 分享图片 URL */
+  image?: string;
+  /** 卡片类型 */
+  card?: 'summary' | 'summary_large_image';
+  /** 网站 Twitter 账号（@username） */
+  site?: string;
+  /** 内容创作者 Twitter 账号（@username） */
+  creator?: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  card = image ? 'summary_large_image' : 'summary',
+  site,
+  creator,
+} = Astro.props;
+
+// 构建完整的图片 URL
+const siteUrl = siteConfig.site.url || Astro.url.origin;
+const twitterImage = image ? new URL(image, siteUrl).href : undefined;
+
+// 从配置中获取 Twitter 账号（如果未提供）
+const twitterSite = site || (siteConfig.social.twitter ? `@${siteConfig.social.twitter.split('/').pop()}` : undefined);
+---
+
+<!-- Twitter Card 标签 -->
+<meta name="twitter:card" content={card} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+{twitterImage && <meta name="twitter:image" content={twitterImage} />}
+{twitterImage && <meta name="twitter:image:alt" content={title} />}
+
+{twitterSite && <meta name="twitter:site" content={twitterSite} />}
+{creator && <meta name="twitter:creator" content={creator} />}

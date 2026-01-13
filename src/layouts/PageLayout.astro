@@ -1,0 +1,92 @@
+---
+/**
+ * PageLayout 页面布局组件
+ * 用于普通页面（关于、联系等），继承 BaseLayout
+ * 提供可选的页面标题显示和容器包裹
+ */
+import BaseLayout from './BaseLayout.astro';
+import Container from '../components/common/Container.astro';
+
+interface Props {
+  /** 页面标题 */
+  title: string;
+  /** 页面描述（用于 SEO） */
+  description?: string;
+  /** 是否显示页面标题 */
+  showTitle?: boolean;
+  /** 容器尺寸 */
+  containerSize?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  /** 自定义类名 */
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  showTitle = true,
+  containerSize = 'lg',
+  class: className = '',
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description} type="website">
+  <slot name="head" slot="head" />
+  
+  <Container size={containerSize} class={className}>
+    {showTitle && (
+      <header class="page-header">
+        <h1 class="page-title">{title}</h1>
+        {description && (
+          <p class="page-description">{description}</p>
+        )}
+      </header>
+    )}
+    
+    <div class="page-content">
+      <slot />
+    </div>
+  </Container>
+</BaseLayout>
+
+<style>
+  .page-header {
+    text-align: center;
+    padding: var(--space-10) 0;
+    border-bottom: 1px solid var(--md-outline-variant);
+    margin-bottom: var(--space-8);
+  }
+
+  .page-title {
+    font-size: var(--text-4xl);
+    color: var(--md-on-background);
+    margin: 0 0 var(--space-2) 0;
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+  }
+
+  .page-description {
+    font-size: var(--text-lg);
+    color: var(--md-on-surface-variant);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  .page-content {
+    /* 页面内容区域 */
+  }
+
+  @media (max-width: 640px) {
+    .page-header {
+      padding: var(--space-8) 0;
+      margin-bottom: var(--space-6);
+    }
+
+    .page-title {
+      font-size: var(--text-3xl);
+    }
+
+    .page-description {
+      font-size: var(--text-base);
+    }
+  }
+</style>

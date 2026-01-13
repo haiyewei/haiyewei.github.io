@@ -1,0 +1,420 @@
+---
+/**
+ * PostLayout 文章布局组件
+ * 专门用于博客文章页面，继承 BaseLayout
+ * 显示文章头部（标题、元信息）、内容、目录和底部（标签、导航）
+ */
+import BaseLayout from './BaseLayout.astro';
+import Container from '../components/common/Container.astro';
+import PostMeta from '../components/blog/PostMeta.astro';
+import CategoryBadge from '../components/blog/CategoryBadge.astro';
+import TagList from '../components/blog/TagList.astro';
+import BackToList from '../components/blog/BackToList.astro';
+import TableOfContents from '../components/interactive/TableOfContents.astro';
+import ImageLightbox from '../components/interactive/ImageLightbox.astro';
+import PageSearch from '../components/interactive/PageSearch.astro';
+import { themeConfig } from '../config/theme.config';
+
+/**
+ * 目录项类型
+ */
+interface TocItem {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+type BackContext = 'posts' | 'category' | 'tag' | 'author';
+
+interface Props {
+  /** 文章标题 */
+  title: string;
+  /** 文章描述 */
+  description: string;
+  /** 发布日期 */
+  pubDate: Date;
+  /** 更新日期 */
+  updatedDate?: Date;
+  /** 作者 ID */
+  author?: string;
+  /** 分类 slug */
+  category?: string;
+  /** 标签数组 */
+  tags?: string[];
+  /** 阅读时间（分钟） */
+  readingTime?: number;
+  /** 文章标题列表（用于目录） */
+  headings?: TocItem[];
+  /** 返回上下文类型 */
+  backContext?: BackContext;
+  /** 返回上下文值（分类名/标签名/作者名） */
+  backContextValue?: string;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  author,
+  category,
+  tags = [],
+  readingTime,
+  headings = [],
+  backContext = 'posts',
+  backContextValue = '',
+} = Astro.props;
+
+// 是否显示目录（配置开关 + 有标题）
+const showToc = themeConfig.blog.showToc && headings.length > 0;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+>
+  <slot name="head" slot="head" />
+  
+  <div class="article-layout">
+    <Container size="md" class="article-container">
+      <article class="article">
+      <!-- 文章头部 -->
+      <header class="article-header">
+        <h1 class="article-title">{title}</h1>
+        
+        <PostMeta
+          pubDate={pubDate}
+          updatedDate={updatedDate}
+          author={author}
+          category={category}
+          tags={tags}
+          readingTime={readingTime}
+          showAuthor={true}
+          showCategory={true}
+          showTags={true}
+          class="article-meta"
+        />
+        
+        <p class="article-description">{description}</p>
+      </header>
+      
+      <!-- 文章内容 -->
+      <div class="article-content">
+        <slot />
+      </div>
+      
+        <!-- 文章底部 -->
+        <footer class="article-footer">
+          {/* 文章底部标签 */}
+          {tags && tags.length > 0 && (
+            <div class="footer-tags">
+              <span class="footer-tags__label">标签：</span>
+              <TagList tags={tags} size="md" />
+            </div>
+          )}
+          
+          <!-- 翻页导航 -->
+          <slot name="navigation" />
+          
+          <!-- 相关文章 -->
+          <slot name="related" />
+          
+          <div class="footer-nav">
+            <BackToList
+              context={backContext}
+              contextValue={backContextValue}
+              variant="outlined"
+              class="footer-back-link"
+            />
+          </div>
+        </footer>
+      </article>
+    </Container>
+    
+    {/* 侧边栏目录 - 桌面端 */}
+    {showToc && (
+      <aside class="article-sidebar">
+        <div class="sidebar-toc">
+          <TableOfContents headings={headings} />
+        </div>
+      </aside>
+    )}
+  </div>
+  
+  {/* 移动端浮动目录 */}
+  {showToc && (
+    <div class="mobile-toc">
+      <TableOfContents headings={headings} />
+    </div>
+  )}
+  
+  {/* 页面内搜索组件 */}
+  <div class="page-search-wrapper">
+    <PageSearch targetSelector=".article-content" placeholder="在文章中搜索..." />
+  </div>
+  
+  {/* 图片灯箱组件 */}
+  <ImageLightbox />
+</BaseLayout>
+
+<style>
+  .article-layout {
+    display: flex;
+    gap: var(--space-8);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+  }
+
+  .article-container {
+    flex: 1;
+    min-width: 0;
+    max-width: var(--container-prose);
+  }
+
+  .article-sidebar {
+    display: none;
+    width: 260px;
+    flex-shrink: 0;
+  }
+
+  .sidebar-toc {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-6));
+  }
+
+  .mobile-toc {
+    display: none;
+  }
+
+  /* 大屏幕显示侧边栏目录 */
+  @media (min-width: 1200px) {
+    .article-sidebar {
+      display: block;
+    }
+  }
+
+  /* 中等屏幕和移动端显示浮动目录 */
+  @media (max-width: 1199px) {
+    .article-layout {
+      padding: 0;
+    }
+
+    .mobile-toc {
+      display: block;
+    }
+  }
+
+  .article {
+    background: var(--md-background);
+  }
+
+  .article-header {
+    margin-bottom: var(--space-10);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--md-outline-variant);
+  }
+
+  .footer-back-link {
+    /* 底部返回链接使用 outlined 变体 */
+  }
+
+  .article-title {
+    font-size: var(--text-4xl);
+    color: var(--md-on-background);
+    margin: 0 0 var(--space-6) 0;
+    line-height: var(--leading-tight);
+    font-weight: var(--font-bold);
+  }
+
+  .article-meta {
+    margin-bottom: var(--space-6);
+  }
+
+  .article-description {
+    font-size: var(--text-lg);
+    color: var(--md-on-surface-variant);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* 文章内容样式 */
+  .article-content {
+    line-height: var(--leading-relaxed);
+    color: var(--md-on-background);
+  }
+
+  .article-content :global(h1),
+  .article-content :global(h2),
+  .article-content :global(h3),
+  .article-content :global(h4),
+  .article-content :global(h5),
+  .article-content :global(h6) {
+    color: var(--md-on-background);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+    font-weight: var(--font-semibold);
+    line-height: var(--leading-tight);
+  }
+
+  .article-content :global(h1) {
+    font-size: var(--text-3xl);
+  }
+
+  .article-content :global(h2) {
+    font-size: var(--text-2xl);
+  }
+
+  .article-content :global(h3) {
+    font-size: var(--text-xl);
+  }
+
+  .article-content :global(h4) {
+    font-size: var(--text-lg);
+  }
+
+  .article-content :global(p) {
+    margin-bottom: var(--space-4);
+  }
+
+  .article-content :global(a) {
+    color: var(--md-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--transition-fast);
+  }
+
+  .article-content :global(a:hover) {
+    border-bottom-color: var(--md-primary);
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-6);
+  }
+
+  .article-content :global(li) {
+    margin-bottom: var(--space-2);
+  }
+
+  .article-content :global(blockquote) {
+    border-left: 4px solid var(--md-primary);
+    padding-left: var(--space-4);
+    margin: var(--space-6) 0;
+    color: var(--md-on-surface-variant);
+    font-style: italic;
+  }
+
+  /* 行内代码样式（非 Expressive Code 代码块） */
+  .article-content :global(:not(pre):not(.expressive-code *) > code) {
+    font-family: var(--font-mono);
+    background-color: var(--md-surface-container);
+    color: var(--md-on-surface);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+  }
+
+  /* Expressive Code 代码块容器间距 */
+  .article-content :global(.expressive-code) {
+    margin: var(--space-6) 0;
+  }
+
+  .article-content :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: var(--space-6) 0;
+  }
+
+  .article-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-6) 0;
+  }
+
+  .article-content :global(th),
+  .article-content :global(td) {
+    border: 1px solid var(--md-outline-variant);
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+  }
+
+  .article-content :global(th) {
+    background-color: var(--md-surface-container);
+    font-weight: var(--font-semibold);
+  }
+
+  .article-content :global(hr) {
+    border: none;
+    border-top: 1px solid var(--md-outline-variant);
+    margin: var(--space-10) 0;
+  }
+
+  /* 文章底部 */
+  .article-footer {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--md-outline-variant);
+  }
+
+  .footer-tags {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+  }
+
+  .footer-tags__label {
+    font-size: var(--text-sm);
+    color: var(--md-on-surface-variant);
+    font-weight: var(--font-medium);
+    padding-top: 0.25rem;
+    white-space: nowrap;
+  }
+
+  .footer-nav {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: var(--space-8);
+  }
+
+  /* 页面内搜索组件定位 */
+  .page-search-wrapper {
+    position: fixed;
+    top: calc(var(--nav-height, 64px) + var(--space-4, 16px));
+    right: var(--space-4, 16px);
+    z-index: var(--z-fixed, 50);
+  }
+
+  @media (max-width: 640px) {
+    .article-title {
+      font-size: var(--text-3xl);
+    }
+
+    .article-content :global(h1) {
+      font-size: var(--text-2xl);
+    }
+
+    .article-content :global(h2) {
+      font-size: var(--text-xl);
+    }
+
+    .article-content :global(h3) {
+      font-size: var(--text-lg);
+    }
+
+    .footer-tags {
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .page-search-wrapper {
+      top: auto;
+      bottom: var(--space-4, 16px);
+      right: var(--space-4, 16px);
+    }
+  }
+</style>

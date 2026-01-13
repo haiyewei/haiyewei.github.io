@@ -1,0 +1,331 @@
+---
+/**
+ * 分类列表页
+ * 显示所有分类及其文章数量
+ */
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import PageLayout from '../layouts/PageLayout.astro';
+import { getCategories } from '../utils/config';
+
+// 获取所有博客文章，过滤草稿
+const allPosts = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+
+// 从 YAML 配置获取所有分类
+const categories = getCategories();
+
+// 统计每个分类的文章数量
+const categoryCounts = new Map<string, number>();
+allPosts.forEach((post) => {
+  if (post.data.category) {
+    categoryCounts.set(
+      post.data.category, 
+      (categoryCounts.get(post.data.category) || 0) + 1
+    );
+  }
+});
+
+// 为每个分类添加文章数量
+const categoriesWithCount = categories.map((category) => ({
+  ...category,
+  count: categoryCounts.get(category.slug) || 0,
+}));
+
+// 按文章数量降序排列
+const sortedCategories = categoriesWithCount.sort((a, b) => b.count - a.count);
+
+// 计算总文章数
+const totalPosts = allPosts.length;
+---
+
+<PageLayout
+  title="所有分类"
+  description={`共 ${categories.length} 个分类`}
+  containerSize="lg"
+>
+  <nav class="categories-breadcrumb" aria-label="面包屑导航">
+    <a href="/posts" class="categories-breadcrumb__link">文章</a>
+    <span class="categories-breadcrumb__separator" aria-hidden="true">/</span>
+    <span class="categories-breadcrumb__current">分类</span>
+  </nav>
+
+  {sortedCategories.length > 0 ? (
+    <section class="categories-grid" aria-label="分类列表">
+      {sortedCategories.map((category) => (
+        <a
+          href={`/category/${category.slug}`}
+          class="category-card"
+          style={`--category-color: ${category.color}`}
+        >
+          <div class="category-card__header">
+            <span class="category-card__icon" aria-hidden="true">
+              <Icon name="material-symbols:folder" size={20} />
+            </span>
+            <h2 class="category-card__name">{category.name}</h2>
+          </div>
+          <p class="category-card__description">{category.description}</p>
+          <div class="category-card__footer">
+            <span class="category-card__count">{category.count} 篇文章</span>
+            <Icon name="material-symbols:arrow-forward" class="category-card__arrow" size={16} aria-hidden="true" />
+          </div>
+          <div class="category-card__color-bar" aria-hidden="true"></div>
+        </a>
+      ))}
+    </section>
+  ) : (
+    <div class="categories-empty">
+      <Icon name="material-symbols:folder-off" class="categories-empty__icon" size={64} aria-hidden="true" />
+      <p class="categories-empty__text">暂无分类</p>
+    </div>
+  )}
+
+  {/* 统计信息 */}
+  <aside class="categories-stats">
+    <h2 class="categories-stats__title">统计信息</h2>
+    <dl class="categories-stats__list">
+      <div class="categories-stats__item">
+        <dt class="categories-stats__label">分类总数</dt>
+        <dd class="categories-stats__value">{categories.length}</dd>
+      </div>
+      <div class="categories-stats__item">
+        <dt class="categories-stats__label">文章总数</dt>
+        <dd class="categories-stats__value">{totalPosts}</dd>
+      </div>
+      {sortedCategories.length > 0 && sortedCategories[0].count > 0 && (
+        <div class="categories-stats__item">
+          <dt class="categories-stats__label">最热门分类</dt>
+          <dd class="categories-stats__value">
+            <a 
+              href={`/category/${sortedCategories[0].slug}`}
+              style={`color: ${sortedCategories[0].color}`}
+            >
+              {sortedCategories[0].name}
+            </a>
+          </dd>
+        </div>
+      )}
+    </dl>
+  </aside>
+</PageLayout>
+
+<style>
+  /* 面包屑导航 */
+  .categories-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    font-size: var(--text-sm);
+  }
+
+  .categories-breadcrumb__link {
+    color: var(--md-on-surface-variant);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .categories-breadcrumb__link:hover {
+    color: var(--md-primary);
+  }
+
+  .categories-breadcrumb__separator {
+    color: var(--md-outline);
+  }
+
+  .categories-breadcrumb__current {
+    color: var(--md-on-surface);
+    font-weight: var(--font-medium);
+  }
+
+  /* 分类网格 */
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  @media (min-width: 640px) {
+    .categories-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .categories-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* 分类卡片 */
+  .category-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    background-color: var(--md-surface-container-low);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    overflow: hidden;
+  }
+
+  .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px color-mix(in srgb, var(--md-shadow) 15%, transparent);
+  }
+
+  .category-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  .category-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: color-mix(in srgb, var(--category-color) 15%, transparent);
+    color: var(--category-color);
+    border-radius: var(--radius-md);
+  }
+
+  .category-card__icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .category-card__name {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--md-on-surface);
+    margin: 0;
+  }
+
+  .category-card__description {
+    flex: 1;
+    font-size: var(--text-sm);
+    color: var(--md-on-surface-variant);
+    margin: 0 0 var(--space-4) 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  .category-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .category-card__count {
+    font-size: var(--text-sm);
+    color: var(--category-color);
+    font-weight: var(--font-medium);
+  }
+
+  .category-card__arrow {
+    color: var(--md-outline);
+    transition: transform var(--transition-fast), color var(--transition-fast);
+  }
+
+  .category-card:hover .category-card__arrow {
+    transform: translateX(4px);
+    color: var(--category-color);
+  }
+
+  .category-card__color-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: var(--category-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-fast);
+  }
+
+  .category-card:hover .category-card__color-bar {
+    transform: scaleX(1);
+  }
+
+  /* 空状态 */
+  .categories-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-16) var(--space-4);
+    text-align: center;
+    color: var(--md-outline);
+  }
+
+  .categories-empty__icon {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: var(--space-4);
+    opacity: 0.5;
+  }
+
+  .categories-empty__text {
+    font-size: var(--text-lg);
+    margin: 0;
+  }
+
+  /* 统计信息 */
+  .categories-stats {
+    padding: var(--space-6);
+    background-color: var(--md-surface-container-low);
+    border-radius: var(--radius-lg);
+  }
+
+  .categories-stats__title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--md-on-surface);
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .categories-stats__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+  }
+
+  .categories-stats__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .categories-stats__label {
+    font-size: var(--text-sm);
+    color: var(--md-on-surface-variant);
+  }
+
+  .categories-stats__value {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--md-on-surface);
+    margin: 0;
+  }
+
+  .categories-stats__value a {
+    text-decoration: none;
+  }
+
+  .categories-stats__value a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .categories-stats__list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

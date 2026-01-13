@@ -1,0 +1,166 @@
+---
+/**
+ * 标签详情页
+ * 显示特定标签下的所有文章
+ */
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import PostList from '../../components/blog/PostList.astro';
+import { getPostLayout, shouldShowPostImage, getExcerptLength } from '../../utils/config';
+
+// 获取帖子配置
+const postLayout = getPostLayout();
+const showImage = shouldShowPostImage();
+const excerptLength = getExcerptLength();
+
+export async function getStaticPaths() {
+  // 获取所有博客文章
+  const allPosts = await getCollection('posts', ({ data }) => {
+    return data.draft !== true;
+  });
+
+  // 提取所有唯一标签
+  const allTags = new Set<string>();
+  allPosts.forEach((post) => {
+    if (post.data.tags) {
+      post.data.tags.forEach((tag) => allTags.add(tag));
+    }
+  });
+
+  // 为每个标签生成路径
+  return Array.from(allTags).map((tag) => {
+    // 过滤出包含该标签的文章
+    const filteredPosts = allPosts.filter(
+      (post) => post.data.tags && post.data.tags.includes(tag)
+    );
+    
+    // 按发布日期降序排列
+    const sortedPosts = filteredPosts.sort(
+      (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    );
+
+    return {
+      params: { tag },
+      props: { posts: sortedPosts, tag },
+    };
+  });
+}
+
+interface Props {
+  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>;
+  tag: string;
+}
+
+const { posts, tag } = Astro.props;
+---
+
+<PageLayout
+  title={`标签: ${tag}`}
+  description={`共 ${posts.length} 篇文章包含标签「${tag}」`}
+  containerSize="lg"
+>
+  <nav class="tag-breadcrumb" aria-label="面包屑导航">
+    <a href="/posts" class="tag-breadcrumb__link">文章</a>
+    <span class="tag-breadcrumb__separator" aria-hidden="true">/</span>
+    <a href="/tags" class="tag-breadcrumb__link">标签</a>
+    <span class="tag-breadcrumb__separator" aria-hidden="true">/</span>
+    <span class="tag-breadcrumb__current">{tag}</span>
+  </nav>
+
+  <div class="tag-info">
+    <span class="tag-info__badge">
+      <span class="tag-info__hash" aria-hidden="true">#</span>
+      {tag}
+    </span>
+    <span class="tag-info__count">{posts.length} 篇文章</span>
+  </div>
+
+  <section class="tag-posts">
+    <PostList
+      posts={posts}
+      layout={postLayout}
+      columns={2}
+      showCategory={true}
+      showTags={true}
+      showImage={showImage}
+      excerptLength={excerptLength}
+      context="tag"
+      contextValue={tag}
+    />
+  </section>
+</PageLayout>
+
+<style>
+  /* 面包屑导航 */
+  .tag-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+    font-size: var(--text-sm);
+  }
+
+  .tag-breadcrumb__link {
+    color: var(--md-on-surface-variant);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .tag-breadcrumb__link:hover {
+    color: var(--md-primary);
+  }
+
+  .tag-breadcrumb__separator {
+    color: var(--md-outline);
+  }
+
+  .tag-breadcrumb__current {
+    color: var(--md-on-surface);
+    font-weight: var(--font-medium);
+  }
+
+  /* 标签信息 */
+  .tag-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+    padding: var(--space-4);
+    background-color: var(--md-surface-container-low);
+    border-radius: var(--radius-lg);
+  }
+
+  .tag-info__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    border-radius: var(--radius-full);
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+  }
+
+  .tag-info__hash {
+    opacity: 0.6;
+    margin-right: var(--space-1);
+  }
+
+  .tag-info__count {
+    color: var(--md-on-surface-variant);
+    font-size: var(--text-sm);
+  }
+
+  /* 文章列表区域 */
+  .tag-posts {
+    margin-bottom: var(--space-12);
+  }
+
+  @media (max-width: 640px) {
+    .tag-info {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+  }
+</style>

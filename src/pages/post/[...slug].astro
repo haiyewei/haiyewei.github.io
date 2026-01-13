@@ -1,0 +1,116 @@
+---
+/**
+ * 博客文章详情页
+ * 使用 PostLayout 布局组件
+ * 文章路由为 /post/[slug]，如 /post/hello-world
+ * 支持上下文翻页：从主页/分类页/标签页进入时显示对应的上一篇/下一篇
+ */
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import PostNavigation from '../../components/blog/PostNavigation.astro';
+import RelatedPosts from '../../components/blog/RelatedPosts.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+
+// 获取 URL 参数（上下文信息）
+const url = new URL(Astro.request.url);
+const fromContext = url.searchParams.get('from') as 'category' | 'tag' | 'author' | null;
+const contextValue = url.searchParams.get('value') || '';
+
+// 确定上下文类型
+const context: 'all' | 'category' | 'tag' | 'author' = fromContext || 'all';
+
+// 映射上下文类型到 BackToList 组件的 context 类型
+type BackContext = 'posts' | 'category' | 'tag' | 'author';
+const backContext: BackContext = context === 'all' ? 'posts' : context;
+
+// 获取所有文章（过滤草稿）
+const allPosts = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+
+// 按发布日期降序排列
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// 根据上下文过滤文章列表
+function getFilteredPosts() {
+  if (context === 'category' && contextValue) {
+    return sortedPosts.filter((p) => p.data.category === contextValue);
+  }
+  if (context === 'tag' && contextValue) {
+    return sortedPosts.filter((p) => p.data.tags && p.data.tags.includes(contextValue));
+  }
+  if (context === 'author' && contextValue) {
+    return sortedPosts.filter((p) => p.data.author === contextValue);
+  }
+  return sortedPosts;
+}
+
+const filteredPosts = getFilteredPosts();
+
+// 找到当前文章在列表中的位置
+const currentIndex = filteredPosts.findIndex((p) => p.slug === post.slug);
+
+// 计算上一篇和下一篇（按时间顺序，上一篇是更新的，下一篇是更旧的）
+const prevPost = currentIndex > 0 ? filteredPosts[currentIndex - 1] : undefined;
+const nextPost = currentIndex < filteredPosts.length - 1 ? filteredPosts[currentIndex + 1] : undefined;
+
+/**
+ * 计算阅读时间（假设每分钟阅读 200 个中文字符或 250 个英文单词）
+ */
+function calculateReadingTime(content: string): number {
+  const chineseChars = (content.match(/[\u4e00-\u9fa5]/g) || []).length;
+  const englishWords = (content.match(/[a-zA-Z]+/g) || []).length;
+  const readingTime = Math.ceil(chineseChars / 200 + englishWords / 250);
+  return Math.max(1, readingTime);
+}
+
+// 获取文章原始内容用于计算阅读时间
+const readingTime = calculateReadingTime(post.body || '');
+
+// 过滤标题（只保留 h2-h4 级别的标题用于目录）
+const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
+---
+
+<PostLayout
+  title={post.data.title}
+  description={post.data.description}
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  author={post.data.author}
+  category={post.data.category}
+  tags={post.data.tags}
+  readingTime={readingTime}
+  headings={tocHeadings}
+  backContext={backContext}
+  backContextValue={contextValue}
+>
+  <Content />
+  
+  <PostNavigation
+    slot="navigation"
+    prevPost={prevPost ? { slug: prevPost.slug, title: prevPost.data.title } : undefined}
+    nextPost={nextPost ? { slug: nextPost.slug, title: nextPost.data.title } : undefined}
+    context={context}
+    contextValue={contextValue}
+  />
+  
+  <RelatedPosts
+    slot="related"
+    currentSlug={post.slug}
+    category={post.data.category}
+    tags={post.data.tags}
+    allPosts={allPosts}
+    limit={3}
+  />
+</PostLayout>

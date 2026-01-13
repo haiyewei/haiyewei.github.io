@@ -1,0 +1,184 @@
+---
+/**
+ * BackToList 返回列表组件
+ * 智能显示返回链接，根据用户来源显示不同的文案
+ * 支持从分类、标签、作者页面进入时显示对应的返回文案
+ */
+import Icon from '../common/Icon.astro';
+
+type ContextType = 'posts' | 'category' | 'tag' | 'author';
+
+interface Props {
+  /** 上下文类型 */
+  context?: ContextType;
+  /** 上下文值（分类名/标签名/作者名） */
+  contextValue?: string;
+  /** 返回链接（可选，默认根据 context 自动生成） */
+  href?: string;
+  /** 自定义类名 */
+  class?: string;
+  /** 变体样式：filled（填充）、outlined（描边）、text（文本） */
+  variant?: 'filled' | 'outlined' | 'text';
+}
+
+const {
+  context = 'posts',
+  contextValue = '',
+  href,
+  class: className = '',
+  variant = 'text',
+} = Astro.props;
+
+/**
+ * 根据上下文生成返回链接
+ */
+function getBackHref(): string {
+  if (href) return href;
+  
+  switch (context) {
+    case 'category':
+      return contextValue ? `/category/${contextValue}` : '/categories';
+    case 'tag':
+      return contextValue ? `/tag/${contextValue}` : '/tags';
+    case 'author':
+      return contextValue ? `/author/${contextValue}` : '/posts';
+    default:
+      return '/posts';
+  }
+}
+
+/**
+ * 根据上下文生成显示文案
+ */
+function getBackText(): string {
+  switch (context) {
+    case 'category':
+      return contextValue ? `返回「${contextValue}」分类` : '返回分类列表';
+    case 'tag':
+      return contextValue ? `返回「${contextValue}」标签` : '返回标签列表';
+    case 'author':
+      return contextValue ? `返回 ${contextValue} 的文章` : '返回文章列表';
+    default:
+      return '返回文章列表';
+  }
+}
+
+const backHref = getBackHref();
+const backText = getBackText();
+---
+
+<a 
+  href={backHref} 
+  class:list={['back-to-list', `back-to-list--${variant}`, className]}
+  aria-label={backText}
+>
+  <span class="back-to-list__icon">
+    <Icon name="material-symbols:arrow-back-rounded" size="1.25em" />
+  </span>
+  <span class="back-to-list__text">{backText}</span>
+</a>
+
+<style>
+  .back-to-list {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .back-to-list__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-fast);
+  }
+
+  .back-to-list:hover .back-to-list__icon {
+    transform: translateX(-2px);
+  }
+
+  .back-to-list__text {
+    line-height: 1;
+  }
+
+  /* Text 变体（默认） */
+  .back-to-list--text {
+    color: var(--md-on-surface-variant);
+    padding: var(--space-2) var(--space-3);
+    margin-left: calc(-1 * var(--space-3));
+  }
+
+  .back-to-list--text:hover {
+    color: var(--md-primary);
+    background-color: var(--md-primary-container);
+  }
+
+  .back-to-list--text:active {
+    background-color: color-mix(in srgb, var(--md-primary-container) 80%, var(--md-primary) 20%);
+  }
+
+  /* Filled 变体 */
+  .back-to-list--filled {
+    color: var(--md-on-primary);
+    background-color: var(--md-primary);
+    padding: var(--space-2) var(--space-4);
+    padding-right: var(--space-5);
+  }
+
+  .back-to-list--filled:hover {
+    background-color: color-mix(in srgb, var(--md-primary) 90%, var(--md-on-primary) 10%);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .back-to-list--filled:active {
+    background-color: color-mix(in srgb, var(--md-primary) 85%, var(--md-on-primary) 15%);
+  }
+
+  /* Outlined 变体 */
+  .back-to-list--outlined {
+    color: var(--md-primary);
+    background-color: transparent;
+    border: 1px solid var(--md-outline);
+    padding: calc(var(--space-2) - 1px) calc(var(--space-4) - 1px);
+    padding-right: calc(var(--space-5) - 1px);
+  }
+
+  .back-to-list--outlined:hover {
+    background-color: var(--md-primary-container);
+    border-color: var(--md-primary);
+  }
+
+  .back-to-list--outlined:active {
+    background-color: color-mix(in srgb, var(--md-primary-container) 80%, var(--md-primary) 20%);
+  }
+
+  /* 焦点状态 */
+  .back-to-list:focus-visible {
+    outline: 2px solid var(--md-primary);
+    outline-offset: 2px;
+  }
+
+  /* 响应式调整 */
+  @media (max-width: 640px) {
+    .back-to-list {
+      font-size: var(--text-sm);
+    }
+
+    .back-to-list--text {
+      padding: var(--space-2);
+      margin-left: calc(-1 * var(--space-2));
+    }
+
+    .back-to-list--filled,
+    .back-to-list--outlined {
+      padding: var(--space-2) var(--space-3);
+      padding-right: var(--space-4);
+    }
+  }
+</style>

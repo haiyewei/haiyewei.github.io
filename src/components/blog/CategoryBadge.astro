@@ -1,0 +1,105 @@
+---
+/**
+ * CategoryBadge 组件
+ * 显示分类徽章，带有颜色和可选图标
+ */
+import { getCategory, getCategoryName, getCategoryColor } from '../../utils/config';
+
+interface Props {
+  /** 分类 slug */
+  category: string;
+  /** 徽章大小 */
+  size?: 'sm' | 'md' | 'lg';
+  /** 是否显示图标 */
+  showIcon?: boolean;
+  /** 自定义类名 */
+  class?: string;
+}
+
+const { 
+  category, 
+  size = 'md', 
+  showIcon = false,
+  class: className = '' 
+} = Astro.props;
+
+// 获取分类信息
+const categoryInfo = getCategory(category);
+const categoryName = getCategoryName(category);
+const categoryColor = getCategoryColor(category);
+
+// 根据大小设置样式类
+const sizeClasses = {
+  sm: 'badge-sm',
+  md: 'badge-md',
+  lg: 'badge-lg',
+};
+---
+
+<a
+  href={`/category/${category}`}
+  class:list={['category-badge', sizeClasses[size], className]}
+  style={`--category-color: ${categoryColor}`}
+>
+  {showIcon && (
+    <span class="badge-icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z" clip-rule="evenodd" />
+        <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
+      </svg>
+    </span>
+  )}
+  <span class="badge-text">{categoryName}</span>
+</a>
+
+<style>
+  .category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    background-color: color-mix(in srgb, var(--category-color) 15%, transparent);
+    color: var(--category-color);
+    border-radius: var(--radius-sm);
+    font-weight: var(--font-medium);
+    text-decoration: none;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .category-badge:hover {
+    background-color: color-mix(in srgb, var(--category-color) 25%, transparent);
+    transform: translateY(-1px);
+  }
+
+  /* 大小变体 */
+  .badge-sm {
+    padding: 0.125rem 0.5rem;
+    font-size: var(--text-xs);
+  }
+
+  .badge-md {
+    padding: 0.25rem 0.75rem;
+    font-size: var(--text-sm);
+  }
+
+  .badge-lg {
+    padding: 0.375rem 1rem;
+    font-size: var(--text-base);
+  }
+
+  /* 图标样式 */
+  .badge-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .badge-icon svg {
+    width: 1em;
+    height: 1em;
+  }
+
+  .badge-text {
+    line-height: 1;
+  }
+</style>

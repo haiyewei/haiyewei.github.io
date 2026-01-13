@@ -1,0 +1,186 @@
+---
+/**
+ * ThemeToggle 主题切换组件
+ * 支持浅色/深色/系统三种模式
+ * 使用原生 JavaScript 实现
+ */
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  /** 初始主题模式 */
+  initialTheme?: 'light' | 'dark' | 'system';
+}
+
+const { initialTheme = 'system' } = Astro.props;
+---
+
+<button
+  type="button"
+  class="theme-toggle"
+  aria-label="切换主题"
+  title="切换主题"
+  data-initial-theme={initialTheme}
+>
+  <!-- 太阳图标（浅色模式） -->
+  <Icon name="material-symbols:light-mode" class="theme-icon icon-sun" size={20} aria-hidden="true" />
+  
+  <!-- 月亮图标（深色模式） -->
+  <Icon name="material-symbols:dark-mode" class="theme-icon icon-moon" size={20} aria-hidden="true" />
+  
+  <!-- 系统图标（跟随系统） -->
+  <Icon name="material-symbols:computer" class="theme-icon icon-system" size={20} aria-hidden="true" />
+</button>
+
+<style>
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-md, 8px);
+    background-color: transparent;
+    color: var(--md-on-surface);
+    cursor: pointer;
+    transition: background-color var(--transition-fast, 150ms ease),
+                color var(--transition-fast, 150ms ease);
+  }
+
+  .theme-toggle:hover {
+    background-color: var(--md-surface-variant);
+    color: var(--md-primary);
+  }
+
+  .theme-toggle:focus-visible {
+    outline: 2px solid var(--md-primary);
+    outline-offset: 2px;
+  }
+
+  /* 默认隐藏所有图标 */
+  .theme-icon {
+    display: none;
+  }
+
+  /* 根据主题模式显示对应图标 */
+  :global([data-theme="light"]) .icon-sun {
+    display: block;
+  }
+
+  :global([data-theme="dark"]) .icon-moon {
+    display: block;
+  }
+
+  :global([data-theme="system"]) .icon-system {
+    display: block;
+  }
+
+  /* 初始状态显示系统图标 */
+  :global(:root:not([data-theme])) .icon-system {
+    display: block;
+  }
+</style>
+
+<script>
+  /**
+   * 主题切换逻辑
+   */
+  (function initThemeToggle() {
+    type ThemeMode = 'light' | 'dark' | 'system';
+    type ResolvedTheme = 'light' | 'dark';
+
+    const STORAGE_KEY = 'theme';
+    const MODES: ThemeMode[] = ['light', 'dark', 'system'];
+
+    /**
+     * 获取系统偏好的主题
+     */
+    function getSystemTheme(): ResolvedTheme {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    /**
+     * 从 localStorage 获取保存的主题
+     */
+    function getSavedTheme(): ThemeMode | null {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === 'light' || saved === 'dark' || saved === 'system') {
+        return saved;
+      }
+      return null;
+    }
+
+    /**
+     * 解析主题模式为实际主题
+     */
+    function resolveTheme(mode: ThemeMode): ResolvedTheme {
+      if (mode === 'system') {
+        return getSystemTheme();
+      }
+      return mode;
+    }
+
+    /**
+     * 应用主题到 document
+     */
+    function applyTheme(mode: ThemeMode): void {
+      const resolved = resolveTheme(mode);
+      const root = document.documentElement;
+      
+      // 设置 data-theme 属性用于图标显示
+      root.setAttribute('data-theme', mode);
+      
+      // 设置 class 用于样式
+      root.classList.remove('light', 'dark');
+      root.classList.add(resolved);
+    }
+
+    /**
+     * 更新按钮的 aria-label
+     */
+    function updateAriaLabel(button: HTMLButtonElement, mode: ThemeMode): void {
+      const labels: Record<ThemeMode, string> = {
+        light: '当前：浅色模式，点击切换到深色模式',
+        dark: '当前：深色模式，点击切换到跟随系统',
+        system: '当前：跟随系统，点击切换到浅色模式',
+      };
+      button.setAttribute('aria-label', labels[mode]);
+      button.setAttribute('title', labels[mode]);
+    }
+
+    /**
+     * 初始化主题切换按钮
+     */
+    function initButton(button: HTMLButtonElement): void {
+      const initialTheme = (button.dataset.initialTheme as ThemeMode) || 'system';
+      let currentMode: ThemeMode = getSavedTheme() || initialTheme;
+
+      // 应用初始主题
+      applyTheme(currentMode);
+      updateAriaLabel(button, currentMode);
+
+      // 点击切换主题
+      button.addEventListener('click', () => {
+        const currentIndex = MODES.indexOf(currentMode);
+        const nextIndex = (currentIndex + 1) % MODES.length;
+        currentMode = MODES[nextIndex];
+
+        localStorage.setItem(STORAGE_KEY, currentMode);
+        applyTheme(currentMode);
+        updateAriaLabel(button, currentMode);
+      });
+
+      // 监听系统主题变化
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQuery.addEventListener('change', () => {
+        if (currentMode === 'system') {
+          applyTheme('system');
+        }
+      });
+    }
+
+    // 初始化所有主题切换按钮
+    document.querySelectorAll<HTMLButtonElement>('.theme-toggle').forEach(initButton);
+  })();
+</script>

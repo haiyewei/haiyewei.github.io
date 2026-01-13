@@ -1,11 +1,265 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/common/Container.astro';
+import PostList from '../components/blog/PostList.astro';
+import { getPostsConfig, getPostLayout, shouldShowPostImage, getExcerptLength, getHeroConfig } from '../utils/config';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 获取帖子配置
+const postsConfig = getPostsConfig();
+const postLayout = getPostLayout();
+const showImage = shouldShowPostImage();
+const excerptLength = getExcerptLength();
+
+// 获取 Hero 配置
+const heroConfig = getHeroConfig();
+
+// 获取所有博客文章，过滤草稿
+const allPosts = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+
+// 按发布日期降序排列，取最新的文章
+const posts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6); // 首页显示最新 6 篇文章
+
+// Hero 区域是否有内容
+const hasHeroContent = heroConfig.title || heroConfig.subtitle;
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="首页" class="home-page">
+  {/* Hero 全屏区域 */}
+  {heroConfig.enabled && (
+    <section
+      class="hero-section"
+      style={heroConfig.background ? `background-image: url('${heroConfig.background}')` : undefined}
+    >
+      <div class="hero-content">
+        {hasHeroContent && (
+          <div class="hero-text">
+            {heroConfig.title && <h1 class="hero-title">{heroConfig.title}</h1>}
+            {heroConfig.subtitle && <p class="hero-subtitle">{heroConfig.subtitle}</p>}
+          </div>
+        )}
+      </div>
+      
+      {/* 向下滚动指示器 */}
+      {heroConfig.showScrollIndicator && (
+        <div class="scroll-indicator">
+          <span class="scroll-text">向下滚动</span>
+          <Icon name="material-symbols:keyboard-double-arrow-down" class="scroll-arrow" size={24} aria-hidden="true" />
+        </div>
+      )}
+    </section>
+  )}
+
+  {/* 帖子列表区域 */}
+  <section class="posts-section-wrapper">
+    <Container size="lg">
+      <section class="posts-section">
+        <div class="section-header">
+          <h2>最新文章</h2>
+          <a href="/posts" class="view-all-link">查看全部</a>
+        </div>
+        
+        <PostList
+          posts={posts}
+          layout={postLayout}
+          columns={2}
+          showCategory={true}
+          showTags={true}
+          showImage={showImage}
+          excerptLength={excerptLength}
+          context="all"
+        />
+        
+        {posts.length === 0 && (
+          <p class="empty-message">暂无文章，敬请期待...</p>
+        )}
+      </section>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero 全屏区域 */
+  .hero-section {
+    min-height: calc(100vh - var(--nav-height-mobile));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: var(--md-background);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: var(--space-8);
+  }
+
+  .hero-text {
+    text-align: center;
+    max-width: var(--container-md);
+  }
+
+  .hero-title {
+    font-size: var(--text-5xl);
+    color: var(--md-on-background);
+    margin: 0 0 var(--space-4) 0;
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-xl);
+    color: var(--md-on-surface-variant);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* 向下滚动指示器 */
+  .scroll-indicator {
+    position: absolute;
+    bottom: var(--space-8);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--md-on-surface-variant);
+    opacity: 0.6;
+    animation: bounce 2s infinite;
+    cursor: pointer;
+  }
+
+  .scroll-text {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+  }
+
+  .scroll-arrow {
+    width: 24px;
+    height: 24px;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+      transform: translateX(-50%) translateY(-5px);
+    }
+  }
+
+  /* 帖子列表主区域 */
+  .posts-section-wrapper {
+    padding: var(--space-12) 0;
+    background-color: var(--md-background);
+  }
+
+  .posts-section {
+    margin-bottom: var(--space-12);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-8);
+  }
+
+  .section-header h2 {
+    font-size: var(--text-2xl);
+    color: var(--md-on-background);
+    margin: 0;
+    font-weight: var(--font-semibold);
+  }
+
+  .view-all-link {
+    color: var(--md-primary);
+    text-decoration: none;
+    font-weight: var(--font-medium);
+    font-size: var(--text-sm);
+    transition: color var(--transition-fast);
+  }
+
+  .view-all-link:hover {
+    color: var(--md-tertiary);
+  }
+
+  .empty-message {
+    text-align: center;
+    color: var(--md-outline);
+    padding: var(--space-12);
+  }
+
+  /* 平板端 */
+  @media (min-width: 640px) {
+    .hero-section {
+      min-height: calc(100vh - var(--nav-height));
+    }
+
+    .hero-title {
+      font-size: var(--text-5xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--text-xl);
+    }
+  }
+
+  /* 移动端 */
+  @media (max-width: 640px) {
+    .hero-title {
+      font-size: var(--text-3xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--text-lg);
+    }
+
+    .scroll-indicator {
+      bottom: var(--space-6);
+    }
+
+    .posts-section-wrapper {
+      padding: var(--space-8) 0;
+    }
+
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+    }
+  }
+</style>
+
+<script>
+  // 点击滚动指示器时平滑滚动到帖子列表
+  document.addEventListener('DOMContentLoaded', () => {
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const postsSection = document.querySelector('.posts-section-wrapper');
+    
+    if (scrollIndicator && postsSection) {
+      scrollIndicator.addEventListener('click', () => {
+        postsSection.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+  });
+</script>
