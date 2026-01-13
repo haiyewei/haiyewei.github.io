@@ -1,0 +1,19 @@
+# Build output
+dist
+.astro
+
+# Dependencies
+node_modules
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Public assets (avoid formatting third-party or generated files)
+public/
+
+# Cache and temporary files
+.cache
+.temp
+*.log

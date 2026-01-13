@@ -3,83 +3,88 @@
  * 分类列表页
  * 显示所有分类及其文章数量
  */
-import { getCollection } from 'astro:content';
-import { Icon } from 'astro-icon/components';
-import PageLayout from '../layouts/PageLayout.astro';
-import { getCategories } from '../utils/config';
+import { getCollection } from 'astro:content'
+import { Icon } from 'astro-icon/components'
+import PageLayout from '../layouts/PageLayout.astro'
+import { getCategories } from '../utils/config'
 
 // 获取所有博客文章，过滤草稿
 const allPosts = await getCollection('posts', ({ data }) => {
-  return data.draft !== true;
-});
+  return data.draft !== true
+})
 
 // 从 YAML 配置获取所有分类
-const categories = getCategories();
+const categories = getCategories()
 
 // 统计每个分类的文章数量
-const categoryCounts = new Map<string, number>();
+const categoryCounts = new Map<string, number>()
 allPosts.forEach((post) => {
   if (post.data.category) {
-    categoryCounts.set(
-      post.data.category, 
-      (categoryCounts.get(post.data.category) || 0) + 1
-    );
+    categoryCounts.set(post.data.category, (categoryCounts.get(post.data.category) || 0) + 1)
   }
-});
+})
 
 // 为每个分类添加文章数量
 const categoriesWithCount = categories.map((category) => ({
   ...category,
   count: categoryCounts.get(category.slug) || 0,
-}));
+}))
 
 // 按文章数量降序排列
-const sortedCategories = categoriesWithCount.sort((a, b) => b.count - a.count);
+const sortedCategories = categoriesWithCount.sort((a, b) => b.count - a.count)
 
 // 计算总文章数
-const totalPosts = allPosts.length;
+const totalPosts = allPosts.length
 ---
 
-<PageLayout
-  title="所有分类"
-  description={`共 ${categories.length} 个分类`}
-  containerSize="lg"
->
+<PageLayout title="所有分类" description={`共 ${categories.length} 个分类`} containerSize="lg">
   <nav class="categories-breadcrumb" aria-label="面包屑导航">
     <a href="/posts" class="categories-breadcrumb__link">文章</a>
     <span class="categories-breadcrumb__separator" aria-hidden="true">/</span>
     <span class="categories-breadcrumb__current">分类</span>
   </nav>
 
-  {sortedCategories.length > 0 ? (
-    <section class="categories-grid" aria-label="分类列表">
-      {sortedCategories.map((category) => (
-        <a
-          href={`/category/${category.slug}`}
-          class="category-card"
-          style={`--category-color: ${category.color}`}
-        >
-          <div class="category-card__header">
-            <span class="category-card__icon" aria-hidden="true">
-              <Icon name="material-symbols:folder" size={20} />
-            </span>
-            <h2 class="category-card__name">{category.name}</h2>
-          </div>
-          <p class="category-card__description">{category.description}</p>
-          <div class="category-card__footer">
-            <span class="category-card__count">{category.count} 篇文章</span>
-            <Icon name="material-symbols:arrow-forward" class="category-card__arrow" size={16} aria-hidden="true" />
-          </div>
-          <div class="category-card__color-bar" aria-hidden="true"></div>
-        </a>
-      ))}
-    </section>
-  ) : (
-    <div class="categories-empty">
-      <Icon name="material-symbols:folder-off" class="categories-empty__icon" size={64} aria-hidden="true" />
-      <p class="categories-empty__text">暂无分类</p>
-    </div>
-  )}
+  {
+    sortedCategories.length > 0 ? (
+      <section class="categories-grid" aria-label="分类列表">
+        {sortedCategories.map((category) => (
+          <a
+            href={`/category/${category.slug}`}
+            class="category-card"
+            style={`--category-color: ${category.color}`}
+          >
+            <div class="category-card__header">
+              <span class="category-card__icon" aria-hidden="true">
+                <Icon name="material-symbols:folder" size={20} />
+              </span>
+              <h2 class="category-card__name">{category.name}</h2>
+            </div>
+            <p class="category-card__description">{category.description}</p>
+            <div class="category-card__footer">
+              <span class="category-card__count">{category.count} 篇文章</span>
+              <Icon
+                name="material-symbols:arrow-forward"
+                class="category-card__arrow"
+                size={16}
+                aria-hidden="true"
+              />
+            </div>
+            <div class="category-card__color-bar" aria-hidden="true" />
+          </a>
+        ))}
+      </section>
+    ) : (
+      <div class="categories-empty">
+        <Icon
+          name="material-symbols:folder-off"
+          class="categories-empty__icon"
+          size={64}
+          aria-hidden="true"
+        />
+        <p class="categories-empty__text">暂无分类</p>
+      </div>
+    )
+  }
 
   {/* 统计信息 */}
   <aside class="categories-stats">
@@ -93,19 +98,21 @@ const totalPosts = allPosts.length;
         <dt class="categories-stats__label">文章总数</dt>
         <dd class="categories-stats__value">{totalPosts}</dd>
       </div>
-      {sortedCategories.length > 0 && sortedCategories[0].count > 0 && (
-        <div class="categories-stats__item">
-          <dt class="categories-stats__label">最热门分类</dt>
-          <dd class="categories-stats__value">
-            <a 
-              href={`/category/${sortedCategories[0].slug}`}
-              style={`color: ${sortedCategories[0].color}`}
-            >
-              {sortedCategories[0].name}
-            </a>
-          </dd>
-        </div>
-      )}
+      {
+        sortedCategories.length > 0 && sortedCategories[0].count > 0 && (
+          <div class="categories-stats__item">
+            <dt class="categories-stats__label">最热门分类</dt>
+            <dd class="categories-stats__value">
+              <a
+                href={`/category/${sortedCategories[0].slug}`}
+                style={`color: ${sortedCategories[0].color}`}
+              >
+                {sortedCategories[0].name}
+              </a>
+            </dd>
+          </div>
+        )
+      }
     </dl>
   </aside>
 </PageLayout>
@@ -229,7 +236,9 @@ const totalPosts = allPosts.length;
 
   .category-card__arrow {
     color: var(--md-outline);
-    transition: transform var(--transition-fast), color var(--transition-fast);
+    transition:
+      transform var(--transition-fast),
+      color var(--transition-fast);
   }
 
   .category-card:hover .category-card__arrow {

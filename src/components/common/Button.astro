@@ -6,17 +6,17 @@
 
 interface Props {
   /** 按钮变体 */
-  variant?: 'primary' | 'secondary' | 'ghost' | 'link';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'link'
   /** 按钮大小 */
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg'
   /** 链接地址，设置后渲染为 a 标签 */
-  href?: string;
+  href?: string
   /** 自定义 CSS 类名 */
-  class?: string;
+  class?: string
   /** 按钮类型（仅在非链接模式下有效） */
-  type?: 'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit' | 'reset'
   /** 是否禁用 */
-  disabled?: boolean;
+  disabled?: boolean
 }
 
 const {
@@ -26,14 +26,14 @@ const {
   class: className = '',
   type = 'button',
   disabled = false,
-} = Astro.props;
+} = Astro.props
 
-const Tag = href ? 'a' : 'button';
+const Tag = href ? 'a' : 'button'
 
 const baseProps = {
   class: `btn btn-${variant} btn-${size} ${className}`.trim(),
   ...(href ? { href } : { type, disabled }),
-};
+}
 ---
 
 <Tag {...baseProps}>
@@ -52,10 +52,11 @@ const baseProps = {
     border: none;
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: background-color var(--transition-fast),
-                color var(--transition-fast),
-                border-color var(--transition-fast),
-                box-shadow var(--transition-fast);
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
   }
 
   .btn:focus-visible {

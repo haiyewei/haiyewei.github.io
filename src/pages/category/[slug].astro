@@ -3,58 +3,62 @@
  * 分类详情页
  * 显示特定分类下的所有文章
  */
-import { getCollection } from 'astro:content';
-import PageLayout from '../../layouts/PageLayout.astro';
-import PostList from '../../components/blog/PostList.astro';
-import { getCategories, getCategory, getPostLayout, shouldShowPostImage, getExcerptLength } from '../../utils/config';
+import { getCollection } from 'astro:content'
+import PageLayout from '../../layouts/PageLayout.astro'
+import PostList from '../../components/blog/PostList.astro'
+import {
+  getCategories,
+  getCategory,
+  getPostLayout,
+  shouldShowPostImage,
+  getExcerptLength,
+} from '../../utils/config'
 
 // 获取帖子配置
-const postLayout = getPostLayout();
-const showImage = shouldShowPostImage();
-const excerptLength = getExcerptLength();
+const postLayout = getPostLayout()
+const showImage = shouldShowPostImage()
+const excerptLength = getExcerptLength()
 
 export async function getStaticPaths() {
   // 从 YAML 配置获取所有分类
-  const categories = getCategories();
-  
+  const categories = getCategories()
+
   // 获取所有博客文章
   const allPosts = await getCollection('posts', ({ data }) => {
-    return data.draft !== true;
-  });
+    return data.draft !== true
+  })
 
   // 为每个分类生成路径
   return categories.map((category) => {
     // 过滤出该分类的文章
-    const filteredPosts = allPosts.filter(
-      (post) => post.data.category === category.slug
-    );
-    
+    const filteredPosts = allPosts.filter((post) => post.data.category === category.slug)
+
     // 按发布日期降序排列
     const sortedPosts = filteredPosts.sort(
       (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-    );
+    )
 
     return {
       params: { slug: category.slug },
-      props: { 
-        posts: sortedPosts, 
-        category 
+      props: {
+        posts: sortedPosts,
+        category,
       },
-    };
-  });
+    }
+  })
 }
 
 interface Props {
-  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>;
+  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>
   category: {
-    slug: string;
-    name: string;
-    description: string;
-    color: string;
-  };
+    slug: string
+    name: string
+    description: string
+    color: string
+  }
 }
 
-const { posts, category } = Astro.props;
+const { posts, category } = Astro.props
 ---
 
 <PageLayout
@@ -75,17 +79,18 @@ const { posts, category } = Astro.props;
       <span class="category-info__badge">
         <span class="category-info__icon" aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z" clip-rule="evenodd" />
-            <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
+            <path
+              fill-rule="evenodd"
+              d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
+              clip-rule="evenodd"></path>
+            <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z"></path>
           </svg>
         </span>
         {category.name}
       </span>
       <span class="category-info__count">{posts.length} 篇文章</span>
     </div>
-    {category.description && (
-      <p class="category-info__description">{category.description}</p>
-    )}
+    {category.description && <p class="category-info__description">{category.description}</p>}
   </div>
 
   <section class="category-posts">

@@ -3,35 +3,35 @@
  * SEO 综合组件
  * 整合所有 SEO 相关标签，包含 OpenGraph、TwitterCard、JsonLd
  */
-import OpenGraph from './OpenGraph.astro';
-import TwitterCard from './TwitterCard.astro';
-import JsonLd from './JsonLd.astro';
-import { siteConfig } from '../../utils/config';
-import { createWebSiteSchema, createArticleSchema, createBlogPostingSchema } from './schema-helpers';
+import OpenGraph from './OpenGraph.astro'
+import TwitterCard from './TwitterCard.astro'
+import JsonLd from './JsonLd.astro'
+import { siteConfig } from '../../utils/config'
+import { createWebSiteSchema, createArticleSchema, createBlogPostingSchema } from './schema-helpers'
 
 interface Props {
   /** 页面标题 */
-  title: string;
+  title: string
   /** 页面描述 */
-  description: string;
+  description: string
   /** 分享图片 URL */
-  image?: string;
+  image?: string
   /** 内容类型 */
-  type?: 'website' | 'article';
+  type?: 'website' | 'article'
   /** 文章发布时间 */
-  publishedTime?: Date;
+  publishedTime?: Date
   /** 文章修改时间 */
-  modifiedTime?: Date;
+  modifiedTime?: Date
   /** 文章作者 */
-  author?: string;
+  author?: string
   /** 文章标签 */
-  tags?: string[];
+  tags?: string[]
   /** 是否禁止索引 */
-  noindex?: boolean;
+  noindex?: boolean
   /** 是否禁止跟踪链接 */
-  nofollow?: boolean;
+  nofollow?: boolean
   /** 规范 URL */
-  canonical?: string;
+  canonical?: string
 }
 
 const {
@@ -46,33 +46,30 @@ const {
   noindex = false,
   nofollow = false,
   canonical,
-} = Astro.props;
+} = Astro.props
 
 // 从配置获取网站信息
-const siteUrl = siteConfig.site.url || Astro.url.origin;
-const siteName = siteConfig.site.title;
+const siteUrl = siteConfig.site.url || Astro.url.origin
+const siteName = siteConfig.site.title
 
 // 构建页面标题
-const pageTitle = title ? `${title} | ${siteName}` : siteName;
+const pageTitle = title ? `${title} | ${siteName}` : siteName
 
 // 构建规范 URL
-const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : Astro.url.href;
+const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : Astro.url.href
 
 // 构建完整的图片 URL
-const ogImage = image ? new URL(image, siteUrl).href : undefined;
+const ogImage = image ? new URL(image, siteUrl).href : undefined
 
 // 构建 robots meta 内容
-const robotsContent = [
-  noindex ? 'noindex' : 'index',
-  nofollow ? 'nofollow' : 'follow',
-].join(', ');
+const robotsContent = [noindex ? 'noindex' : 'index', nofollow ? 'nofollow' : 'follow'].join(', ')
 
 // 构建结构化数据
-let jsonLdType: 'WebSite' | 'Article' | 'BlogPosting' = 'WebSite';
-let jsonLdData: Record<string, any>;
+let jsonLdType: 'WebSite' | 'Article' | 'BlogPosting' = 'WebSite'
+let jsonLdData: Record<string, any>
 
 if (type === 'article' && publishedTime) {
-  jsonLdType = 'BlogPosting';
+  jsonLdType = 'BlogPosting'
   jsonLdData = createBlogPostingSchema({
     title: pageTitle,
     description,
@@ -89,15 +86,15 @@ if (type === 'article' && publishedTime) {
       url: siteUrl,
     },
     tags,
-  });
+  })
 } else {
-  jsonLdType = 'WebSite';
+  jsonLdType = 'WebSite'
   jsonLdData = createWebSiteSchema({
     name: siteName,
     url: siteUrl,
     description: siteConfig.site.description,
     language: siteConfig.site.language,
-  });
+  })
 }
 ---
 
@@ -125,11 +122,7 @@ if (type === 'article' && publishedTime) {
 />
 
 <!-- Twitter Card 标签 -->
-<TwitterCard
-  title={pageTitle}
-  description={description}
-  image={image}
-/>
+<TwitterCard title={pageTitle} description={description} image={image} />
 
 <!-- JSON-LD 结构化数据 -->
 <JsonLd type={jsonLdType} data={jsonLdData} />

@@ -1,10 +1,10 @@
 ---
-title: "Markdown 完整语法指南"
-description: "全面介绍 Markdown 语法，包括基础语法、扩展语法和本博客的增强功能"
+title: 'Markdown 完整语法指南'
+description: '全面介绍 Markdown 语法，包括基础语法、扩展语法和本博客的增强功能'
 pubDate: 2024-01-10
-category: "教程"
-tags: ["markdown", "写作", "教程"]
-author: "admin"
+category: '教程'
+tags: ['markdown', '写作', '教程']
+author: 'admin'
 ---
 
 # Markdown 完整语法指南
@@ -21,10 +21,15 @@ Markdown 支持六级标题，使用 `#` 符号表示。`#` 的数量对应标�
 
 ```markdown
 # 一级标题 (H1)
+
 ## 二级标题 (H2)
+
 ### 三级标题 (H3)
+
 #### 四级标题 (H4)
+
 ##### 五级标题 (H5)
+
 ###### 六级标题 (H6)
 ```
 
@@ -75,28 +80,28 @@ Markdown 支持六级标题，使用 `#` 符号表示。`#` 的数量对应标�
 Markdown 提供多种文本强调方式：
 
 ```markdown
-**粗体文本** 或 __粗体文本__
+**粗体文本** 或 **粗体文本**
 
-*斜体文本* 或 _斜体文本_
+_斜体文本_ 或 _斜体文本_
 
-***粗斜体文本*** 或 ___粗斜体文本___
+**_粗斜体文本_** 或 **_粗斜体文本_**
 
 ~~删除线文本~~
 
-这是一段包含 **粗体**、*斜体* 和 ~~删除线~~ 的混合文本。
+这是一段包含 **粗体**、_斜体_ 和 ~~删除线~~ 的混合文本。
 ```
 
 **效果展示：**
 
-**粗体文本** 或 __粗体文本__
+**粗体文本** 或 **粗体文本**
 
-*斜体文本* 或 _斜体文本_
+_斜体文本_ 或 _斜体文本_
 
-***粗斜体文本*** 或 ___粗斜体文本___
+**_粗斜体文本_** 或 **_粗斜体文本_**
 
 ~~删除线文本~~
 
-这是一段包含 **粗体**、*斜体* 和 ~~删除线~~ 的混合文本。
+这是一段包含 **粗体**、_斜体_ 和 ~~删除线~~ 的混合文本。
 
 ---
 
@@ -106,29 +111,34 @@ Markdown 提供多种文本强调方式：
 
 ```markdown
 > 这是一段引用文本。
-> 
+>
 > 引用可以包含多个段落。
 
 > 第一层引用
->> 第二层嵌套引用
->>> 第三层嵌套引用
+>
+> > 第二层嵌套引用
+> >
+> > > 第三层嵌套引用
 ```
 
 **效果展示：**
 
 > 这是一段引用文本。
-> 
+>
 > 引用可以包含多个段落。
 
 > 第一层引用
->> 第二层嵌套引用
->>> 第三层嵌套引用
+>
+> > 第二层嵌套引用
+> >
+> > > 第三层嵌套引用
 
 > **引用中的格式化**
-> 
+>
 > 引用块中可以使用其他 Markdown 语法：
+>
 > - 列表项
-> - **粗体** 和 *斜体*
+> - **粗体** 和 _斜体_
 > - `行内代码`
 
 ---
@@ -206,11 +216,11 @@ Markdown 支持多种链接格式：
 ```markdown
 [内联链接](https://example.com)
 
-[带标题的链接](https://example.com "链接标题")
+[带标题的链接](https://example.com '链接标题')
 
 [引用式链接][reference]
 
-[reference]: https://example.com "引用式链接"
+[reference]: https://example.com '引用式链接'
 
 自动链接：<https://example.com>
 ```
@@ -218,11 +228,13 @@ Markdown 支持多种链接格式：
 **效果展示：**
 
 **内部链接：**
+
 - [返回首页](/)
 - [关于页面](/about)
 - [所有文章](/posts)
 
 **外部链接（注意外部链接图标）：**
+
 - [Astro 官方网站](https://astro.build) - 现代化的静态网站生成器
 - [GitHub](https://github.com) - 全球最大的代码托管平台
 - [MDN Web Docs](https://developer.mozilla.org) - Mozilla 的 Web 技术文档
@@ -239,7 +251,7 @@ Markdown 支持多种链接格式：
 ```markdown
 ![替代文本](图片URL)
 
-![带标题的图片](图片URL "图片标题")
+![带标题的图片](图片URL '图片标题')
 ```
 
 **效果展示：**
@@ -258,19 +270,18 @@ Markdown 支持多种链接格式：
 
 ```markdown
 ---
+---
 
-***
-
-___
+---
 ```
 
 **效果展示：**
 
 ---
 
-***
+---
 
-___
+---
 
 ---
 
@@ -313,6 +324,7 @@ ___
 使用三个反引号创建代码块，并指定语言以启用语法高亮：
 
 > 💡 **提示**：本博客的代码块支持以下增强功能：
+>
 > - **语言标题**：自动显示代码语言
 > - **一键复制**：点击复制按钮即可复制代码
 
@@ -322,22 +334,22 @@ ___
 // JavaScript 示例：异步函数和 Promise
 async function fetchUserData(userId) {
   try {
-    const response = await fetch(`/api/users/${userId}`);
+    const response = await fetch(`/api/users/${userId}`)
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
-    const data = await response.json();
-    return data;
+    const data = await response.json()
+    return data
   } catch (error) {
-    console.error('获取用户数据失败:', error);
-    throw error;
+    console.error('获取用户数据失败:', error)
+    throw error
   }
 }
 
 // 使用示例
 fetchUserData(123)
-  .then(user => console.log('用户信息:', user))
-  .catch(err => console.error('错误:', err));
+  .then((user) => console.log('用户信息:', user))
+  .catch((err) => console.error('错误:', err))
 ```
 
 #### TypeScript
@@ -345,32 +357,32 @@ fetchUserData(123)
 ```typescript
 // TypeScript 示例：接口和泛型
 interface User {
-  id: number;
-  name: string;
-  email: string;
-  createdAt: Date;
+  id: number
+  name: string
+  email: string
+  createdAt: Date
 }
 
 interface ApiResponse<T> {
-  data: T;
-  status: number;
-  message: string;
+  data: T
+  status: number
+  message: string
 }
 
 async function fetchData<T>(url: string): Promise<ApiResponse<T>> {
-  const response = await fetch(url);
-  const data: T = await response.json();
-  
+  const response = await fetch(url)
+  const data: T = await response.json()
+
   return {
     data,
     status: response.status,
-    message: response.ok ? 'Success' : 'Error'
-  };
+    message: response.ok ? 'Success' : 'Error',
+  }
 }
 
 // 使用泛型函数
-const userResponse = await fetchData<User>('/api/user/1');
-console.log(userResponse.data.name);
+const userResponse = await fetchData<User>('/api/user/1')
+console.log(userResponse.data.name)
 ```
 
 #### Python
@@ -394,10 +406,10 @@ def timer(func: Callable) -> Callable:
 
 class DataProcessor:
     """数据处理类"""
-    
+
     def __init__(self, data: list[int]):
         self.data = data
-    
+
     @timer
     def process(self) -> list[int]:
         """处理数据：过滤、映射、排序"""
@@ -433,7 +445,9 @@ print(f'处理结果: {result}')
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   padding: var(--spacing-unit);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .card:hover {
@@ -460,38 +474,38 @@ print(f'处理结果: {result}')
 ```html
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="示例页面描述">
-  <title>示例页面</title>
-  <link rel="stylesheet" href="/styles/main.css">
-</head>
-<body>
-  <header class="header">
-    <nav class="nav">
-      <a href="/" class="logo">Logo</a>
-      <ul class="nav-links">
-        <li><a href="/about">关于</a></li>
-        <li><a href="/posts">文章</a></li>
-        <li><a href="/contact">联系</a></li>
-      </ul>
-    </nav>
-  </header>
-  
-  <main class="main">
-    <article class="post">
-      <h1>文章标题</h1>
-      <p>文章内容...</p>
-    </article>
-  </main>
-  
-  <footer class="footer">
-    <p>&copy; 2024 我的网站</p>
-  </footer>
-  
-  <script src="/scripts/main.js" defer></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="示例页面描述" />
+    <title>示例页面</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <a href="/" class="logo">Logo</a>
+        <ul class="nav-links">
+          <li><a href="/about">关于</a></li>
+          <li><a href="/posts">文章</a></li>
+          <li><a href="/contact">联系</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="main">
+      <article class="post">
+        <h1>文章标题</h1>
+        <p>文章内容...</p>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2024 我的网站</p>
+    </footer>
+
+    <script src="/scripts/main.js" defer></script>
+  </body>
 </html>
 ```
 
@@ -572,25 +586,25 @@ echo "   cd $PROJECT_NAME && npm run dev"
 ```yaml
 # YAML 示例：网站配置文件
 site:
-  title: "我的博客"
-  description: "分享技术与生活"
-  url: "https://example.com"
-  language: "zh-CN"
-  
+  title: '我的博客'
+  description: '分享技术与生活'
+  url: 'https://example.com'
+  language: 'zh-CN'
+
 author:
-  name: "张三"
-  email: "zhangsan@example.com"
+  name: '张三'
+  email: 'zhangsan@example.com'
   social:
-    github: "https://github.com/zhangsan"
-    twitter: "https://twitter.com/zhangsan"
+    github: 'https://github.com/zhangsan'
+    twitter: 'https://twitter.com/zhangsan'
 
 navigation:
-  - title: "首页"
-    url: "/"
-  - title: "文章"
-    url: "/posts"
-  - title: "关于"
-    url: "/about"
+  - title: '首页'
+    url: '/'
+  - title: '文章'
+    url: '/posts'
+  - title: '关于'
+    url: '/about'
 
 features:
   darkMode: true
@@ -599,7 +613,7 @@ features:
   rss: true
 
 build:
-  output: "dist"
+  output: 'dist'
   minify: true
   sourcemap: false
 ```
@@ -614,30 +628,30 @@ build:
 
 ```markdown
 | 左对齐 | 居中对齐 | 右对齐 |
-|:-------|:--------:|-------:|
-| 内容1  | 内容2    | 内容3  |
-| 内容4  | 内容5    | 内容6  |
+| :----- | :------: | -----: |
+| 内容1  |  内容2   |  内容3 |
+| 内容4  |  内容5   |  内容6 |
 ```
 
 **效果展示：**
 
-| 功能 | 语法 | 示例 | 说明 |
-|:-----|:----:|-----:|:-----|
-| 粗体 | `**text**` | **粗体** | 使用双星号包裹 |
-| 斜体 | `*text*` | *斜体* | 使用单星号包裹 |
-| 删除线 | `~~text~~` | ~~删除~~ | 使用双波浪线包裹 |
-| 行内代码 | `` `code` `` | `code` | 使用反引号包裹 |
-| 链接 | `[text](url)` | [链接](#) | 方括号加圆括号 |
+| 功能     |     语法      |      示例 | 说明             |
+| :------- | :-----------: | --------: | :--------------- |
+| 粗体     |  `**text**`   |  **粗体** | 使用双星号包裹   |
+| 斜体     |   `*text*`    |    _斜体_ | 使用单星号包裹   |
+| 删除线   |  `~~text~~`   |  ~~删除~~ | 使用双波浪线包裹 |
+| 行内代码 | `` `code` ``  |    `code` | 使用反引号包裹   |
+| 链接     | `[text](url)` | [链接](#) | 方括号加圆括号   |
 
 **更复杂的表格示例：**
 
-| 编程语言 | 类型系统 | 主要用途 | 流行框架 |
-|:---------|:--------:|:---------|:---------|
-| JavaScript | 动态类型 | Web 前端、Node.js 后端 | React, Vue, Angular |
-| TypeScript | 静态类型 | 大型 Web 应用 | Next.js, NestJS |
-| Python | 动态类型 | 数据科学、AI、后端 | Django, FastAPI, Flask |
-| Rust | 静态类型 | 系统编程、WebAssembly | Actix, Rocket |
-| Go | 静态类型 | 云原生、微服务 | Gin, Echo |
+| 编程语言   | 类型系统 | 主要用途               | 流行框架               |
+| :--------- | :------: | :--------------------- | :--------------------- |
+| JavaScript | 动态类型 | Web 前端、Node.js 后端 | React, Vue, Angular    |
+| TypeScript | 静态类型 | 大型 Web 应用          | Next.js, NestJS        |
+| Python     | 动态类型 | 数据科学、AI、后端     | Django, FastAPI, Flask |
+| Rust       | 静态类型 | 系统编程、WebAssembly  | Actix, Rocket          |
+| Go         | 静态类型 | 云原生、微服务         | Gin, Echo              |
 
 ---
 
@@ -683,6 +697,7 @@ build:
 这是另一个脚注示例[^note]。
 
 [^1]: 这是第一个脚注的内容。
+
 [^note]: 这是命名脚注的内容，可以包含更详细的说明。
 ```
 
@@ -693,8 +708,11 @@ Markdown 是由 John Gruber 创建的[^1]，最初发布于 2004 年[^2]。它�
 如今，Markdown 已经成为技术写作的事实标准，被广泛应用于文档编写、博客发布和代码注释等场景[^usage]。
 
 [^1]: John Gruber 是一位美国博主和 UI 设计师，也是 Daring Fireball 博客的作者。
+
 [^2]: Markdown 的首个版本于 2004 年 3 月 19 日发布。
+
 [^design]: Markdown 的核心理念是"易读易写"，源文档应该可以直接发布而无需转换。
+
 [^usage]: GitHub、Stack Overflow、Reddit 等平台都支持 Markdown 格式。
 
 ---
@@ -739,8 +757,8 @@ CSS
 
 ```javascript
 // 试试点击右上角的复制按钮！
-const greeting = "Hello, World!";
-console.log(greeting);
+const greeting = 'Hello, World!'
+console.log(greeting)
 ```
 
 ### 2. 标题锚点链接
@@ -822,4 +840,4 @@ Markdown 是一种简单而强大的写作工具。通过本指南，你已经�
 
 ---
 
-*本文最后更新于 2024 年 1 月 10 日*
+_本文最后更新于 2024 年 1 月 10 日_

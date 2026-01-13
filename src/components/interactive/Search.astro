@@ -5,16 +5,16 @@
  * 点击后展开搜索输入框，点击外部或按 ESC 收起
  * 使用原生 JavaScript 实现
  */
-import { Icon } from 'astro-icon/components';
+import { Icon } from 'astro-icon/components'
 
 interface Props {
   /** 搜索框占位符文本 */
-  placeholder?: string;
+  placeholder?: string
   /** 自定义类名 */
-  class?: string;
+  class?: string
 }
 
-const { placeholder = '搜索文章...', class: className = '' } = Astro.props;
+const { placeholder = '搜索文章...', class: className = '' } = Astro.props
 ---
 
 <div class:list={['search-container', className]} data-search-container>
@@ -46,12 +46,7 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props;
         role="combobox"
         data-search-input
       />
-      <button
-        type="button"
-        class="search-close"
-        aria-label="关闭搜索"
-        data-search-close
-      >
+      <button type="button" class="search-close" aria-label="关闭搜索" data-search-close>
         <Icon name="material-symbols:close" size={18} aria-hidden="true" />
       </button>
     </div>
@@ -84,8 +79,9 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props;
     color: var(--md-on-surface);
     cursor: pointer;
     border-radius: var(--radius-md, 8px);
-    transition: background-color var(--transition-fast, 150ms ease),
-                color var(--transition-fast, 150ms ease);
+    transition:
+      background-color var(--transition-fast, 150ms ease),
+      color var(--transition-fast, 150ms ease);
   }
 
   .search-toggle-btn:hover {
@@ -142,8 +138,9 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props;
     border: 1px solid var(--md-outline);
     border-radius: var(--radius-md, 8px);
     outline: none;
-    transition: border-color var(--transition-fast, 150ms ease),
-                box-shadow var(--transition-fast, 150ms ease);
+    transition:
+      border-color var(--transition-fast, 150ms ease),
+      box-shadow var(--transition-fast, 150ms ease);
     box-shadow: var(--shadow-lg);
   }
 
@@ -153,7 +150,9 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props;
 
   .search-input:focus {
     border-color: var(--md-primary);
-    box-shadow: var(--shadow-lg), 0 0 0 3px color-mix(in srgb, var(--md-primary) 20%, transparent);
+    box-shadow:
+      var(--shadow-lg),
+      0 0 0 3px color-mix(in srgb, var(--md-primary) 20%, transparent);
   }
 
   .search-close {
@@ -170,8 +169,9 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props;
     color: var(--md-outline);
     cursor: pointer;
     border-radius: var(--radius-sm, 4px);
-    transition: color var(--transition-fast, 150ms ease),
-                background-color var(--transition-fast, 150ms ease);
+    transition:
+      color var(--transition-fast, 150ms ease),
+      background-color var(--transition-fast, 150ms ease);
   }
 
   .search-close:hover {
@@ -277,248 +277,263 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props;
    * 支持展开/收起搜索框
    */
   interface SearchResult {
-    title: string;
-    description: string;
-    slug: string;
-    category?: string;
-    tags?: string[];
+    title: string
+    description: string
+    slug: string
+    category?: string
+    tags?: string[]
   }
 
-  (function initSearch() {
-    const containers = document.querySelectorAll<HTMLDivElement>('[data-search-container]');
-    
+  ;(function initSearch() {
+    const containers = document.querySelectorAll<HTMLDivElement>('[data-search-container]')
+
     containers.forEach((container) => {
-      const toggleBtn = container.querySelector<HTMLButtonElement>('[data-search-toggle]');
-      const expandedEl = container.querySelector<HTMLDivElement>('[data-search-expanded]');
-      const input = container.querySelector<HTMLInputElement>('[data-search-input]');
-      const closeBtn = container.querySelector<HTMLButtonElement>('[data-search-close]');
-      const dropdown = container.querySelector<HTMLDivElement>('[data-search-dropdown]');
-      const loadingEl = container.querySelector<HTMLDivElement>('[data-search-loading]');
-      const resultsEl = container.querySelector<HTMLUListElement>('[data-search-results]');
-      const noResultsEl = container.querySelector<HTMLDivElement>('[data-search-no-results]');
+      const toggleBtn = container.querySelector<HTMLButtonElement>('[data-search-toggle]')
+      const expandedEl = container.querySelector<HTMLDivElement>('[data-search-expanded]')
+      const input = container.querySelector<HTMLInputElement>('[data-search-input]')
+      const closeBtn = container.querySelector<HTMLButtonElement>('[data-search-close]')
+      const dropdown = container.querySelector<HTMLDivElement>('[data-search-dropdown]')
+      const loadingEl = container.querySelector<HTMLDivElement>('[data-search-loading]')
+      const resultsEl = container.querySelector<HTMLUListElement>('[data-search-results]')
+      const noResultsEl = container.querySelector<HTMLDivElement>('[data-search-no-results]')
 
-      if (!toggleBtn || !expandedEl || !input || !closeBtn || !dropdown || !loadingEl || !resultsEl || !noResultsEl) return;
+      if (
+        !toggleBtn ||
+        !expandedEl ||
+        !input ||
+        !closeBtn ||
+        !dropdown ||
+        !loadingEl ||
+        !resultsEl ||
+        !noResultsEl
+      )
+        return
 
-      let searchData: SearchResult[] = [];
-      let results: SearchResult[] = [];
-      let selectedIndex = -1;
-      let isDropdownOpen = false;
-      let isSearchExpanded = false;
-      let isLoading = false;
+      let searchData: SearchResult[] = []
+      let results: SearchResult[] = []
+      let selectedIndex = -1
+      let isDropdownOpen = false
+      let isSearchExpanded = false
+      let isLoading = false
 
       // 展开搜索框
       function expandSearch(): void {
-        isSearchExpanded = true;
-        container.classList.add('expanded');
-        expandedEl.hidden = false;
-        toggleBtn.setAttribute('aria-expanded', 'true');
-        
+        isSearchExpanded = true
+        container.classList.add('expanded')
+        expandedEl.hidden = false
+        toggleBtn.setAttribute('aria-expanded', 'true')
+
         // 延迟聚焦，等待动画
         requestAnimationFrame(() => {
-          input.focus();
-        });
+          input.focus()
+        })
       }
 
       // 收起搜索框
       function collapseSearch(): void {
-        isSearchExpanded = false;
-        container.classList.remove('expanded');
-        expandedEl.hidden = true;
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        
+        isSearchExpanded = false
+        container.classList.remove('expanded')
+        expandedEl.hidden = true
+        toggleBtn.setAttribute('aria-expanded', 'false')
+
         // 清空搜索
-        input.value = '';
-        results = [];
-        selectedIndex = -1;
-        renderResults();
-        closeDropdown();
+        input.value = ''
+        results = []
+        selectedIndex = -1
+        renderResults()
+        closeDropdown()
       }
 
       // 加载搜索数据
       async function loadSearchData(): Promise<void> {
-        if (searchData.length > 0 || isLoading) return;
-        
+        if (searchData.length > 0 || isLoading) return
+
         try {
-          isLoading = true;
-          showLoading(true);
-          const response = await fetch('/api/search.json');
+          isLoading = true
+          showLoading(true)
+          const response = await fetch('/api/search.json')
           if (response.ok) {
-            searchData = await response.json();
+            searchData = await response.json()
           }
         } catch (error) {
-          console.error('加载搜索数据失败:', error);
+          console.error('加载搜索数据失败:', error)
         } finally {
-          isLoading = false;
-          showLoading(false);
+          isLoading = false
+          showLoading(false)
         }
       }
 
       // 显示/隐藏加载状态
       function showLoading(show: boolean): void {
-        loadingEl.hidden = !show;
+        loadingEl.hidden = !show
       }
 
       // 执行搜索
       function performSearch(query: string): void {
         if (!query.trim()) {
-          results = [];
-          renderResults();
-          return;
+          results = []
+          renderResults()
+          return
         }
 
-        const lowerQuery = query.toLowerCase();
-        results = searchData.filter((item) => {
-          const titleMatch = item.title.toLowerCase().includes(lowerQuery);
-          const descMatch = item.description.toLowerCase().includes(lowerQuery);
-          const tagMatch = item.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery));
-          const categoryMatch = item.category?.toLowerCase().includes(lowerQuery);
-          return titleMatch || descMatch || tagMatch || categoryMatch;
-        }).slice(0, 5);
+        const lowerQuery = query.toLowerCase()
+        results = searchData
+          .filter((item) => {
+            const titleMatch = item.title.toLowerCase().includes(lowerQuery)
+            const descMatch = item.description.toLowerCase().includes(lowerQuery)
+            const tagMatch = item.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery))
+            const categoryMatch = item.category?.toLowerCase().includes(lowerQuery)
+            return titleMatch || descMatch || tagMatch || categoryMatch
+          })
+          .slice(0, 5)
 
-        selectedIndex = -1;
-        renderResults();
+        selectedIndex = -1
+        renderResults()
       }
 
       // 渲染搜索结果
       function renderResults(): void {
-        resultsEl.innerHTML = '';
-        
+        resultsEl.innerHTML = ''
+
         if (results.length === 0) {
-          noResultsEl.hidden = !input.value.trim();
-          return;
+          noResultsEl.hidden = !input.value.trim()
+          return
         }
 
-        noResultsEl.hidden = true;
+        noResultsEl.hidden = true
 
         results.forEach((result, index) => {
-          const li = document.createElement('li');
-          li.className = `search-result-item${index === selectedIndex ? ' selected' : ''}`;
-          li.setAttribute('role', 'option');
-          li.setAttribute('aria-selected', String(index === selectedIndex));
-          li.dataset.index = String(index);
+          const li = document.createElement('li')
+          li.className = `search-result-item${index === selectedIndex ? ' selected' : ''}`
+          li.setAttribute('role', 'option')
+          li.setAttribute('aria-selected', String(index === selectedIndex))
+          li.dataset.index = String(index)
 
-          let tagsHtml = '';
+          let tagsHtml = ''
           if (result.tags && result.tags.length > 0) {
             tagsHtml = `
               <div class="search-result-tags">
-                ${result.tags.slice(0, 3).map((tag) => `<span class="search-result-tag">${tag}</span>`).join('')}
+                ${result.tags
+                  .slice(0, 3)
+                  .map((tag) => `<span class="search-result-tag">${tag}</span>`)
+                  .join('')}
               </div>
-            `;
+            `
           }
 
           li.innerHTML = `
             <div class="search-result-title">${result.title}</div>
             <div class="search-result-description">${result.description}</div>
             ${tagsHtml}
-          `;
+          `
 
-          li.addEventListener('click', () => navigateToResult(result));
+          li.addEventListener('click', () => navigateToResult(result))
           li.addEventListener('mouseenter', () => {
-            selectedIndex = index;
-            updateSelection();
-          });
+            selectedIndex = index
+            updateSelection()
+          })
 
-          resultsEl.appendChild(li);
-        });
+          resultsEl.appendChild(li)
+        })
       }
 
       // 更新选中状态
       function updateSelection(): void {
-        const items = resultsEl.querySelectorAll('.search-result-item');
+        const items = resultsEl.querySelectorAll('.search-result-item')
         items.forEach((item, index) => {
-          const isSelected = index === selectedIndex;
-          item.classList.toggle('selected', isSelected);
-          item.setAttribute('aria-selected', String(isSelected));
-        });
+          const isSelected = index === selectedIndex
+          item.classList.toggle('selected', isSelected)
+          item.setAttribute('aria-selected', String(isSelected))
+        })
 
         // 滚动到可见区域
         if (selectedIndex >= 0) {
-          const selectedItem = items[selectedIndex] as HTMLElement;
-          selectedItem?.scrollIntoView({ block: 'nearest' });
+          const selectedItem = items[selectedIndex] as HTMLElement
+          selectedItem?.scrollIntoView({ block: 'nearest' })
         }
       }
 
       // 导航到结果
       function navigateToResult(result: SearchResult): void {
-        window.location.href = `/${result.slug}`;
+        window.location.href = `/${result.slug}`
       }
 
       // 打开下拉框
       function openDropdown(): void {
-        isDropdownOpen = true;
-        dropdown.hidden = false;
-        input.setAttribute('aria-expanded', 'true');
+        isDropdownOpen = true
+        dropdown.hidden = false
+        input.setAttribute('aria-expanded', 'true')
       }
 
       // 关闭下拉框
       function closeDropdown(): void {
-        isDropdownOpen = false;
-        dropdown.hidden = true;
-        input.setAttribute('aria-expanded', 'false');
+        isDropdownOpen = false
+        dropdown.hidden = true
+        input.setAttribute('aria-expanded', 'false')
       }
 
       // 事件监听 - 搜索按钮点击
       toggleBtn.addEventListener('click', () => {
-        expandSearch();
-        loadSearchData();
-      });
+        expandSearch()
+        loadSearchData()
+      })
 
       // 事件监听 - 关闭按钮点击
-      closeBtn.addEventListener('click', collapseSearch);
+      closeBtn.addEventListener('click', collapseSearch)
 
       // 事件监听 - 输入
       input.addEventListener('input', () => {
-        const query = input.value;
-        performSearch(query);
+        const query = input.value
+        performSearch(query)
         if (query) {
-          openDropdown();
+          openDropdown()
         } else {
-          closeDropdown();
+          closeDropdown()
         }
-      });
+      })
 
       input.addEventListener('focus', async () => {
-        await loadSearchData();
+        await loadSearchData()
         if (input.value) {
-          openDropdown();
+          openDropdown()
         }
-      });
+      })
 
       input.addEventListener('keydown', (e) => {
         switch (e.key) {
           case 'ArrowDown':
             if (isDropdownOpen) {
-              e.preventDefault();
-              selectedIndex = Math.min(selectedIndex + 1, results.length - 1);
-              updateSelection();
+              e.preventDefault()
+              selectedIndex = Math.min(selectedIndex + 1, results.length - 1)
+              updateSelection()
             }
-            break;
+            break
           case 'ArrowUp':
             if (isDropdownOpen) {
-              e.preventDefault();
-              selectedIndex = Math.max(selectedIndex - 1, -1);
-              updateSelection();
+              e.preventDefault()
+              selectedIndex = Math.max(selectedIndex - 1, -1)
+              updateSelection()
             }
-            break;
+            break
           case 'Enter':
             if (isDropdownOpen && selectedIndex >= 0 && results[selectedIndex]) {
-              e.preventDefault();
-              navigateToResult(results[selectedIndex]);
+              e.preventDefault()
+              navigateToResult(results[selectedIndex])
             }
-            break;
+            break
           case 'Escape':
-            e.preventDefault();
-            collapseSearch();
-            break;
+            e.preventDefault()
+            collapseSearch()
+            break
         }
-      });
+      })
 
       // 点击外部关闭
       document.addEventListener('mousedown', (e) => {
         if (isSearchExpanded && !container.contains(e.target as Node)) {
-          collapseSearch();
+          collapseSearch()
         }
-      });
-    });
-  })();
+      })
+    })
+  })()
 </script>

@@ -3,28 +3,28 @@
  * Layout 兼容层
  * 为了向后兼容，保留此文件作为 BaseLayout 的别名
  * 新代码应该直接使用 BaseLayout、PageLayout 或 PostLayout
- * 
+ *
  * @deprecated 请使用 BaseLayout、PageLayout 或 PostLayout
  */
-import BaseLayout from './BaseLayout.astro';
+import BaseLayout from './BaseLayout.astro'
 
 interface Props {
   /** 页面标题 */
-  title?: string;
+  title?: string
   /** 页面描述（用于 SEO） */
-  description?: string;
+  description?: string
   /** OG 图片 URL */
-  image?: string;
+  image?: string
   /** 页面类型 */
-  type?: 'website' | 'article';
+  type?: 'website' | 'article'
   /** 自定义 body 类名 */
-  class?: string;
-  
+  class?: string
+
   // 保留旧版 Props 以兼容
   /** @deprecated 使用 PageLayout 代替 */
-  useContainer?: boolean;
+  useContainer?: boolean
   /** @deprecated 使用 PageLayout 代替 */
-  containerSize?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  containerSize?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
 }
 
 const {
@@ -36,16 +36,10 @@ const {
   // 忽略旧版属性，仅保留接口兼容
   useContainer,
   containerSize,
-} = Astro.props;
+} = Astro.props
 ---
 
-<BaseLayout 
-  title={title}
-  description={description}
-  image={image}
-  type={type}
-  class={className}
->
+<BaseLayout title={title} description={description} image={image} type={type} class={className}>
   <slot name="head" slot="head" />
   <slot />
 </BaseLayout>

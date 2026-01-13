@@ -1,13 +1,13 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from 'astro/config'
 
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
-import icon from 'astro-icon';
-import expressiveCode from 'astro-expressive-code';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeExternalLinks from 'rehype-external-links';
+import mdx from '@astrojs/mdx'
+import sitemap from '@astrojs/sitemap'
+import icon from 'astro-icon'
+import expressiveCode from 'astro-expressive-code'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeExternalLinks from 'rehype-external-links'
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,27 +18,33 @@ export default defineConfig({
   markdown: {
     rehypePlugins: [
       rehypeSlug,
-      [rehypeAutolinkHeadings, {
-        behavior: 'wrap',  // 整个标题成为链接，不需要额外的 # 符号
-        properties: {
-          className: ['heading-link'],
-          ariaLabel: '链接到此标题'
-        }
-      }],
-      [rehypeExternalLinks, {
-        target: '_blank',
-        rel: ['noopener', 'noreferrer'],
-        content: {
-          type: 'element',
-          tagName: 'span',
-          properties: { className: ['external-link-icon'] },
-          children: []
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: 'wrap', // 整个标题成为链接，不需要额外的 # 符号
+          properties: {
+            className: ['heading-link'],
+            ariaLabel: '链接到此标题',
+          },
         },
-        contentProperties: { className: ['external-link-icon-wrapper'] }
-      }]
+      ],
+      [
+        rehypeExternalLinks,
+        {
+          target: '_blank',
+          rel: ['noopener', 'noreferrer'],
+          content: {
+            type: 'element',
+            tagName: 'span',
+            properties: { className: ['external-link-icon'] },
+            children: [],
+          },
+          contentProperties: { className: ['external-link-icon-wrapper'] },
+        },
+      ],
     ],
   },
-  
+
   integrations: [
     // expressiveCode 必须放在 mdx 之前
     expressiveCode({
@@ -49,10 +55,10 @@ export default defineConfig({
       themeCssSelector: (theme) => {
         if (theme.type === 'light') {
           // 浅色主题：默认状态或明确设置为 light
-          return ':root:not(.dark)';
+          return ':root:not(.dark)'
         }
         // 深色主题：设置为 dark 类
-        return ':root.dark';
+        return ':root.dark'
       },
       // 样式覆盖：适配 Material Design 3 主题
       styleOverrides: {
@@ -118,8 +124,8 @@ export default defineConfig({
     icon({
       include: {
         'material-symbols': ['*'], // 加载所有 Material Symbols 图标
-        'mdi': ['github', 'twitter'], // 加载 MDI 图标（用于社交链接）
+        mdi: ['github', 'twitter'], // 加载 MDI 图标（用于社交链接）
       },
     }),
   ],
-});
+})

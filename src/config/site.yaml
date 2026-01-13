@@ -2,9 +2,9 @@
 site:
   title: 海野味
   description: 分享技术、想法和生活
-  author: Your Name
+  author: ddlg
   language: zh-CN
-  url: https://example.com
+  url: https://blog.haiyewei.com
 
 # 导航菜单（已移至页脚，此处保留空配置以兼容旧代码）
 navigation: []
@@ -82,6 +82,12 @@ authors:
   - id: "guest"
     name: "访客作者"
     email: "guest@example.com"
+  - id: "donghai"
+    name: "donghai"
+    email: "donghai@example.com"
+  - id: "junrong"
+    name: "junrong"
+    email: "junrong@example.com"
 
 # 主题配置
 theme:

@@ -4,20 +4,20 @@
  * 用于普通页面（关于、联系等），继承 BaseLayout
  * 提供可选的页面标题显示和容器包裹
  */
-import BaseLayout from './BaseLayout.astro';
-import Container from '../components/common/Container.astro';
+import BaseLayout from './BaseLayout.astro'
+import Container from '../components/common/Container.astro'
 
 interface Props {
   /** 页面标题 */
-  title: string;
+  title: string
   /** 页面描述（用于 SEO） */
-  description?: string;
+  description?: string
   /** 是否显示页面标题 */
-  showTitle?: boolean;
+  showTitle?: boolean
   /** 容器尺寸 */
-  containerSize?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  containerSize?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
   /** 自定义类名 */
-  class?: string;
+  class?: string
 }
 
 const {
@@ -26,22 +26,22 @@ const {
   showTitle = true,
   containerSize = 'lg',
   class: className = '',
-} = Astro.props;
+} = Astro.props
 ---
 
 <BaseLayout title={title} description={description} type="website">
   <slot name="head" slot="head" />
-  
+
   <Container size={containerSize} class={className}>
-    {showTitle && (
-      <header class="page-header">
-        <h1 class="page-title">{title}</h1>
-        {description && (
-          <p class="page-description">{description}</p>
-        )}
-      </header>
-    )}
-    
+    {
+      showTitle && (
+        <header class="page-header">
+          <h1 class="page-title">{title}</h1>
+          {description && <p class="page-description">{description}</p>}
+        </header>
+      )
+    }
+
     <div class="page-content">
       <slot />
     </div>

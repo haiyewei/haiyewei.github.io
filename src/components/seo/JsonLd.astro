@@ -6,19 +6,19 @@
 
 interface Props {
   /** Schema.org 类型 */
-  type: 'WebSite' | 'Article' | 'BlogPosting' | 'Person' | 'Organization' | 'BreadcrumbList';
+  type: 'WebSite' | 'Article' | 'BlogPosting' | 'Person' | 'Organization' | 'BreadcrumbList'
   /** 结构化数据内容 */
-  data: Record<string, any>;
+  data: Record<string, any>
 }
 
-const { type, data } = Astro.props;
+const { type, data } = Astro.props
 
 // 构建完整的 JSON-LD 对象
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': type,
   ...data,
-};
+}
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd, null, 2)} />

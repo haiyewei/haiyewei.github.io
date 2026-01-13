@@ -6,51 +6,45 @@
 
 interface Props {
   /** 标签数组 */
-  tags: string[];
+  tags: string[]
   /** 标签大小 */
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md'
   /** 最多显示数量 */
-  limit?: number;
+  limit?: number
   /** 自定义类名 */
-  class?: string;
+  class?: string
 }
 
-const { 
-  tags, 
-  size = 'md', 
-  limit,
-  class: className = '' 
-} = Astro.props;
+const { tags, size = 'md', limit, class: className = '' } = Astro.props
 
 // 根据 limit 截取标签
-const displayTags = limit ? tags.slice(0, limit) : tags;
-const remainingCount = limit && tags.length > limit ? tags.length - limit : 0;
+const displayTags = limit ? tags.slice(0, limit) : tags
+const remainingCount = limit && tags.length > limit ? tags.length - limit : 0
 
 // 根据大小设置样式类
 const sizeClasses = {
   sm: 'tag-sm',
   md: 'tag-md',
-};
+}
 ---
 
-{tags.length > 0 && (
-  <div class:list={['tag-list', className]}>
-    {displayTags.map((tag) => (
-      <a
-        href={`/tag/${encodeURIComponent(tag)}`}
-        class:list={['tag', sizeClasses[size]]}
-      >
-        <span class="tag-hash" aria-hidden="true">#</span>
-        <span class="tag-text">{tag}</span>
-      </a>
-    ))}
-    {remainingCount > 0 && (
-      <span class:list={['tag-more', sizeClasses[size]]}>
-        +{remainingCount}
-      </span>
-    )}
-  </div>
-)}
+{
+  tags.length > 0 && (
+    <div class:list={['tag-list', className]}>
+      {displayTags.map((tag) => (
+        <a href={`/tag/${encodeURIComponent(tag)}`} class:list={['tag', sizeClasses[size]]}>
+          <span class="tag-hash" aria-hidden="true">
+            #
+          </span>
+          <span class="tag-text">{tag}</span>
+        </a>
+      ))}
+      {remainingCount > 0 && (
+        <span class:list={['tag-more', sizeClasses[size]]}>+{remainingCount}</span>
+      )}
+    </div>
+  )
+}
 
 <style>
   .tag-list {
@@ -67,7 +61,9 @@ const sizeClasses = {
     color: var(--md-on-secondary-container);
     border-radius: var(--radius-full);
     text-decoration: none;
-    transition: background-color var(--transition-fast), color var(--transition-fast);
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast);
     white-space: nowrap;
   }
 

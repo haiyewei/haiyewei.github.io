@@ -1,10 +1,10 @@
 ---
-title: "MDX 完整语法指南"
-description: "全面介绍 MDX 语法，包括基础用法、组件导入、JSX 表达式以及在 Astro 中的最佳实践"
+title: 'MDX 完整语法指南'
+description: '全面介绍 MDX 语法，包括基础用法、组件导入、JSX 表达式以及在 Astro 中的最佳实践'
 pubDate: 2024-01-15
-category: "教程"
-tags: ["mdx", "markdown", "astro", "组件", "教程"]
-author: "admin"
+category: '教程'
+tags: ['mdx', 'markdown', 'astro', '组件', '教程']
+author: 'admin'
 ---
 
 # MDX 完整语法指南
@@ -25,16 +25,16 @@ MDX 的核心理念是：
 
 ### MDX 与 Markdown 的区别
 
-| 特性 | Markdown | MDX |
-|:-----|:--------:|:---:|
-| 基础文本格式 | ✅ | ✅ |
-| 代码块语法高亮 | ✅ | ✅ |
-| 表格支持 | ✅ | ✅ |
-| 导入组件 | ❌ | ✅ |
-| 使用 JSX | ❌ | ✅ |
-| JavaScript 表达式 | ❌ | ✅ |
-| 自定义组件替换 | ❌ | ✅ |
-| 交互式内容 | ❌ | ✅ |
+| 特性              | Markdown | MDX |
+| :---------------- | :------: | :-: |
+| 基础文本格式      |    ✅    | ✅  |
+| 代码块语法高亮    |    ✅    | ✅  |
+| 表格支持          |    ✅    | ✅  |
+| 导入组件          |    ❌    | ✅  |
+| 使用 JSX          |    ❌    | ✅  |
+| JavaScript 表达式 |    ❌    | ✅  |
+| 自定义组件替换    |    ❌    | ✅  |
+| 交互式内容        |    ❌    | ✅  |
 
 ### MDX 的优势
 
@@ -55,7 +55,7 @@ MDX 完全兼容标准 Markdown 语法，你可以像往常一样编写：
 ```markdown
 # 这是标题
 
-这是一个段落，包含 **粗体** 和 *斜体* 文本。
+这是一个段落，包含 **粗体** 和 _斜体_ 文本。
 
 - 列表项 1
 - 列表项 2
@@ -71,9 +71,13 @@ MDX 完全兼容标准 Markdown 语法，你可以像往常一样编写：
 MDX 的核心特性是可以直接在文档中使用 JSX 语法：
 
 ```jsx
-{/* 这是 JSX 注释 */}
+{
+  /* 这是 JSX 注释 */
+}
 
-<div style={{ padding: '1rem', backgroundColor: '#f0f0f0', borderRadius: '8px' }}>
+;<div
+  style={{ padding: '1rem', backgroundColor: '#f0f0f0', borderRadius: '8px' }}
+>
   <h3>这是一个 JSX 块</h3>
   <p>你可以在这里使用任何有效的 JSX 语法。</p>
 </div>
@@ -168,49 +172,49 @@ MDX 允许你用自定义组件替换默认的 HTML 元素。这在 Astro 中通
 
 ```jsx
 // 在布局文件中
-import { Content } from './my-post.mdx';
+import { Content } from './my-post.mdx'
 
 const components = {
   // 替换默认的 h1 元素
   h1: (props) => <h1 className="custom-heading" {...props} />,
-  
+
   // 替换默认的 a 元素
   a: (props) => {
-    const isExternal = props.href?.startsWith('http');
+    const isExternal = props.href?.startsWith('http')
     return (
-      <a 
-        {...props} 
+      <a
+        {...props}
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noopener noreferrer' : undefined}
       />
-    );
+    )
   },
-  
+
   // 替换默认的 code 元素
   code: (props) => <code className="inline-code" {...props} />,
-  
+
   // 替换默认的 pre 元素（代码块）
   pre: (props) => <pre className="code-block" {...props} />,
-};
+}
 
-<Content components={components} />
+;<Content components={components} />
 ```
 
 **可替换的元素列表：**
 
-| 元素 | Markdown 语法 | 说明 |
-|:-----|:-------------|:-----|
-| `h1` - `h6` | `#` 到 `######` | 标题 |
-| `p` | 普通段落 | 段落 |
-| `a` | `[text](url)` | 链接 |
-| `img` | `![alt](src)` | 图片 |
-| `blockquote` | `>` | 引用块 |
-| `ul` / `ol` | `-` 或 `1.` | 列表 |
-| `li` | 列表项 | 列表项 |
-| `code` | `` `code` `` | 行内代码 |
-| `pre` | ` ``` ` | 代码块 |
-| `table` | `\|` 语法 | 表格 |
-| `hr` | `---` | 分割线 |
+| 元素         | Markdown 语法   | 说明     |
+| :----------- | :-------------- | :------- |
+| `h1` - `h6`  | `#` 到 `######` | 标题     |
+| `p`          | 普通段落        | 段落     |
+| `a`          | `[text](url)`   | 链接     |
+| `img`        | `![alt](src)`   | 图片     |
+| `blockquote` | `>`             | 引用块   |
+| `ul` / `ol`  | `-` 或 `1.`     | 列表     |
+| `li`         | 列表项          | 列表项   |
+| `code`       | `` `code` ``    | 行内代码 |
+| `pre`        | ` ``` `         | 代码块   |
+| `table`      | `\|` 语法       | 表格     |
+| `hr`         | `---`           | 分割线   |
 
 ### 布局组件
 
@@ -229,16 +233,16 @@ export { default as Layout } from '../layouts/PostLayout.astro';
 
 ```javascript
 // astro.config.mjs
-import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
+import { defineConfig } from 'astro/config'
+import mdx from '@astrojs/mdx'
 
 export default defineConfig({
   integrations: [
     mdx({
       // MDX 配置选项
-    })
-  ]
-});
+    }),
+  ],
+})
 ```
 
 ### 传递 Props
@@ -253,7 +257,7 @@ export function Alert({ type = 'info', title, children }) {
     error: { bg: '#ffebee', border: '#f44336' },
     success: { bg: '#e8f5e9', border: '#4caf50' }
   };
-  
+
   const style = {
     padding: '1rem',
     borderLeft: `4px solid ${colors[type].border}`,
@@ -261,7 +265,7 @@ export function Alert({ type = 'info', title, children }) {
     borderRadius: '4px',
     marginBottom: '1rem'
   };
-  
+
   return (
     <div style={style}>
       {title && <strong>{title}</strong>}
@@ -310,8 +314,8 @@ yarn add @astrojs/mdx
 
 ```javascript
 // astro.config.mjs
-import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
+import { defineConfig } from 'astro/config'
+import mdx from '@astrojs/mdx'
 
 export default defineConfig({
   integrations: [mdx()],
@@ -319,41 +323,41 @@ export default defineConfig({
     // Markdown 配置也会应用到 MDX
     shikiConfig: {
       theme: 'github-dark',
-      wrap: true
-    }
-  }
-});
+      wrap: true,
+    },
+  },
+})
 ```
 
 ### MDX 配置选项
 
 ```javascript
 // astro.config.mjs
-import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
+import { defineConfig } from 'astro/config'
+import mdx from '@astrojs/mdx'
+import remarkGfm from 'remark-gfm'
+import rehypeSlug from 'rehype-slug'
 
 export default defineConfig({
   integrations: [
     mdx({
       // 语法扩展
       syntaxHighlight: 'shiki', // 或 'prism'
-      
+
       // Remark 插件（处理 Markdown）
       remarkPlugins: [remarkGfm],
-      
+
       // Rehype 插件（处理 HTML）
       rehypePlugins: [rehypeSlug],
-      
+
       // 是否使用 Astro 的 Markdown 配置
       extendMarkdownConfig: true,
-      
+
       // 优化选项
-      optimize: true
-    })
-  ]
-});
+      optimize: true,
+    }),
+  ],
+})
 ```
 
 ### 在 Astro 组件中使用 MDX
@@ -361,19 +365,19 @@ export default defineConfig({
 ```astro
 ---
 // src/pages/post/[slug].astro
-import { getCollection } from 'astro:content';
-import PostLayout from '../../layouts/PostLayout.astro';
+import { getCollection } from 'astro:content'
+import PostLayout from '../../layouts/PostLayout.astro'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
-  return posts.map(post => ({
+  const posts = await getCollection('posts')
+  return posts.map((post) => ({
     params: { slug: post.slug },
-    props: { post }
-  }));
+    props: { post },
+  }))
 }
 
-const { post } = Astro.props;
-const { Content } = await post.render();
+const { post } = Astro.props
+const { Content } = await post.render()
 ---
 
 <PostLayout frontmatter={post.data}>
@@ -397,7 +401,7 @@ import Container from '../../components/common/Container.astro';
 
 <Container>
   这是容器内的内容。
-  
+
   <Button>点击这里</Button>
 </Container>
 ```
@@ -422,13 +426,13 @@ import Counter from '../../components/Counter.jsx';
 
 **客户端指令说明：**
 
-| 指令 | 说明 |
-|:-----|:-----|
-| `client:load` | 页面加载时立即水合 |
-| `client:idle` | 页面空闲时水合 |
-| `client:visible` | 组件进入视口时水合 |
-| `client:media` | 满足媒体查询条件时水合 |
-| `client:only` | 仅在客户端渲染，跳过 SSR |
+| 指令             | 说明                     |
+| :--------------- | :----------------------- |
+| `client:load`    | 页面加载时立即水合       |
+| `client:idle`    | 页面空闲时水合           |
+| `client:visible` | 组件进入视口时水合       |
+| `client:media`   | 满足媒体查询条件时水合   |
+| `client:only`    | 仅在客户端渲染，跳过 SSR |
 
 ---
 
@@ -467,10 +471,10 @@ src/
 
 ```javascript
 // 使用动态导入减少初始包大小
-const HeavyComponent = await import('../components/HeavyComponent');
+const HeavyComponent = await import('../components/HeavyComponent')
 
 // 使用 client:visible 延迟加载
-<HeavyComponent client:visible />
+;<HeavyComponent client:visible />
 ```
 
 ### 4. 类型安全
@@ -480,9 +484,9 @@ const HeavyComponent = await import('../components/HeavyComponent');
 ```typescript
 // components/Alert.tsx
 interface AlertProps {
-  type?: 'info' | 'warning' | 'error' | 'success';
-  title?: string;
-  children: React.ReactNode;
+  type?: 'info' | 'warning' | 'error' | 'success'
+  title?: string
+  children: React.ReactNode
 }
 
 export function Alert({ type = 'info', title, children }: AlertProps) {
@@ -521,7 +525,7 @@ export const showAdvanced = true;
 {showAdvanced && (
   <div>
     ## 高级内容
-    
+
     这部分只在 showAdvanced 为 true 时显示。
   </div>
 )}
@@ -533,8 +537,8 @@ export const showAdvanced = true;
 
 ```yaml
 ---
-title: "我的文章"
-description: "文章描述"
+title: '我的文章'
+description: '文章描述'
 pubDate: 2024-01-15
 ---
 ```
@@ -590,21 +594,14 @@ export function Collapsible({ title, children }) {
       <summary style={{ cursor: 'pointer', fontWeight: 'bold' }}>
         {title}
       </summary>
-      <div style={{ paddingTop: '0.5rem' }}>
-        {children}
-      </div>
+      <div style={{ paddingTop: '0.5rem' }}>{children}</div>
     </details>
-  );
+  )
 }
 
-<Collapsible title="点击展开更多内容">
-
-这里是隐藏的内容，点击标题可以展开或收起。
-
-- 支持 Markdown 语法
-- 支持嵌套组件
-- 支持任意内容
-
+;<Collapsible title="点击展开更多内容">
+  这里是隐藏的内容，点击标题可以展开或收起。 - 支持 Markdown 语法 - 支持嵌套组件
+  - 支持任意内容
 </Collapsible>
 ```
 
@@ -621,11 +618,9 @@ export function Tabs({ children, labels }) {
           </button>
         ))}
       </div>
-      <div className="tabs-content">
-        {children}
-      </div>
+      <div className="tabs-content">{children}</div>
     </div>
-  );
+  )
 }
 ```
 
@@ -634,13 +629,19 @@ export function Tabs({ children, labels }) {
 ```jsx
 <Tabs labels={['JavaScript', 'Python', 'Go']}>
   {/* JavaScript 代码 */}
-  <pre><code>console.log('Hello, World!');</code></pre>
-  
+  <pre>
+    <code>console.log('Hello, World!');</code>
+  </pre>
+
   {/* Python 代码 */}
-  <pre><code>print('Hello, World!')</code></pre>
-  
+  <pre>
+    <code>print('Hello, World!')</code>
+  </pre>
+
   {/* Go 代码 */}
-  <pre><code>fmt.Println("Hello, World!")</code></pre>
+  <pre>
+    <code>fmt.Println("Hello, World!")</code>
+  </pre>
 </Tabs>
 ```
 
@@ -649,17 +650,23 @@ export function Tabs({ children, labels }) {
 ```jsx
 export function CodeComparison({ before, after, language = 'javascript' }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+    <div
+      style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}
+    >
       <div>
         <h4 style={{ color: '#ef4444' }}>❌ 之前</h4>
-        <pre><code className={`language-${language}`}>{before}</code></pre>
+        <pre>
+          <code className={`language-${language}`}>{before}</code>
+        </pre>
       </div>
       <div>
         <h4 style={{ color: '#22c55e' }}>✅ 之后</h4>
-        <pre><code className={`language-${language}`}>{after}</code></pre>
+        <pre>
+          <code className={`language-${language}`}>{after}</code>
+        </pre>
       </div>
     </div>
-  );
+  )
 }
 ```
 
@@ -690,4 +697,4 @@ MDX 是一个强大的工具，它将 Markdown 的简洁性与组件化开发的
 
 ---
 
-*本文最后更新于 2024 年 1 月 15 日*
+_本文最后更新于 2024 年 1 月 15 日_

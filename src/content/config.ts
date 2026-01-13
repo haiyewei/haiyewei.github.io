@@ -1,4 +1,4 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from 'astro:content'
 
 /**
  * 文章集合
@@ -19,7 +19,7 @@ const postsCollection = defineCollection({
     author: z.string().optional(),
     draft: z.boolean().default(false),
   }),
-});
+})
 
 /**
  * 静态页面集合
@@ -32,7 +32,7 @@ const pagesCollection = defineCollection({
     description: z.string().optional(),
     updatedDate: z.coerce.date().optional(),
   }),
-});
+})
 
 /**
  * 作者集合
@@ -51,17 +51,19 @@ const authorsCollection = defineCollection({
     /** 作者简介（可选） */
     bio: z.string().optional(),
     /** 社交链接（可选） */
-    social: z.object({
-      github: z.string().url().optional(),
-      twitter: z.string().url().optional(),
-      website: z.string().url().optional(),
-      linkedin: z.string().url().optional(),
-    }).optional(),
+    social: z
+      .object({
+        github: z.string().url().optional(),
+        twitter: z.string().url().optional(),
+        website: z.string().url().optional(),
+        linkedin: z.string().url().optional(),
+      })
+      .optional(),
   }),
-});
+})
 
 export const collections = {
   posts: postsCollection,
   pages: pagesCollection,
   authors: authorsCollection,
-};
+}

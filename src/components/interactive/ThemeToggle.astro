@@ -4,14 +4,14 @@
  * 支持浅色/深色/系统三种模式
  * 使用原生 JavaScript 实现
  */
-import { Icon } from 'astro-icon/components';
+import { Icon } from 'astro-icon/components'
 
 interface Props {
   /** 初始主题模式 */
-  initialTheme?: 'light' | 'dark' | 'system';
+  initialTheme?: 'light' | 'dark' | 'system'
 }
 
-const { initialTheme = 'system' } = Astro.props;
+const { initialTheme = 'system' } = Astro.props
 ---
 
 <button
@@ -22,13 +22,28 @@ const { initialTheme = 'system' } = Astro.props;
   data-initial-theme={initialTheme}
 >
   <!-- 太阳图标（浅色模式） -->
-  <Icon name="material-symbols:light-mode" class="theme-icon icon-sun" size={20} aria-hidden="true" />
-  
+  <Icon
+    name="material-symbols:light-mode"
+    class="theme-icon icon-sun"
+    size={20}
+    aria-hidden="true"
+  />
+
   <!-- 月亮图标（深色模式） -->
-  <Icon name="material-symbols:dark-mode" class="theme-icon icon-moon" size={20} aria-hidden="true" />
-  
+  <Icon
+    name="material-symbols:dark-mode"
+    class="theme-icon icon-moon"
+    size={20}
+    aria-hidden="true"
+  />
+
   <!-- 系统图标（跟随系统） -->
-  <Icon name="material-symbols:computer" class="theme-icon icon-system" size={20} aria-hidden="true" />
+  <Icon
+    name="material-symbols:computer"
+    class="theme-icon icon-system"
+    size={20}
+    aria-hidden="true"
+  />
 </button>
 
 <style>
@@ -44,8 +59,9 @@ const { initialTheme = 'system' } = Astro.props;
     background-color: transparent;
     color: var(--md-on-surface);
     cursor: pointer;
-    transition: background-color var(--transition-fast, 150ms ease),
-                color var(--transition-fast, 150ms ease);
+    transition:
+      background-color var(--transition-fast, 150ms ease),
+      color var(--transition-fast, 150ms ease);
   }
 
   .theme-toggle:hover {
@@ -64,15 +80,15 @@ const { initialTheme = 'system' } = Astro.props;
   }
 
   /* 根据主题模式显示对应图标 */
-  :global([data-theme="light"]) .icon-sun {
+  :global([data-theme='light']) .icon-sun {
     display: block;
   }
 
-  :global([data-theme="dark"]) .icon-moon {
+  :global([data-theme='dark']) .icon-moon {
     display: block;
   }
 
-  :global([data-theme="system"]) .icon-system {
+  :global([data-theme='system']) .icon-system {
     display: block;
   }
 
@@ -86,29 +102,29 @@ const { initialTheme = 'system' } = Astro.props;
   /**
    * 主题切换逻辑
    */
-  (function initThemeToggle() {
-    type ThemeMode = 'light' | 'dark' | 'system';
-    type ResolvedTheme = 'light' | 'dark';
+  ;(function initThemeToggle() {
+    type ThemeMode = 'light' | 'dark' | 'system'
+    type ResolvedTheme = 'light' | 'dark'
 
-    const STORAGE_KEY = 'theme';
-    const MODES: ThemeMode[] = ['light', 'dark', 'system'];
+    const STORAGE_KEY = 'theme'
+    const MODES: ThemeMode[] = ['light', 'dark', 'system']
 
     /**
      * 获取系统偏好的主题
      */
     function getSystemTheme(): ResolvedTheme {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
     }
 
     /**
      * 从 localStorage 获取保存的主题
      */
     function getSavedTheme(): ThemeMode | null {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = localStorage.getItem(STORAGE_KEY)
       if (saved === 'light' || saved === 'dark' || saved === 'system') {
-        return saved;
+        return saved
       }
-      return null;
+      return null
     }
 
     /**
@@ -116,24 +132,24 @@ const { initialTheme = 'system' } = Astro.props;
      */
     function resolveTheme(mode: ThemeMode): ResolvedTheme {
       if (mode === 'system') {
-        return getSystemTheme();
+        return getSystemTheme()
       }
-      return mode;
+      return mode
     }
 
     /**
      * 应用主题到 document
      */
     function applyTheme(mode: ThemeMode): void {
-      const resolved = resolveTheme(mode);
-      const root = document.documentElement;
-      
+      const resolved = resolveTheme(mode)
+      const root = document.documentElement
+
       // 设置 data-theme 属性用于图标显示
-      root.setAttribute('data-theme', mode);
-      
+      root.setAttribute('data-theme', mode)
+
       // 设置 class 用于样式
-      root.classList.remove('light', 'dark');
-      root.classList.add(resolved);
+      root.classList.remove('light', 'dark')
+      root.classList.add(resolved)
     }
 
     /**
@@ -144,43 +160,43 @@ const { initialTheme = 'system' } = Astro.props;
         light: '当前：浅色模式，点击切换到深色模式',
         dark: '当前：深色模式，点击切换到跟随系统',
         system: '当前：跟随系统，点击切换到浅色模式',
-      };
-      button.setAttribute('aria-label', labels[mode]);
-      button.setAttribute('title', labels[mode]);
+      }
+      button.setAttribute('aria-label', labels[mode])
+      button.setAttribute('title', labels[mode])
     }
 
     /**
      * 初始化主题切换按钮
      */
     function initButton(button: HTMLButtonElement): void {
-      const initialTheme = (button.dataset.initialTheme as ThemeMode) || 'system';
-      let currentMode: ThemeMode = getSavedTheme() || initialTheme;
+      const initialTheme = (button.dataset.initialTheme as ThemeMode) || 'system'
+      let currentMode: ThemeMode = getSavedTheme() || initialTheme
 
       // 应用初始主题
-      applyTheme(currentMode);
-      updateAriaLabel(button, currentMode);
+      applyTheme(currentMode)
+      updateAriaLabel(button, currentMode)
 
       // 点击切换主题
       button.addEventListener('click', () => {
-        const currentIndex = MODES.indexOf(currentMode);
-        const nextIndex = (currentIndex + 1) % MODES.length;
-        currentMode = MODES[nextIndex];
+        const currentIndex = MODES.indexOf(currentMode)
+        const nextIndex = (currentIndex + 1) % MODES.length
+        currentMode = MODES[nextIndex]
 
-        localStorage.setItem(STORAGE_KEY, currentMode);
-        applyTheme(currentMode);
-        updateAriaLabel(button, currentMode);
-      });
+        localStorage.setItem(STORAGE_KEY, currentMode)
+        applyTheme(currentMode)
+        updateAriaLabel(button, currentMode)
+      })
 
       // 监听系统主题变化
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
       mediaQuery.addEventListener('change', () => {
         if (currentMode === 'system') {
-          applyTheme('system');
+          applyTheme('system')
         }
-      });
+      })
     }
 
     // 初始化所有主题切换按钮
-    document.querySelectorAll<HTMLButtonElement>('.theme-toggle').forEach(initButton);
-  })();
+    document.querySelectorAll<HTMLButtonElement>('.theme-toggle').forEach(initButton)
+  })()
 </script>

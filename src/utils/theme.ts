@@ -7,72 +7,72 @@ import {
   hexFromArgb,
   themeFromSourceColor,
   type Theme,
-} from '@material/material-color-utilities';
-import { getSeedColor } from './config';
+} from '@material/material-color-utilities'
+import { getSeedColor } from './config'
 
 // ============ 类型定义 ============
 
 /** 颜色角色映射 */
 export interface ColorRoles {
   // Primary 主色系
-  primary: string;
-  onPrimary: string;
-  primaryContainer: string;
-  onPrimaryContainer: string;
+  primary: string
+  onPrimary: string
+  primaryContainer: string
+  onPrimaryContainer: string
 
   // Secondary 次要色系
-  secondary: string;
-  onSecondary: string;
-  secondaryContainer: string;
-  onSecondaryContainer: string;
+  secondary: string
+  onSecondary: string
+  secondaryContainer: string
+  onSecondaryContainer: string
 
   // Tertiary 第三色系
-  tertiary: string;
-  onTertiary: string;
-  tertiaryContainer: string;
-  onTertiaryContainer: string;
+  tertiary: string
+  onTertiary: string
+  tertiaryContainer: string
+  onTertiaryContainer: string
 
   // Error 错误色系
-  error: string;
-  onError: string;
-  errorContainer: string;
-  onErrorContainer: string;
+  error: string
+  onError: string
+  errorContainer: string
+  onErrorContainer: string
 
   // Background & Surface 背景和表面
-  background: string;
-  onBackground: string;
-  surface: string;
-  onSurface: string;
-  surfaceVariant: string;
-  onSurfaceVariant: string;
+  background: string
+  onBackground: string
+  surface: string
+  onSurface: string
+  surfaceVariant: string
+  onSurfaceVariant: string
 
   // Outline 轮廓
-  outline: string;
-  outlineVariant: string;
+  outline: string
+  outlineVariant: string
 
   // Inverse 反色
-  inverseSurface: string;
-  inverseOnSurface: string;
-  inversePrimary: string;
+  inverseSurface: string
+  inverseOnSurface: string
+  inversePrimary: string
 
   // Shadow & Scrim
-  shadow: string;
-  scrim: string;
+  shadow: string
+  scrim: string
 
   // Surface Tones 表面色调
-  surfaceDim: string;
-  surfaceBright: string;
-  surfaceContainerLowest: string;
-  surfaceContainerLow: string;
-  surfaceContainer: string;
-  surfaceContainerHigh: string;
-  surfaceContainerHighest: string;
+  surfaceDim: string
+  surfaceBright: string
+  surfaceContainerLowest: string
+  surfaceContainerLow: string
+  surfaceContainer: string
+  surfaceContainerHigh: string
+  surfaceContainerHighest: string
 }
 
 /** 主题调色板 */
 export interface ThemePalette {
-  light: ColorRoles;
-  dark: ColorRoles;
+  light: ColorRoles
+  dark: ColorRoles
 }
 
 // ============ 主题生成函数 ============
@@ -84,15 +84,15 @@ export interface ThemePalette {
  */
 export function generateTheme(seedColor: string): ThemePalette {
   // 将十六进制颜色转换为 ARGB 格式
-  const sourceColor = argbFromHex(seedColor);
+  const sourceColor = argbFromHex(seedColor)
 
   // 使用 Material Color Utilities 生成主题
-  const theme = themeFromSourceColor(sourceColor);
+  const theme = themeFromSourceColor(sourceColor)
 
   return {
     light: extractColorRoles(theme, 'light'),
     dark: extractColorRoles(theme, 'dark'),
-  };
+  }
 }
 
 /**
@@ -101,34 +101,32 @@ export function generateTheme(seedColor: string): ThemePalette {
  * @param mode 主题模式（'light' 或 'dark'）
  * @returns 颜色角色对象
  */
-function extractColorRoles(
-  theme: Theme,
-  mode: 'light' | 'dark'
-): ColorRoles {
-  const scheme = mode === 'light' ? theme.schemes.light : theme.schemes.dark;
-  const neutralPalette = theme.palettes.neutral;
+function extractColorRoles(theme: Theme, mode: 'light' | 'dark'): ColorRoles {
+  const scheme = mode === 'light' ? theme.schemes.light : theme.schemes.dark
+  const neutralPalette = theme.palettes.neutral
 
   // Surface tone 值根据 Material Design 3 规范
   // 浅色模式和深色模式使用不同的 tone 值
-  const surfaceTones = mode === 'light'
-    ? {
-        surfaceDim: 87,
-        surfaceBright: 98,
-        surfaceContainerLowest: 100,
-        surfaceContainerLow: 96,
-        surfaceContainer: 94,
-        surfaceContainerHigh: 92,
-        surfaceContainerHighest: 90,
-      }
-    : {
-        surfaceDim: 6,
-        surfaceBright: 24,
-        surfaceContainerLowest: 4,
-        surfaceContainerLow: 10,
-        surfaceContainer: 12,
-        surfaceContainerHigh: 17,
-        surfaceContainerHighest: 22,
-      };
+  const surfaceTones =
+    mode === 'light'
+      ? {
+          surfaceDim: 87,
+          surfaceBright: 98,
+          surfaceContainerLowest: 100,
+          surfaceContainerLow: 96,
+          surfaceContainer: 94,
+          surfaceContainerHigh: 92,
+          surfaceContainerHighest: 90,
+        }
+      : {
+          surfaceDim: 6,
+          surfaceBright: 24,
+          surfaceContainerLowest: 4,
+          surfaceContainerLow: 10,
+          surfaceContainer: 12,
+          surfaceContainerHigh: 17,
+          surfaceContainerHighest: 22,
+        }
 
   return {
     // Primary
@@ -186,7 +184,7 @@ function extractColorRoles(
     surfaceContainer: hexFromArgb(neutralPalette.tone(surfaceTones.surfaceContainer)),
     surfaceContainerHigh: hexFromArgb(neutralPalette.tone(surfaceTones.surfaceContainerHigh)),
     surfaceContainerHighest: hexFromArgb(neutralPalette.tone(surfaceTones.surfaceContainerHighest)),
-  };
+  }
 }
 
 /**
@@ -195,22 +193,18 @@ function extractColorRoles(
  * @param prefix CSS 变量前缀（默认为 'md'）
  * @returns CSS 变量字符串
  */
-export function colorRolesToCssVariables(
-  colors: ColorRoles,
-  prefix: string = 'md'
-): string {
-  const lines: string[] = [];
+export function colorRolesToCssVariables(colors: ColorRoles, prefix: string = 'md'): string {
+  const lines: string[] = []
 
   // 将 camelCase 转换为 kebab-case
-  const toKebabCase = (str: string): string =>
-    str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  const toKebabCase = (str: string): string => str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 
   for (const [key, value] of Object.entries(colors)) {
-    const cssVarName = `--${prefix}-${toKebabCase(key)}`;
-    lines.push(`  ${cssVarName}: ${value};`);
+    const cssVarName = `--${prefix}-${toKebabCase(key)}`
+    lines.push(`  ${cssVarName}: ${value};`)
   }
 
-  return lines.join('\n');
+  return lines.join('\n')
 }
 
 /**
@@ -219,14 +213,11 @@ export function colorRolesToCssVariables(
  * @param prefix CSS 变量前缀
  * @returns 完整的 CSS 字符串
  */
-export function generateThemeCss(
-  seedColor: string,
-  prefix: string = 'md'
-): string {
-  const palette = generateTheme(seedColor);
+export function generateThemeCss(seedColor: string, prefix: string = 'md'): string {
+  const palette = generateTheme(seedColor)
 
-  const lightVars = colorRolesToCssVariables(palette.light, prefix);
-  const darkVars = colorRolesToCssVariables(palette.dark, prefix);
+  const lightVars = colorRolesToCssVariables(palette.light, prefix)
+  const darkVars = colorRolesToCssVariables(palette.dark, prefix)
 
   return `/* Material Design 3 主题变量 - 由 ${seedColor} 生成 */
 
@@ -246,7 +237,7 @@ ${darkVars}
 ${darkVars}
   }
 }
-`;
+`
 }
 
 /**
@@ -256,10 +247,10 @@ ${darkVars}
  * @returns 完整的 CSS 字符串，包含 MD3 变量和语义化映射
  */
 export function generateFullThemeCss(seedColor: string): string {
-  const palette = generateTheme(seedColor);
+  const palette = generateTheme(seedColor)
 
-  const lightVars = colorRolesToCssVariables(palette.light, 'md');
-  const darkVars = colorRolesToCssVariables(palette.dark, 'md');
+  const lightVars = colorRolesToCssVariables(palette.light, 'md')
+  const darkVars = colorRolesToCssVariables(palette.dark, 'md')
 
   // 语义化映射 - 浅色模式
   const lightSemanticVars = `  /* 品牌色 */
@@ -315,7 +306,7 @@ export function generateFullThemeCss(seedColor: string): string {
   /* 标签色 */
   --tag-bg: var(--md-surface-container);
   --tag-text: var(--md-on-surface-variant);
-  --tag-hover-bg: var(--md-surface-container-high);`;
+  --tag-hover-bg: var(--md-surface-container-high);`
 
   // 语义化映射 - 深色模式
   const darkSemanticVars = `  /* 品牌色 */
@@ -371,7 +362,7 @@ export function generateFullThemeCss(seedColor: string): string {
   /* 标签色 */
   --tag-bg: var(--md-surface-container);
   --tag-text: var(--md-on-surface-variant);
-  --tag-hover-bg: var(--md-surface-container-high);`;
+  --tag-hover-bg: var(--md-surface-container-high);`
 
   return `/* Material Design 3 主题变量 - 由 ${seedColor} 生成 */
 
@@ -408,7 +399,7 @@ ${darkSemanticVars}
 ${darkSemanticVars}
   }
 }
-`;
+`
 }
 
 /**
@@ -554,7 +545,7 @@ export function generateSemanticMappingCss(): string {
     --tag-hover-bg: var(--md-surface-container-high);
   }
 }
-`;
+`
 }
 
 // ============ 配置读取 ============
@@ -569,7 +560,7 @@ export function generateSemanticMappingCss(): string {
  * @returns 种子颜色，默认为 Material Design 3 紫色
  */
 export function getSeedColorFromConfig(): string {
-  return getSeedColor();
+  return getSeedColor()
 }
 
 export default {
@@ -579,4 +570,4 @@ export default {
   generateSemanticMappingCss,
   getSeedColorFromConfig,
   colorRolesToCssVariables,
-};
+}

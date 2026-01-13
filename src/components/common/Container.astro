@@ -6,12 +6,12 @@
 
 interface Props {
   /** 自定义 CSS 类名 */
-  class?: string;
+  class?: string
   /** 容器尺寸预设 */
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
 }
 
-const { class: className = '', size = 'md' } = Astro.props;
+const { class: className = '', size = 'md' } = Astro.props
 
 // 根据 size 获取对应的最大宽度
 const sizeMap = {
@@ -20,9 +20,9 @@ const sizeMap = {
   lg: 'var(--container-lg)',
   xl: 'var(--container-xl)',
   full: '100%',
-};
+}
 
-const maxWidth = sizeMap[size];
+const maxWidth = sizeMap[size]
 ---
 
 <div class:list={['container', className]} style={`--container-max-width: ${maxWidth}`}>

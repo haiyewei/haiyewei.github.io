@@ -10,7 +10,7 @@ export {
   createPersonSchema,
   createOrganizationSchema,
   createBreadcrumbSchema,
-} from './schema-helpers';
+} from './schema-helpers'
 
 // 导出类型
 export type {
@@ -20,4 +20,4 @@ export type {
   PersonSchemaOptions,
   OrganizationSchemaOptions,
   BreadcrumbItem,
-} from './schema-helpers';
+} from './schema-helpers'

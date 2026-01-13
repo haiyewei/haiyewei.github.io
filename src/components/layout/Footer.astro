@@ -4,46 +4,43 @@
  * 多列布局设计，显示网站信息、社交链接和版权信息
  * 桌面端：3列布局 | 平板端：2列布局 | 移动端：单列布局
  */
-import { Icon } from 'astro-icon/components';
-import { siteConfig, getCopyright, getSocialLinks } from '../../utils/config';
+import { Icon } from 'astro-icon/components'
+import { siteConfig, getCopyright, getSocialLinks } from '../../utils/config'
 
 interface Props {
   /** 自定义版权信息 */
-  copyright?: string;
+  copyright?: string
   /** 是否显示社交链接 */
-  showSocial?: boolean;
+  showSocial?: boolean
 }
 
-const {
-  copyright = getCopyright(),
-  showSocial = true,
-} = Astro.props;
+const { copyright = getCopyright(), showSocial = true } = Astro.props
 
-const footerLinks = siteConfig.footer.links;
-const socialLinks = getSocialLinks();
+const footerLinks = siteConfig.footer.links
+const socialLinks = getSocialLinks()
 
 // 网站信息
-const siteTitle = siteConfig.site.title;
-const siteDescription = siteConfig.site.description;
+const siteTitle = siteConfig.site.title
+const siteDescription = siteConfig.site.description
 
 // 社交链接图标映射（使用 Material Symbols 图标名称）
 const socialIconNames: Record<string, string> = {
   github: 'mdi:github',
   twitter: 'mdi:twitter',
   email: 'material-symbols:mail',
-};
+}
 
 // 社交链接显示名称
 const socialDisplayNames: Record<string, string> = {
   github: 'GitHub',
   twitter: 'Twitter',
   email: '邮箱',
-};
+}
 
 // 过滤有效的社交链接
 const validSocialLinks = Object.entries(socialLinks).filter(
   ([key, value]) => value && socialIconNames[key]
-);
+)
 ---
 
 <footer class="footer">
@@ -58,39 +55,43 @@ const validSocialLinks = Object.entries(socialLinks).filter(
       </div>
 
       {/* 第二列：社交链接 */}
-      {showSocial && validSocialLinks.length > 0 && (
-        <div class="footer-column">
-          <h4 class="footer-column-title">社交</h4>
-          <nav class="footer-social" aria-label="社交链接">
-            {validSocialLinks.map(([key, value]) => (
-              <a
-                href={key === 'email' ? `mailto:${value}` : value}
-                class="social-link"
-                target={key !== 'email' ? '_blank' : undefined}
-                rel={key !== 'email' ? 'noopener noreferrer' : undefined}
-                aria-label={socialDisplayNames[key]}
-              >
-                <Icon name={socialIconNames[key]} size={18} aria-hidden="true" />
-                <span class="social-link-text">{socialDisplayNames[key]}</span>
-              </a>
-            ))}
-          </nav>
-        </div>
-      )}
+      {
+        showSocial && validSocialLinks.length > 0 && (
+          <div class="footer-column">
+            <h4 class="footer-column-title">社交</h4>
+            <nav class="footer-social" aria-label="社交链接">
+              {validSocialLinks.map(([key, value]) => (
+                <a
+                  href={key === 'email' ? `mailto:${value}` : value}
+                  class="social-link"
+                  target={key !== 'email' ? '_blank' : undefined}
+                  rel={key !== 'email' ? 'noopener noreferrer' : undefined}
+                  aria-label={socialDisplayNames[key]}
+                >
+                  <Icon name={socialIconNames[key]} size={18} aria-hidden="true" />
+                  <span class="social-link-text">{socialDisplayNames[key]}</span>
+                </a>
+              ))}
+            </nav>
+          </div>
+        )
+      }
 
       {/* 第三列：其他链接 */}
-      {footerLinks && footerLinks.length > 0 && (
-        <div class="footer-column">
-          <h4 class="footer-column-title">更多</h4>
-          <nav class="footer-links" aria-label="其他链接">
-            {footerLinks.map((link) => (
-              <a href={link.href} class="footer-link">
-                {link.name}
-              </a>
-            ))}
-          </nav>
-        </div>
-      )}
+      {
+        footerLinks && footerLinks.length > 0 && (
+          <div class="footer-column">
+            <h4 class="footer-column-title">更多</h4>
+            <nav class="footer-links" aria-label="其他链接">
+              {footerLinks.map((link) => (
+                <a href={link.href} class="footer-link">
+                  {link.name}
+                </a>
+              ))}
+            </nav>
+          </div>
+        )
+      }
     </div>
 
     {/* 底部栏：分隔线 + 版权信息 */}
@@ -107,8 +108,9 @@ const validSocialLinks = Object.entries(socialLinks).filter(
     background-color: var(--md-sys-color-surface-container, var(--md-surface-variant));
     border-top: 1px solid var(--md-sys-color-outline-variant, var(--md-outline-variant));
     padding: var(--space-12, 3rem) 0 var(--space-8, 2rem);
-    transition: background-color var(--transition-normal),
-                border-color var(--transition-normal);
+    transition:
+      background-color var(--transition-normal),
+      border-color var(--transition-normal);
   }
 
   .footer-container {

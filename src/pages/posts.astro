@@ -1,35 +1,36 @@
 ---
-import { getCollection } from 'astro:content';
-import PageLayout from '../layouts/PageLayout.astro';
-import PostList from '../components/blog/PostList.astro';
-import CategoryBadge from '../components/blog/CategoryBadge.astro';
-import { getCategories, getPostLayout, shouldShowPostImage, getExcerptLength } from '../utils/config';
+import { getCollection } from 'astro:content'
+import PageLayout from '../layouts/PageLayout.astro'
+import PostList from '../components/blog/PostList.astro'
+import CategoryBadge from '../components/blog/CategoryBadge.astro'
+import {
+  getCategories,
+  getPostLayout,
+  shouldShowPostImage,
+  getExcerptLength,
+} from '../utils/config'
 
 // 获取帖子配置
-const postLayout = getPostLayout();
-const showImage = shouldShowPostImage();
-const excerptLength = getExcerptLength();
+const postLayout = getPostLayout()
+const showImage = shouldShowPostImage()
+const excerptLength = getExcerptLength()
 
 // 获取所有博客文章，过滤草稿
 const allPosts = await getCollection('posts', ({ data }) => {
-  return data.draft !== true;
-});
+  return data.draft !== true
+})
 
 // 按发布日期降序排列
-const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 
 // 获取所有分类
-const categories = getCategories();
+const categories = getCategories()
 ---
 
-<PageLayout
-  title="博客文章"
-  description={`共 ${posts.length} 篇文章`}
-  containerSize="lg"
->
-
-    {/* 分类筛选 */}
-    {categories.length > 0 && (
+<PageLayout title="博客文章" description={`共 ${posts.length} 篇文章`} containerSize="lg">
+  {/* 分类筛选 */}
+  {
+    categories.length > 0 && (
       <nav class="category-nav" aria-label="文章分类">
         <span class="category-nav__label">分类：</span>
         <div class="category-nav__list">
@@ -37,8 +38,8 @@ const categories = getCategories();
             全部
           </a>
           {categories.map((cat) => (
-            <a 
-              href={`/category/${cat.slug}`} 
+            <a
+              href={`/category/${cat.slug}`}
               class="category-nav__item"
               style={`--category-color: ${cat.color}`}
             >
@@ -47,7 +48,8 @@ const categories = getCategories();
           ))}
         </div>
       </nav>
-    )}
+    )
+  }
 
   <section class="posts-section">
     <PostList

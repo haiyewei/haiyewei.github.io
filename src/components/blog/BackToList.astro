@@ -4,21 +4,21 @@
  * 智能显示返回链接，根据用户来源显示不同的文案
  * 支持从分类、标签、作者页面进入时显示对应的返回文案
  */
-import Icon from '../common/Icon.astro';
+import Icon from '../common/Icon.astro'
 
-type ContextType = 'posts' | 'category' | 'tag' | 'author';
+type ContextType = 'posts' | 'category' | 'tag' | 'author'
 
 interface Props {
   /** 上下文类型 */
-  context?: ContextType;
+  context?: ContextType
   /** 上下文值（分类名/标签名/作者名） */
-  contextValue?: string;
+  contextValue?: string
   /** 返回链接（可选，默认根据 context 自动生成） */
-  href?: string;
+  href?: string
   /** 自定义类名 */
-  class?: string;
+  class?: string
   /** 变体样式：filled（填充）、outlined（描边）、text（文本） */
-  variant?: 'filled' | 'outlined' | 'text';
+  variant?: 'filled' | 'outlined' | 'text'
 }
 
 const {
@@ -27,23 +27,23 @@ const {
   href,
   class: className = '',
   variant = 'text',
-} = Astro.props;
+} = Astro.props
 
 /**
  * 根据上下文生成返回链接
  */
 function getBackHref(): string {
-  if (href) return href;
-  
+  if (href) return href
+
   switch (context) {
     case 'category':
-      return contextValue ? `/category/${contextValue}` : '/categories';
+      return contextValue ? `/category/${contextValue}` : '/categories'
     case 'tag':
-      return contextValue ? `/tag/${contextValue}` : '/tags';
+      return contextValue ? `/tag/${contextValue}` : '/tags'
     case 'author':
-      return contextValue ? `/author/${contextValue}` : '/posts';
+      return contextValue ? `/author/${contextValue}` : '/posts'
     default:
-      return '/posts';
+      return '/posts'
   }
 }
 
@@ -53,22 +53,22 @@ function getBackHref(): string {
 function getBackText(): string {
   switch (context) {
     case 'category':
-      return contextValue ? `返回「${contextValue}」分类` : '返回分类列表';
+      return contextValue ? `返回「${contextValue}」分类` : '返回分类列表'
     case 'tag':
-      return contextValue ? `返回「${contextValue}」标签` : '返回标签列表';
+      return contextValue ? `返回「${contextValue}」标签` : '返回标签列表'
     case 'author':
-      return contextValue ? `返回 ${contextValue} 的文章` : '返回文章列表';
+      return contextValue ? `返回 ${contextValue} 的文章` : '返回文章列表'
     default:
-      return '返回文章列表';
+      return '返回文章列表'
   }
 }
 
-const backHref = getBackHref();
-const backText = getBackText();
+const backHref = getBackHref()
+const backText = getBackText()
 ---
 
-<a 
-  href={backHref} 
+<a
+  href={backHref}
   class:list={['back-to-list', `back-to-list--${variant}`, className]}
   aria-label={backText}
 >

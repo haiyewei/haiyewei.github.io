@@ -4,77 +4,77 @@
 export interface ThemeConfig {
   /** 网站基本信息 */
   site: {
-    title: string;
-    description: string;
-    author: string;
-    language: string;
-  };
+    title: string
+    description: string
+    author: string
+    language: string
+  }
 
   /** 导航配置 */
   navigation: {
     links: Array<{
-      text: string;
-      href: string;
-      external?: boolean;
-    }>;
-  };
+      text: string
+      href: string
+      external?: boolean
+    }>
+  }
 
   /** 主题外观配置 */
   appearance: {
     /** 默认主题模式 */
-    defaultTheme: 'light' | 'dark' | 'system';
+    defaultTheme: 'light' | 'dark' | 'system'
     /** 是否允许用户切换主题 */
-    themeToggle: boolean;
+    themeToggle: boolean
     /** 主色调 */
-    primaryColor: string;
+    primaryColor: string
     /** 强调色 */
-    accentColor: string;
-  };
+    accentColor: string
+  }
 
   /** 排版配置 */
   typography: {
     /** 正文字体 */
-    fontFamily: string;
+    fontFamily: string
     /** 标题字体 */
-    headingFontFamily: string;
+    headingFontFamily: string
     /** 代码字体 */
-    monoFontFamily: string;
-  };
+    monoFontFamily: string
+  }
 
   /** 博客配置 */
   blog: {
     /** 每页文章数 */
-    postsPerPage: number;
+    postsPerPage: number
     /** 是否显示目录 */
-    showToc: boolean;
+    showToc: boolean
     /** 是否显示相关文章 */
-    showRelatedPosts: boolean;
+    showRelatedPosts: boolean
     /** 是否显示阅读时间 */
-    showReadingTime: boolean;
-  };
+    showReadingTime: boolean
+  }
 
   /** 社交链接 */
   social: {
-    github?: string;
-    twitter?: string;
-    email?: string;
-    rss?: boolean;
-  };
+    github?: string
+    twitter?: string
+    email?: string
+    rss?: boolean
+  }
 
   /** 页脚配置 */
   footer: {
-    copyright: string;
+    copyright: string
     links?: Array<{
-      text: string;
-      href: string;
-    }>;
-  };
+      text: string
+      href: string
+    }>
+  }
 }
 
 /**
  * 主题模式类型
  */
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = 'light' | 'dark' | 'system'
 
 /**
  * 默认主题配置
@@ -102,8 +102,10 @@ export const themeConfig: ThemeConfig = {
   },
 
   typography: {
-    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif",
-    headingFontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif",
+    fontFamily:
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif",
+    headingFontFamily:
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif",
     monoFontFamily: "'Fira Code', 'JetBrains Mono', Consolas, 'Liberation Mono', monospace",
   },
 
@@ -122,10 +124,8 @@ export const themeConfig: ThemeConfig = {
 
   footer: {
     copyright: '© {year} 我的博客. All rights reserved.',
-    links: [
-      { text: 'RSS', href: '/rss.xml' },
-    ],
+    links: [{ text: 'RSS', href: '/rss.xml' }],
   },
-};
+}
 
-export default themeConfig;
+export default themeConfig

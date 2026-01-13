@@ -3,55 +3,53 @@
  * 标签详情页
  * 显示特定标签下的所有文章
  */
-import { getCollection } from 'astro:content';
-import PageLayout from '../../layouts/PageLayout.astro';
-import PostList from '../../components/blog/PostList.astro';
-import { getPostLayout, shouldShowPostImage, getExcerptLength } from '../../utils/config';
+import { getCollection } from 'astro:content'
+import PageLayout from '../../layouts/PageLayout.astro'
+import PostList from '../../components/blog/PostList.astro'
+import { getPostLayout, shouldShowPostImage, getExcerptLength } from '../../utils/config'
 
 // 获取帖子配置
-const postLayout = getPostLayout();
-const showImage = shouldShowPostImage();
-const excerptLength = getExcerptLength();
+const postLayout = getPostLayout()
+const showImage = shouldShowPostImage()
+const excerptLength = getExcerptLength()
 
 export async function getStaticPaths() {
   // 获取所有博客文章
   const allPosts = await getCollection('posts', ({ data }) => {
-    return data.draft !== true;
-  });
+    return data.draft !== true
+  })
 
   // 提取所有唯一标签
-  const allTags = new Set<string>();
+  const allTags = new Set<string>()
   allPosts.forEach((post) => {
     if (post.data.tags) {
-      post.data.tags.forEach((tag) => allTags.add(tag));
+      post.data.tags.forEach((tag) => allTags.add(tag))
     }
-  });
+  })
 
   // 为每个标签生成路径
   return Array.from(allTags).map((tag) => {
     // 过滤出包含该标签的文章
-    const filteredPosts = allPosts.filter(
-      (post) => post.data.tags && post.data.tags.includes(tag)
-    );
-    
+    const filteredPosts = allPosts.filter((post) => post.data.tags && post.data.tags.includes(tag))
+
     // 按发布日期降序排列
     const sortedPosts = filteredPosts.sort(
       (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-    );
+    )
 
     return {
       params: { tag },
       props: { posts: sortedPosts, tag },
-    };
-  });
+    }
+  })
 }
 
 interface Props {
-  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>;
-  tag: string;
+  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>
+  tag: string
 }
 
-const { posts, tag } = Astro.props;
+const { posts, tag } = Astro.props
 ---
 
 <PageLayout

@@ -11,11 +11,11 @@
 
 :root {
   /* ---- 字体族 ---- */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC',
+    sans-serif;
   --font-serif: Georgia, 'Times New Roman', 'Noto Serif SC', serif;
-  --font-mono: 'Fira Code', 'JetBrains Mono', Consolas, 'Liberation Mono',
-    monospace;
+  --font-mono: 'Fira Code', 'JetBrains Mono', Consolas, 'Liberation Mono', monospace;
 
   /* ---- 字体大小 ---- */
   --text-xs: 0.75rem; /* 12px */
@@ -79,10 +79,14 @@
 
   /* 阴影 - 使用 MD3 shadow 变量 */
   --shadow-sm: 0 1px 2px 0 color-mix(in srgb, var(--md-shadow) 5%, transparent);
-  --shadow-md: 0 4px 6px -1px color-mix(in srgb, var(--md-shadow) 10%, transparent), 0 2px 4px -2px color-mix(in srgb, var(--md-shadow) 10%, transparent);
-  --shadow-lg: 0 10px 15px -3px color-mix(in srgb, var(--md-shadow) 10%, transparent),
+  --shadow-md:
+    0 4px 6px -1px color-mix(in srgb, var(--md-shadow) 10%, transparent),
+    0 2px 4px -2px color-mix(in srgb, var(--md-shadow) 10%, transparent);
+  --shadow-lg:
+    0 10px 15px -3px color-mix(in srgb, var(--md-shadow) 10%, transparent),
     0 4px 6px -4px color-mix(in srgb, var(--md-shadow) 10%, transparent);
-  --shadow-xl: 0 20px 25px -5px color-mix(in srgb, var(--md-shadow) 10%, transparent),
+  --shadow-xl:
+    0 20px 25px -5px color-mix(in srgb, var(--md-shadow) 10%, transparent),
     0 8px 10px -6px color-mix(in srgb, var(--md-shadow) 10%, transparent);
 
   /* 过渡 */
@@ -106,21 +110,28 @@
 /* 深色模式下阴影更微妙 - 使用 MD3 shadow 变量 */
 :root.dark {
   --shadow-sm: 0 1px 2px 0 color-mix(in srgb, var(--md-shadow) 30%, transparent);
-  --shadow-md: 0 4px 6px -1px color-mix(in srgb, var(--md-shadow) 40%, transparent), 0 2px 4px -2px color-mix(in srgb, var(--md-shadow) 30%, transparent);
-  --shadow-lg: 0 10px 15px -3px color-mix(in srgb, var(--md-shadow) 40%, transparent),
+  --shadow-md:
+    0 4px 6px -1px color-mix(in srgb, var(--md-shadow) 40%, transparent),
+    0 2px 4px -2px color-mix(in srgb, var(--md-shadow) 30%, transparent);
+  --shadow-lg:
+    0 10px 15px -3px color-mix(in srgb, var(--md-shadow) 40%, transparent),
     0 4px 6px -4px color-mix(in srgb, var(--md-shadow) 30%, transparent);
-  --shadow-xl: 0 20px 25px -5px color-mix(in srgb, var(--md-shadow) 50%, transparent),
+  --shadow-xl:
+    0 20px 25px -5px color-mix(in srgb, var(--md-shadow) 50%, transparent),
     0 8px 10px -6px color-mix(in srgb, var(--md-shadow) 40%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light):not(.dark) {
     --shadow-sm: 0 1px 2px 0 color-mix(in srgb, var(--md-shadow) 30%, transparent);
-    --shadow-md: 0 4px 6px -1px color-mix(in srgb, var(--md-shadow) 40%, transparent),
+    --shadow-md:
+      0 4px 6px -1px color-mix(in srgb, var(--md-shadow) 40%, transparent),
       0 2px 4px -2px color-mix(in srgb, var(--md-shadow) 30%, transparent);
-    --shadow-lg: 0 10px 15px -3px color-mix(in srgb, var(--md-shadow) 40%, transparent),
+    --shadow-lg:
+      0 10px 15px -3px color-mix(in srgb, var(--md-shadow) 40%, transparent),
       0 4px 6px -4px color-mix(in srgb, var(--md-shadow) 30%, transparent);
-    --shadow-xl: 0 20px 25px -5px color-mix(in srgb, var(--md-shadow) 50%, transparent),
+    --shadow-xl:
+      0 20px 25px -5px color-mix(in srgb, var(--md-shadow) 50%, transparent),
       0 8px 10px -6px color-mix(in srgb, var(--md-shadow) 40%, transparent);
   }
 }
@@ -158,7 +169,8 @@ body {
   flex-direction: column;
   background-color: var(--md-background);
   color: var(--md-on-background);
-  transition: background-color var(--transition-normal),
+  transition:
+    background-color var(--transition-normal),
     color var(--transition-normal);
 }
 
@@ -361,7 +373,7 @@ blockquote {
 
 /* 复制成功状态 */
 .expressive-code .copy button.copied,
-.expressive-code .copy button[data-copied="true"] {
+.expressive-code .copy button[data-copied='true'] {
   color: var(--md-primary) !important;
   background-color: var(--md-primary-container) !important;
   border-color: var(--md-primary) !important;

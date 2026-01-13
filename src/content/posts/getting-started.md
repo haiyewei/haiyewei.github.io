@@ -65,15 +65,15 @@ tags: ['标签1', '标签2']
 使用 Astro 的 `getCollection` 函数查询内容：
 
 ```typescript
-import { getCollection } from 'astro:content';
+import { getCollection } from 'astro:content'
 
 // 获取所有博客文章
-const posts = await getCollection('blog');
+const posts = await getCollection('blog')
 
 // 过滤草稿
 const publishedPosts = await getCollection('blog', ({ data }) => {
-  return data.draft !== true;
-});
+  return data.draft !== true
+})
 ```
 
 ## 下一步
@@ -83,4 +83,4 @@ const publishedPosts = await getCollection('blog', ({ data }) => {
 
 ---
 
-*祝你使用愉快！*
+_祝你使用愉快！_

@@ -1,7 +1,7 @@
 ---
-name: "访客作者"
-email: "guest@example.com"
-bio: "访客作者，欢迎投稿"
+name: '访客作者'
+email: 'guest@example.com'
+bio: '访客作者，欢迎投稿'
 ---
 
 # 关于访客作者

@@ -7,69 +7,69 @@
  * 网站结构化数据选项
  */
 export interface WebSiteSchemaOptions {
-  name: string;
-  url: string;
-  description?: string;
-  language?: string;
+  name: string
+  url: string
+  description?: string
+  language?: string
 }
 
 /**
  * 文章结构化数据选项
  */
 export interface ArticleSchemaOptions {
-  title: string;
-  description: string;
-  url: string;
-  image?: string;
-  publishedTime: Date;
-  modifiedTime?: Date;
+  title: string
+  description: string
+  url: string
+  image?: string
+  publishedTime: Date
+  modifiedTime?: Date
   author: {
-    name: string;
-    url?: string;
-  };
+    name: string
+    url?: string
+  }
   publisher: {
-    name: string;
-    url: string;
-    logo?: string;
-  };
-  tags?: string[];
+    name: string
+    url: string
+    logo?: string
+  }
+  tags?: string[]
 }
 
 /**
  * 博客文章结构化数据选项
  */
 export interface BlogPostingSchemaOptions extends ArticleSchemaOptions {
-  wordCount?: number;
+  wordCount?: number
 }
 
 /**
  * 人物结构化数据选项
  */
 export interface PersonSchemaOptions {
-  name: string;
-  url?: string;
-  image?: string;
-  description?: string;
-  sameAs?: string[];
+  name: string
+  url?: string
+  image?: string
+  description?: string
+  sameAs?: string[]
 }
 
 /**
  * 组织结构化数据选项
  */
 export interface OrganizationSchemaOptions {
-  name: string;
-  url: string;
-  logo?: string;
-  description?: string;
-  sameAs?: string[];
+  name: string
+  url: string
+  logo?: string
+  description?: string
+  sameAs?: string[]
 }
 
 /**
  * 面包屑导航项
  */
 export interface BreadcrumbItem {
-  name: string;
-  url: string;
+  name: string
+  url: string
 }
 
 /**
@@ -91,7 +91,7 @@ export function createWebSiteSchema(options: WebSiteSchemaOptions): Record<strin
       },
       'query-input': 'required name=search_term_string',
     },
-  };
+  }
 }
 
 /**
@@ -120,24 +120,24 @@ export function createArticleSchema(options: ArticleSchemaOptions): Record<strin
       '@type': 'WebPage',
       '@id': options.url,
     },
-  };
+  }
 
   if (options.image) {
-    schema.image = options.image;
+    schema.image = options.image
   }
 
   if (options.publisher.logo) {
     schema.publisher.logo = {
       '@type': 'ImageObject',
       url: options.publisher.logo,
-    };
+    }
   }
 
   if (options.tags && options.tags.length > 0) {
-    schema.keywords = options.tags.join(', ');
+    schema.keywords = options.tags.join(', ')
   }
 
-  return schema;
+  return schema
 }
 
 /**
@@ -146,13 +146,13 @@ export function createArticleSchema(options: ArticleSchemaOptions): Record<strin
  * @returns Schema.org BlogPosting 数据
  */
 export function createBlogPostingSchema(options: BlogPostingSchemaOptions): Record<string, any> {
-  const schema = createArticleSchema(options);
-  
+  const schema = createArticleSchema(options)
+
   if (options.wordCount) {
-    schema.wordCount = options.wordCount;
+    schema.wordCount = options.wordCount
   }
 
-  return schema;
+  return schema
 }
 
 /**
@@ -163,25 +163,25 @@ export function createBlogPostingSchema(options: BlogPostingSchemaOptions): Reco
 export function createPersonSchema(options: PersonSchemaOptions): Record<string, any> {
   const schema: Record<string, any> = {
     name: options.name,
-  };
+  }
 
   if (options.url) {
-    schema.url = options.url;
+    schema.url = options.url
   }
 
   if (options.image) {
-    schema.image = options.image;
+    schema.image = options.image
   }
 
   if (options.description) {
-    schema.description = options.description;
+    schema.description = options.description
   }
 
   if (options.sameAs && options.sameAs.length > 0) {
-    schema.sameAs = options.sameAs;
+    schema.sameAs = options.sameAs
   }
 
-  return schema;
+  return schema
 }
 
 /**
@@ -193,24 +193,24 @@ export function createOrganizationSchema(options: OrganizationSchemaOptions): Re
   const schema: Record<string, any> = {
     name: options.name,
     url: options.url,
-  };
+  }
 
   if (options.logo) {
     schema.logo = {
       '@type': 'ImageObject',
       url: options.logo,
-    };
+    }
   }
 
   if (options.description) {
-    schema.description = options.description;
+    schema.description = options.description
   }
 
   if (options.sameAs && options.sameAs.length > 0) {
-    schema.sameAs = options.sameAs;
+    schema.sameAs = options.sameAs
   }
 
-  return schema;
+  return schema
 }
 
 /**
@@ -226,5 +226,5 @@ export function createBreadcrumbSchema(items: BreadcrumbItem[]): Record<string, 
       name: item.name,
       item: item.url,
     })),
-  };
+  }
 }

@@ -2,134 +2,134 @@
  * 网站配置加载工具
  * 从 YAML 配置文件读取并提供类型安全的配置访问
  */
-import yaml from 'js-yaml';
-import fs from 'node:fs';
-import path from 'node:path';
+import yaml from 'js-yaml'
+import fs from 'node:fs'
+import path from 'node:path'
 
 // ============ 类型定义 ============
 
 /** 网站基本信息 */
 export interface SiteInfo {
-  title: string;
-  description: string;
-  author: string;
-  language: string;
-  url: string;
+  title: string
+  description: string
+  author: string
+  language: string
+  url: string
 }
 
 /** 导航链接 */
 export interface NavLink {
-  name: string;
-  href: string;
-  external?: boolean;
+  name: string
+  href: string
+  external?: boolean
 }
 
 /** 博客分类 */
 export interface Category {
-  slug: string;
-  name: string;
-  description: string;
-  color: string;
+  slug: string
+  name: string
+  description: string
+  color: string
 }
 
 /** 社交链接 */
 export interface SocialLinks {
-  github?: string;
-  twitter?: string;
-  email?: string;
-  [key: string]: string | undefined;
+  github?: string
+  twitter?: string
+  email?: string
+  [key: string]: string | undefined
 }
 
 /** 页脚链接 */
 export interface FooterLink {
-  name: string;
-  href: string;
+  name: string
+  href: string
 }
 
 /** 页脚配置 */
 export interface FooterConfig {
-  copyright: string;
-  links: FooterLink[];
+  copyright: string
+  links: FooterLink[]
 }
 
 /** 功能开关 */
 export interface Features {
-  darkMode: boolean;
-  search: boolean;
-  comments: boolean;
-  analytics: boolean;
+  darkMode: boolean
+  search: boolean
+  comments: boolean
+  analytics: boolean
 }
 
 /** 主题配置 */
 export interface ThemeSettings {
   /** 种子颜色 - Material Design 3 会从这个颜色生成完整的调色板 */
-  seedColor: string;
+  seedColor: string
 }
 
 /** 作者配置 */
 export interface Author {
   /** 作者唯一标识 */
-  id: string;
+  id: string
   /** 作者名称 */
-  name: string;
+  name: string
   /** 邮箱地址 */
-  email?: string;
+  email?: string
   /** 头像 URL */
-  avatar?: string;
+  avatar?: string
   /** 作者简介 */
-  bio?: string;
+  bio?: string
 }
 
 /** Hero 区域配置 */
 export interface HeroConfig {
   /** 是否启用 hero 区域 */
-  enabled: boolean;
+  enabled: boolean
   /** 可选标题 */
-  title?: string;
+  title?: string
   /** 可选副标题 */
-  subtitle?: string;
+  subtitle?: string
   /** 可选背景图片 URL */
-  background?: string;
+  background?: string
   /** 是否显示向下滚动指示器 */
-  showScrollIndicator?: boolean;
+  showScrollIndicator?: boolean
 }
 
 /** 帖子布局类型 */
-export type PostLayout = 'cms' | 'blog' | 'image-blog';
+export type PostLayout = 'cms' | 'blog' | 'image-blog'
 
 /** 帖子显示配置 */
 export interface PostsConfig {
   /** 布局样式 */
-  layout: PostLayout;
+  layout: PostLayout
   /** 是否显示封面图片 */
-  showImage: boolean;
+  showImage: boolean
   /** 每页显示数量 */
-  postsPerPage: number;
+  postsPerPage: number
   /** 摘要长度（字符数） */
-  excerptLength: number;
+  excerptLength: number
 }
 
 /** 完整的网站配置 */
 export interface SiteConfig {
-  site: SiteInfo;
-  navigation: NavLink[];
-  categories: Category[];
-  social: SocialLinks;
-  footer: FooterConfig;
-  features: Features;
-  theme?: ThemeSettings;
-  posts?: PostsConfig;
-  hero?: HeroConfig;
-  authors?: Author[];
+  site: SiteInfo
+  navigation: NavLink[]
+  categories: Category[]
+  social: SocialLinks
+  footer: FooterConfig
+  features: Features
+  theme?: ThemeSettings
+  posts?: PostsConfig
+  hero?: HeroConfig
+  authors?: Author[]
 }
 
 // ============ 配置加载 ============
 
 /** 配置文件路径 */
-const CONFIG_PATH = path.join(process.cwd(), 'src/config/site.yaml');
+const CONFIG_PATH = path.join(process.cwd(), 'src/config/site.yaml')
 
 /** 缓存的配置对象 */
-let cachedConfig: SiteConfig | null = null;
+let cachedConfig: SiteConfig | null = null
 
 /**
  * 加载并解析 YAML 配置文件
@@ -137,24 +137,24 @@ let cachedConfig: SiteConfig | null = null;
  */
 function loadConfig(): SiteConfig {
   if (cachedConfig) {
-    return cachedConfig;
+    return cachedConfig
   }
 
   try {
-    const fileContents = fs.readFileSync(CONFIG_PATH, 'utf8');
-    const config = yaml.load(fileContents) as SiteConfig;
-    
+    const fileContents = fs.readFileSync(CONFIG_PATH, 'utf8')
+    const config = yaml.load(fileContents) as SiteConfig
+
     // 验证必要字段
     if (!config.site || !config.navigation || !config.categories) {
-      throw new Error('配置文件缺少必要字段');
+      throw new Error('配置文件缺少必要字段')
     }
 
-    cachedConfig = config;
-    return config;
+    cachedConfig = config
+    return config
   } catch (error) {
-    console.error('加载配置文件失败:', error);
+    console.error('加载配置文件失败:', error)
     // 返回默认配置
-    return getDefaultConfig();
+    return getDefaultConfig()
   }
 }
 
@@ -186,9 +186,7 @@ function getDefaultConfig(): SiteConfig {
     },
     footer: {
       copyright: '© 2026 我的博客',
-      links: [
-        { name: 'RSS', href: '/rss.xml' },
-      ],
+      links: [{ name: 'RSS', href: '/rss.xml' }],
     },
     features: {
       darkMode: true,
@@ -196,13 +194,13 @@ function getDefaultConfig(): SiteConfig {
       comments: false,
       analytics: false,
     },
-  };
+  }
 }
 
 // ============ 导出配置对象 ============
 
 /** 网站配置 */
-export const siteConfig: SiteConfig = loadConfig();
+export const siteConfig: SiteConfig = loadConfig()
 
 // ============ 辅助函数 ============
 
@@ -211,7 +209,7 @@ export const siteConfig: SiteConfig = loadConfig();
  * @returns 网站基本信息
  */
 export function getSiteInfo(): SiteInfo {
-  return siteConfig.site;
+  return siteConfig.site
 }
 
 /**
@@ -219,7 +217,7 @@ export function getSiteInfo(): SiteInfo {
  * @returns 导航链接数组
  */
 export function getNavigation(): NavLink[] {
-  return siteConfig.navigation;
+  return siteConfig.navigation
 }
 
 /**
@@ -227,7 +225,7 @@ export function getNavigation(): NavLink[] {
  * @returns 分类数组
  */
 export function getCategories(): Category[] {
-  return siteConfig.categories;
+  return siteConfig.categories
 }
 
 /**
@@ -236,7 +234,7 @@ export function getCategories(): Category[] {
  * @returns 分类对象，如果未找到则返回 undefined
  */
 export function getCategory(slug: string): Category | undefined {
-  return siteConfig.categories.find((cat) => cat.slug === slug);
+  return siteConfig.categories.find((cat) => cat.slug === slug)
 }
 
 /**
@@ -245,8 +243,8 @@ export function getCategory(slug: string): Category | undefined {
  * @returns 分类名称，如果未找到则返回 slug
  */
 export function getCategoryName(slug: string): string {
-  const category = getCategory(slug);
-  return category ? category.name : slug;
+  const category = getCategory(slug)
+  return category ? category.name : slug
 }
 
 /**
@@ -255,8 +253,8 @@ export function getCategoryName(slug: string): string {
  * @returns 分类颜色，如果未找到则返回默认颜色
  */
 export function getCategoryColor(slug: string): string {
-  const category = getCategory(slug);
-  return category ? category.color : '#6b7280';
+  const category = getCategory(slug)
+  return category ? category.color : '#6b7280'
 }
 
 /**
@@ -264,7 +262,7 @@ export function getCategoryColor(slug: string): string {
  * @returns 社交链接对象
  */
 export function getSocialLinks(): SocialLinks {
-  return siteConfig.social;
+  return siteConfig.social
 }
 
 /**
@@ -272,7 +270,7 @@ export function getSocialLinks(): SocialLinks {
  * @returns 页脚配置对象
  */
 export function getFooterConfig(): FooterConfig {
-  return siteConfig.footer;
+  return siteConfig.footer
 }
 
 /**
@@ -280,7 +278,7 @@ export function getFooterConfig(): FooterConfig {
  * @returns 功能开关对象
  */
 export function getFeatures(): Features {
-  return siteConfig.features;
+  return siteConfig.features
 }
 
 /**
@@ -289,7 +287,7 @@ export function getFeatures(): Features {
  * @returns 是否启用
  */
 export function isFeatureEnabled(feature: keyof Features): boolean {
-  return siteConfig.features[feature] ?? false;
+  return siteConfig.features[feature] ?? false
 }
 
 /**
@@ -297,8 +295,8 @@ export function isFeatureEnabled(feature: keyof Features): boolean {
  * @returns 处理后的版权信息
  */
 export function getCopyright(): string {
-  const copyright = siteConfig.footer.copyright;
-  return copyright.replace('{year}', new Date().getFullYear().toString());
+  const copyright = siteConfig.footer.copyright
+  return copyright.replace('{year}', new Date().getFullYear().toString())
 }
 
 /**
@@ -306,7 +304,7 @@ export function getCopyright(): string {
  * @returns 主题配置对象
  */
 export function getThemeSettings(): ThemeSettings {
-  return siteConfig.theme ?? { seedColor: '#6750A4' };
+  return siteConfig.theme ?? { seedColor: '#6750A4' }
 }
 
 /**
@@ -314,7 +312,7 @@ export function getThemeSettings(): ThemeSettings {
  * @returns 种子颜色（十六进制格式）
  */
 export function getSeedColor(): string {
-  return siteConfig.theme?.seedColor ?? '#6750A4';
+  return siteConfig.theme?.seedColor ?? '#6750A4'
 }
 
 /**
@@ -322,7 +320,7 @@ export function getSeedColor(): string {
  * @returns 帖子显示配置对象
  */
 export function getPostsConfig(): PostsConfig {
-  return siteConfig.posts ?? getDefaultPostsConfig();
+  return siteConfig.posts ?? getDefaultPostsConfig()
 }
 
 /**
@@ -335,7 +333,7 @@ function getDefaultPostsConfig(): PostsConfig {
     showImage: true,
     postsPerPage: 10,
     excerptLength: 150,
-  };
+  }
 }
 
 /**
@@ -343,7 +341,7 @@ function getDefaultPostsConfig(): PostsConfig {
  * @returns 布局类型
  */
 export function getPostLayout(): PostLayout {
-  return siteConfig.posts?.layout ?? 'blog';
+  return siteConfig.posts?.layout ?? 'blog'
 }
 
 /**
@@ -351,13 +349,13 @@ export function getPostLayout(): PostLayout {
  * @returns 是否显示图片
  */
 export function shouldShowPostImage(): boolean {
-  const layout = getPostLayout();
+  const layout = getPostLayout()
   // image-blog 布局始终显示图片
-  if (layout === 'image-blog') return true;
+  if (layout === 'image-blog') return true
   // cms 布局不显示图片
-  if (layout === 'cms') return false;
+  if (layout === 'cms') return false
   // blog 布局根据配置决定
-  return siteConfig.posts?.showImage ?? true;
+  return siteConfig.posts?.showImage ?? true
 }
 
 /**
@@ -365,7 +363,7 @@ export function shouldShowPostImage(): boolean {
  * @returns 每页帖子数量
  */
 export function getPostsPerPage(): number {
-  return siteConfig.posts?.postsPerPage ?? 10;
+  return siteConfig.posts?.postsPerPage ?? 10
 }
 
 /**
@@ -373,7 +371,7 @@ export function getPostsPerPage(): number {
  * @returns 摘要长度（字符数）
  */
 export function getExcerptLength(): number {
-  return siteConfig.posts?.excerptLength ?? 150;
+  return siteConfig.posts?.excerptLength ?? 150
 }
 
 /**
@@ -381,7 +379,7 @@ export function getExcerptLength(): number {
  * @returns Hero 配置对象
  */
 export function getHeroConfig(): HeroConfig {
-  return siteConfig.hero ?? getDefaultHeroConfig();
+  return siteConfig.hero ?? getDefaultHeroConfig()
 }
 
 /**
@@ -395,7 +393,7 @@ function getDefaultHeroConfig(): HeroConfig {
     subtitle: '',
     background: '',
     showScrollIndicator: true,
-  };
+  }
 }
 
 /**
@@ -403,7 +401,7 @@ function getDefaultHeroConfig(): HeroConfig {
  * @returns 是否启用
  */
 export function isHeroEnabled(): boolean {
-  return siteConfig.hero?.enabled ?? true;
+  return siteConfig.hero?.enabled ?? true
 }
 
 // ============ 作者相关函数 ============
@@ -413,7 +411,7 @@ export function isHeroEnabled(): boolean {
  * @returns 作者数组
  */
 export function getAuthors(): Author[] {
-  return siteConfig.authors ?? [];
+  return siteConfig.authors ?? []
 }
 
 /**
@@ -422,7 +420,7 @@ export function getAuthors(): Author[] {
  * @returns 作者对象，如果未找到则返回 undefined
  */
 export function getAuthorById(id: string): Author | undefined {
-  return siteConfig.authors?.find((author) => author.id === id);
+  return siteConfig.authors?.find((author) => author.id === id)
 }
 
 /**
@@ -431,8 +429,8 @@ export function getAuthorById(id: string): Author | undefined {
  * @returns 作者名称，如果未找到则返回 ID
  */
 export function getAuthorName(id: string): string {
-  const author = getAuthorById(id);
-  return author ? author.name : id;
+  const author = getAuthorById(id)
+  return author ? author.name : id
 }
 
 /**
@@ -440,8 +438,8 @@ export function getAuthorName(id: string): string {
  * @returns 默认作者，如果没有配置作者则返回 undefined
  */
 export function getDefaultAuthor(): Author | undefined {
-  const authors = getAuthors();
-  return authors.length > 0 ? authors[0] : undefined;
+  const authors = getAuthors()
+  return authors.length > 0 ? authors[0] : undefined
 }
 
 // ============ 图片提取工具函数 ============
@@ -453,17 +451,17 @@ export function getDefaultAuthor(): Author | undefined {
  */
 export function extractFirstImage(content: string): string | null {
   // 匹配 Markdown 图片语法: ![alt](url)
-  const mdImageRegex = /!\[.*?\]\((.*?)\)/;
+  const mdImageRegex = /!\[.*?\]\((.*?)\)/
   // 匹配 HTML img 标签: <img src="url" />
-  const htmlImageRegex = /<img[^>]+src=["']([^"']+)["']/i;
-  
-  const mdMatch = content.match(mdImageRegex);
-  if (mdMatch) return mdMatch[1];
-  
-  const htmlMatch = content.match(htmlImageRegex);
-  if (htmlMatch) return htmlMatch[1];
-  
-  return null;
+  const htmlImageRegex = /<img[^>]+src=["']([^"']+)["']/i
+
+  const mdMatch = content.match(mdImageRegex)
+  if (mdMatch) return mdMatch[1]
+
+  const htmlMatch = content.match(htmlImageRegex)
+  if (htmlMatch) return htmlMatch[1]
+
+  return null
 }
 
 /**
@@ -472,8 +470,11 @@ export function extractFirstImage(content: string): string | null {
  * @param defaultImage 默认图片 URL
  * @returns 封面图片 URL
  */
-export function getCoverImage(content: string, defaultImage: string = '/placeholder-image.svg'): string {
-  return extractFirstImage(content) || defaultImage;
+export function getCoverImage(
+  content: string,
+  defaultImage: string = '/placeholder-image.svg'
+): string {
+  return extractFirstImage(content) || defaultImage
 }
 
-export default siteConfig;
+export default siteConfig

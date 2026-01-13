@@ -1,9 +1,9 @@
 ---
-name: "管理员"
-email: "admin@example.com"
-bio: "网站管理员"
+name: '管理员'
+email: 'admin@example.com'
+bio: '网站管理员'
 social:
-  github: "https://github.com/username"
+  github: 'https://github.com/username'
 ---
 
 # 关于管理员

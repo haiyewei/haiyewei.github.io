@@ -4,22 +4,22 @@
  * 用于在当前页面内搜索文本内容（类似浏览器的 Ctrl+F）
  * 支持高亮显示匹配文本、跳转到匹配位置、显示匹配数量
  */
-import { Icon } from 'astro-icon/components';
+import { Icon } from 'astro-icon/components'
 
 interface Props {
   /** 搜索框占位符文本 */
-  placeholder?: string;
+  placeholder?: string
   /** 自定义类名 */
-  class?: string;
+  class?: string
   /** 搜索的目标容器选择器 */
-  targetSelector?: string;
+  targetSelector?: string
 }
 
 const {
   placeholder = '在页面中搜索...',
   class: className = '',
   targetSelector = '.article-content',
-} = Astro.props;
+} = Astro.props
 ---
 
 <div
@@ -77,12 +77,7 @@ const {
           <Icon name="material-symbols:keyboard-arrow-down" size={18} aria-hidden="true" />
         </button>
       </div>
-      <button
-        type="button"
-        class="page-search-close"
-        aria-label="关闭搜索"
-        data-page-search-close
-      >
+      <button type="button" class="page-search-close" aria-label="关闭搜索" data-page-search-close>
         <Icon name="material-symbols:close" size={18} aria-hidden="true" />
       </button>
     </div>
@@ -109,8 +104,9 @@ const {
     color: var(--md-on-surface);
     cursor: pointer;
     border-radius: var(--radius-md, 8px);
-    transition: background-color var(--transition-fast, 150ms ease),
-                color var(--transition-fast, 150ms ease);
+    transition:
+      background-color var(--transition-fast, 150ms ease),
+      color var(--transition-fast, 150ms ease);
   }
 
   .page-search-toggle-btn:hover {
@@ -150,13 +146,16 @@ const {
     border: 1px solid var(--md-outline);
     border-radius: var(--radius-md, 8px);
     box-shadow: var(--shadow-lg);
-    transition: border-color var(--transition-fast, 150ms ease),
-                box-shadow var(--transition-fast, 150ms ease);
+    transition:
+      border-color var(--transition-fast, 150ms ease),
+      box-shadow var(--transition-fast, 150ms ease);
   }
 
   .page-search-input-wrapper:focus-within {
     border-color: var(--md-primary);
-    box-shadow: var(--shadow-lg), 0 0 0 3px color-mix(in srgb, var(--md-primary) 20%, transparent);
+    box-shadow:
+      var(--shadow-lg),
+      0 0 0 3px color-mix(in srgb, var(--md-primary) 20%, transparent);
   }
 
   .page-search-icon {
@@ -220,8 +219,9 @@ const {
     color: var(--md-on-surface);
     cursor: pointer;
     border-radius: var(--radius-sm, 4px);
-    transition: color var(--transition-fast, 150ms ease),
-                background-color var(--transition-fast, 150ms ease);
+    transition:
+      color var(--transition-fast, 150ms ease),
+      background-color var(--transition-fast, 150ms ease);
   }
 
   .page-search-nav-btn:hover:not(:disabled) {
@@ -252,8 +252,9 @@ const {
     color: var(--md-outline);
     cursor: pointer;
     border-radius: var(--radius-sm, 4px);
-    transition: color var(--transition-fast, 150ms ease),
-                background-color var(--transition-fast, 150ms ease);
+    transition:
+      color var(--transition-fast, 150ms ease),
+      background-color var(--transition-fast, 150ms ease);
   }
 
   .page-search-close:hover {
@@ -295,12 +296,12 @@ const {
   }
 
   /* 暗色模式下的高亮颜色 */
-  [data-theme="dark"] .page-search-highlight {
+  [data-theme='dark'] .page-search-highlight {
     background-color: var(--md-tertiary-container, #633b48);
     color: var(--md-on-tertiary-container, #ffd8e4);
   }
 
-  [data-theme="dark"] .page-search-highlight.current {
+  [data-theme='dark'] .page-search-highlight.current {
     background-color: var(--md-primary, #d0bcff);
     color: var(--md-on-primary, #381e72);
   }
@@ -312,326 +313,332 @@ const {
    * 支持文本搜索、高亮显示、导航跳转
    */
   interface HighlightInfo {
-    element: HTMLElement;
-    originalParent: Node;
-    originalNextSibling: Node | null;
+    element: HTMLElement
+    originalParent: Node
+    originalNextSibling: Node | null
   }
 
-  (function initPageSearch() {
-    const containers = document.querySelectorAll<HTMLDivElement>('[data-page-search-container]');
+  ;(function initPageSearch() {
+    const containers = document.querySelectorAll<HTMLDivElement>('[data-page-search-container]')
 
     containers.forEach((container) => {
-      const targetSelector = container.dataset.targetSelector || '.article-content';
-      const toggleBtn = container.querySelector<HTMLButtonElement>('[data-page-search-toggle]');
-      const expandedEl = container.querySelector<HTMLDivElement>('[data-page-search-expanded]');
-      const input = container.querySelector<HTMLInputElement>('[data-page-search-input]');
-      const closeBtn = container.querySelector<HTMLButtonElement>('[data-page-search-close]');
-      const countEl = container.querySelector<HTMLSpanElement>('[data-page-search-count]');
-      const currentMatchEl = container.querySelector<HTMLSpanElement>('[data-current-match]');
-      const totalMatchesEl = container.querySelector<HTMLSpanElement>('[data-total-matches]');
-      const prevBtn = container.querySelector<HTMLButtonElement>('[data-page-search-prev]');
-      const nextBtn = container.querySelector<HTMLButtonElement>('[data-page-search-next]');
+      const targetSelector = container.dataset.targetSelector || '.article-content'
+      const toggleBtn = container.querySelector<HTMLButtonElement>('[data-page-search-toggle]')
+      const expandedEl = container.querySelector<HTMLDivElement>('[data-page-search-expanded]')
+      const input = container.querySelector<HTMLInputElement>('[data-page-search-input]')
+      const closeBtn = container.querySelector<HTMLButtonElement>('[data-page-search-close]')
+      const countEl = container.querySelector<HTMLSpanElement>('[data-page-search-count]')
+      const currentMatchEl = container.querySelector<HTMLSpanElement>('[data-current-match]')
+      const totalMatchesEl = container.querySelector<HTMLSpanElement>('[data-total-matches]')
+      const prevBtn = container.querySelector<HTMLButtonElement>('[data-page-search-prev]')
+      const nextBtn = container.querySelector<HTMLButtonElement>('[data-page-search-next]')
 
-      if (!toggleBtn || !expandedEl || !input || !closeBtn || !countEl || !currentMatchEl || !totalMatchesEl || !prevBtn || !nextBtn) {
-        return;
+      if (
+        !toggleBtn ||
+        !expandedEl ||
+        !input ||
+        !closeBtn ||
+        !countEl ||
+        !currentMatchEl ||
+        !totalMatchesEl ||
+        !prevBtn ||
+        !nextBtn
+      ) {
+        return
       }
 
-      let isExpanded = false;
-      let highlights: HighlightInfo[] = [];
-      let currentIndex = -1;
-      let searchTimeout: ReturnType<typeof setTimeout> | null = null;
+      let isExpanded = false
+      let highlights: HighlightInfo[] = []
+      let currentIndex = -1
+      let searchTimeout: ReturnType<typeof setTimeout> | null = null
 
       // 获取搜索目标容器
       function getTargetContainer(): HTMLElement | null {
-        return document.querySelector<HTMLElement>(targetSelector);
+        return document.querySelector<HTMLElement>(targetSelector)
       }
 
       // 展开搜索框
       function expandSearch(): void {
-        isExpanded = true;
-        container.classList.add('expanded');
-        expandedEl.hidden = false;
-        toggleBtn.setAttribute('aria-expanded', 'true');
+        isExpanded = true
+        container.classList.add('expanded')
+        expandedEl.hidden = false
+        toggleBtn.setAttribute('aria-expanded', 'true')
 
         requestAnimationFrame(() => {
-          input.focus();
-        });
+          input.focus()
+        })
       }
 
       // 收起搜索框
       function collapseSearch(): void {
-        isExpanded = false;
-        container.classList.remove('expanded');
-        expandedEl.hidden = true;
-        toggleBtn.setAttribute('aria-expanded', 'false');
+        isExpanded = false
+        container.classList.remove('expanded')
+        expandedEl.hidden = true
+        toggleBtn.setAttribute('aria-expanded', 'false')
 
         // 清空搜索
-        input.value = '';
-        clearHighlights();
-        updateCount(0, 0);
+        input.value = ''
+        clearHighlights()
+        updateCount(0, 0)
       }
 
       // 清除所有高亮
       function clearHighlights(): void {
         highlights.forEach(({ element }) => {
-          const parent = element.parentNode;
+          const parent = element.parentNode
           if (parent) {
             // 将高亮元素的文本内容还原
-            const textNode = document.createTextNode(element.textContent || '');
-            parent.replaceChild(textNode, element);
+            const textNode = document.createTextNode(element.textContent || '')
+            parent.replaceChild(textNode, element)
             // 合并相邻的文本节点
-            parent.normalize();
+            parent.normalize()
           }
-        });
-        highlights = [];
-        currentIndex = -1;
+        })
+        highlights = []
+        currentIndex = -1
       }
 
       // 更新匹配计数显示
       function updateCount(current: number, total: number): void {
         if (total === 0) {
-          countEl.hidden = true;
-          prevBtn.disabled = true;
-          nextBtn.disabled = true;
+          countEl.hidden = true
+          prevBtn.disabled = true
+          nextBtn.disabled = true
         } else {
-          countEl.hidden = false;
-          currentMatchEl.textContent = String(current);
-          totalMatchesEl.textContent = String(total);
-          prevBtn.disabled = total <= 1;
-          nextBtn.disabled = total <= 1;
+          countEl.hidden = false
+          currentMatchEl.textContent = String(current)
+          totalMatchesEl.textContent = String(total)
+          prevBtn.disabled = total <= 1
+          nextBtn.disabled = total <= 1
         }
       }
 
       // 执行搜索
       function performSearch(query: string): void {
-        clearHighlights();
+        clearHighlights()
 
         if (!query.trim()) {
-          updateCount(0, 0);
-          return;
+          updateCount(0, 0)
+          return
         }
 
-        const targetContainer = getTargetContainer();
+        const targetContainer = getTargetContainer()
         if (!targetContainer) {
-          updateCount(0, 0);
-          return;
+          updateCount(0, 0)
+          return
         }
 
         // 搜索并高亮文本
-        const matches = highlightText(targetContainer, query);
+        const matches = highlightText(targetContainer, query)
 
         if (matches.length > 0) {
-          currentIndex = 1;
-          updateCount(currentIndex, matches.length);
-          scrollToMatch(currentIndex - 1);
+          currentIndex = 1
+          updateCount(currentIndex, matches.length)
+          scrollToMatch(currentIndex - 1)
         } else {
-          updateCount(0, 0);
+          updateCount(0, 0)
         }
       }
 
       // 高亮文本
       function highlightText(container: HTMLElement, query: string): HighlightInfo[] {
-        const matches: HighlightInfo[] = [];
-        const lowerQuery = query.toLowerCase();
+        const matches: HighlightInfo[] = []
+        const lowerQuery = query.toLowerCase()
 
         // 使用 TreeWalker 遍历所有文本节点
-        const walker = document.createTreeWalker(
-          container,
-          NodeFilter.SHOW_TEXT,
-          {
-            acceptNode: (node) => {
-              // 跳过脚本和样式标签内的文本
-              const parent = node.parentElement;
-              if (!parent) return NodeFilter.FILTER_REJECT;
-              const tagName = parent.tagName.toLowerCase();
-              if (tagName === 'script' || tagName === 'style' || tagName === 'noscript') {
-                return NodeFilter.FILTER_REJECT;
-              }
-              // 跳过已经高亮的元素
-              if (parent.classList.contains('page-search-highlight')) {
-                return NodeFilter.FILTER_REJECT;
-              }
-              return NodeFilter.FILTER_ACCEPT;
-            },
-          }
-        );
+        const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
+          acceptNode: (node) => {
+            // 跳过脚本和样式标签内的文本
+            const parent = node.parentElement
+            if (!parent) return NodeFilter.FILTER_REJECT
+            const tagName = parent.tagName.toLowerCase()
+            if (tagName === 'script' || tagName === 'style' || tagName === 'noscript') {
+              return NodeFilter.FILTER_REJECT
+            }
+            // 跳过已经高亮的元素
+            if (parent.classList.contains('page-search-highlight')) {
+              return NodeFilter.FILTER_REJECT
+            }
+            return NodeFilter.FILTER_ACCEPT
+          },
+        })
 
-        const textNodes: Text[] = [];
-        let node: Node | null;
+        const textNodes: Text[] = []
+        let node: Node | null
         while ((node = walker.nextNode())) {
-          textNodes.push(node as Text);
+          textNodes.push(node as Text)
         }
 
         // 处理每个文本节点
         textNodes.forEach((textNode) => {
-          const text = textNode.textContent || '';
-          const lowerText = text.toLowerCase();
-          let lastIndex = 0;
-          let index: number;
+          const text = textNode.textContent || ''
+          const lowerText = text.toLowerCase()
+          let lastIndex = 0
+          let index: number
 
-          const fragments: (string | HTMLElement)[] = [];
-          let hasMatch = false;
+          const fragments: (string | HTMLElement)[] = []
+          let hasMatch = false
 
           while ((index = lowerText.indexOf(lowerQuery, lastIndex)) !== -1) {
-            hasMatch = true;
+            hasMatch = true
 
             // 添加匹配前的文本
             if (index > lastIndex) {
-              fragments.push(text.substring(lastIndex, index));
+              fragments.push(text.substring(lastIndex, index))
             }
 
             // 创建高亮元素
-            const highlight = document.createElement('mark');
-            highlight.className = 'page-search-highlight';
-            highlight.textContent = text.substring(index, index + query.length);
-            fragments.push(highlight);
+            const highlight = document.createElement('mark')
+            highlight.className = 'page-search-highlight'
+            highlight.textContent = text.substring(index, index + query.length)
+            fragments.push(highlight)
 
             matches.push({
               element: highlight,
               originalParent: textNode.parentNode!,
               originalNextSibling: textNode.nextSibling,
-            });
+            })
 
-            lastIndex = index + query.length;
+            lastIndex = index + query.length
           }
 
           // 添加剩余文本
           if (hasMatch) {
             if (lastIndex < text.length) {
-              fragments.push(text.substring(lastIndex));
+              fragments.push(text.substring(lastIndex))
             }
 
             // 替换原文本节点
-            const parent = textNode.parentNode;
+            const parent = textNode.parentNode
             if (parent) {
-              const wrapper = document.createDocumentFragment();
+              const wrapper = document.createDocumentFragment()
               fragments.forEach((fragment) => {
                 if (typeof fragment === 'string') {
-                  wrapper.appendChild(document.createTextNode(fragment));
+                  wrapper.appendChild(document.createTextNode(fragment))
                 } else {
-                  wrapper.appendChild(fragment);
+                  wrapper.appendChild(fragment)
                 }
-              });
-              parent.replaceChild(wrapper, textNode);
+              })
+              parent.replaceChild(wrapper, textNode)
             }
           }
-        });
+        })
 
-        highlights = matches;
-        return matches;
+        highlights = matches
+        return matches
       }
 
       // 滚动到指定匹配项
       function scrollToMatch(index: number): void {
-        if (index < 0 || index >= highlights.length) return;
+        if (index < 0 || index >= highlights.length) return
 
         // 移除之前的当前高亮
         highlights.forEach(({ element }) => {
-          element.classList.remove('current');
-        });
+          element.classList.remove('current')
+        })
 
         // 添加当前高亮
-        const current = highlights[index];
-        current.element.classList.add('current');
+        const current = highlights[index]
+        current.element.classList.add('current')
 
         // 滚动到可见区域
         current.element.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
-        });
+        })
       }
 
       // 跳转到上一个匹配
       function goToPrevMatch(): void {
-        if (highlights.length === 0) return;
+        if (highlights.length === 0) return
 
-        currentIndex = currentIndex <= 1 ? highlights.length : currentIndex - 1;
-        updateCount(currentIndex, highlights.length);
-        scrollToMatch(currentIndex - 1);
+        currentIndex = currentIndex <= 1 ? highlights.length : currentIndex - 1
+        updateCount(currentIndex, highlights.length)
+        scrollToMatch(currentIndex - 1)
       }
 
       // 跳转到下一个匹配
       function goToNextMatch(): void {
-        if (highlights.length === 0) return;
+        if (highlights.length === 0) return
 
-        currentIndex = currentIndex >= highlights.length ? 1 : currentIndex + 1;
-        updateCount(currentIndex, highlights.length);
-        scrollToMatch(currentIndex - 1);
+        currentIndex = currentIndex >= highlights.length ? 1 : currentIndex + 1
+        updateCount(currentIndex, highlights.length)
+        scrollToMatch(currentIndex - 1)
       }
 
       // 防抖搜索
       function debouncedSearch(query: string): void {
         if (searchTimeout) {
-          clearTimeout(searchTimeout);
+          clearTimeout(searchTimeout)
         }
         searchTimeout = setTimeout(() => {
-          performSearch(query);
-        }, 200);
+          performSearch(query)
+        }, 200)
       }
 
       // 事件监听 - 搜索按钮点击
-      toggleBtn.addEventListener('click', expandSearch);
+      toggleBtn.addEventListener('click', expandSearch)
 
       // 事件监听 - 关闭按钮点击
-      closeBtn.addEventListener('click', collapseSearch);
+      closeBtn.addEventListener('click', collapseSearch)
 
       // 事件监听 - 输入
       input.addEventListener('input', () => {
-        debouncedSearch(input.value);
-      });
+        debouncedSearch(input.value)
+      })
 
       // 事件监听 - 上一个/下一个按钮
-      prevBtn.addEventListener('click', goToPrevMatch);
-      nextBtn.addEventListener('click', goToNextMatch);
+      prevBtn.addEventListener('click', goToPrevMatch)
+      nextBtn.addEventListener('click', goToNextMatch)
 
       // 事件监听 - 键盘快捷键
       input.addEventListener('keydown', (e) => {
         switch (e.key) {
           case 'Enter':
-            e.preventDefault();
+            e.preventDefault()
             if (e.shiftKey) {
-              goToPrevMatch();
+              goToPrevMatch()
             } else {
-              goToNextMatch();
+              goToNextMatch()
             }
-            break;
+            break
           case 'Escape':
-            e.preventDefault();
-            collapseSearch();
-            break;
+            e.preventDefault()
+            collapseSearch()
+            break
           case 'F3':
-            e.preventDefault();
+            e.preventDefault()
             if (e.shiftKey) {
-              goToPrevMatch();
+              goToPrevMatch()
             } else {
-              goToNextMatch();
+              goToNextMatch()
             }
-            break;
+            break
         }
-      });
+      })
 
       // 点击外部关闭
       document.addEventListener('mousedown', (e) => {
         if (isExpanded && !container.contains(e.target as Node)) {
-          collapseSearch();
+          collapseSearch()
         }
-      });
+      })
 
       // 全局快捷键 Ctrl+F 打开页面内搜索
       document.addEventListener('keydown', (e) => {
         // 检查是否在文章页面
-        const targetContainer = getTargetContainer();
-        if (!targetContainer) return;
+        const targetContainer = getTargetContainer()
+        if (!targetContainer) return
 
         if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
-          e.preventDefault();
+          e.preventDefault()
           if (!isExpanded) {
-            expandSearch();
+            expandSearch()
           } else {
-            input.select();
+            input.select()
           }
         }
-      });
-    });
-  })();
+      })
+    })
+  })()
 </script>

@@ -4,77 +4,81 @@
  * 文章翻页导航，支持上一篇/下一篇
  * 根据不同上下文（全部文章、分类、标签）显示不同的文章序列
  */
-import { Icon } from 'astro-icon/components';
+import { Icon } from 'astro-icon/components'
 
 interface PostInfo {
-  slug: string;
-  title: string;
+  slug: string
+  title: string
 }
 
 interface Props {
   /** 上一篇文章 */
-  prevPost?: PostInfo;
+  prevPost?: PostInfo
   /** 下一篇文章 */
-  nextPost?: PostInfo;
+  nextPost?: PostInfo
   /** 上下文类型 */
-  context?: 'all' | 'category' | 'tag' | 'author';
+  context?: 'all' | 'category' | 'tag' | 'author'
   /** 上下文值（分类 slug、标签名或作者 slug） */
-  contextValue?: string;
+  contextValue?: string
 }
 
-const { prevPost, nextPost, context = 'all', contextValue } = Astro.props;
+const { prevPost, nextPost, context = 'all', contextValue } = Astro.props
 
 /**
  * 根据上下文生成文章链接
  */
 function getPostUrl(slug: string): string {
-  const baseUrl = `/post/${slug}`;
-  if (context === 'all' || !contextValue) return baseUrl;
-  if (context === 'category') return `${baseUrl}?from=category&value=${encodeURIComponent(contextValue)}`;
-  if (context === 'tag') return `${baseUrl}?from=tag&value=${encodeURIComponent(contextValue)}`;
-  if (context === 'author') return `${baseUrl}?from=author&value=${encodeURIComponent(contextValue)}`;
-  return baseUrl;
+  const baseUrl = `/post/${slug}`
+  if (context === 'all' || !contextValue) return baseUrl
+  if (context === 'category')
+    return `${baseUrl}?from=category&value=${encodeURIComponent(contextValue)}`
+  if (context === 'tag') return `${baseUrl}?from=tag&value=${encodeURIComponent(contextValue)}`
+  if (context === 'author')
+    return `${baseUrl}?from=author&value=${encodeURIComponent(contextValue)}`
+  return baseUrl
 }
 
 // 如果没有上一篇和下一篇，不渲染组件
-const hasNavigation = prevPost || nextPost;
+const hasNavigation = prevPost || nextPost
 ---
 
-{hasNavigation && (
-  <nav class="post-navigation" aria-label="文章导航">
-    <div class="post-navigation__container">
-      {/* 上一篇 */}
-      <div class="post-navigation__item post-navigation__item--prev">
-        {prevPost ? (
-          <a href={getPostUrl(prevPost.slug)} class="post-navigation__link">
-            <span class="post-navigation__direction">
-              <Icon name="material-symbols:arrow-back" class="post-navigation__icon" />
-              <span>上一篇</span>
-            </span>
-            <span class="post-navigation__title">{prevPost.title}</span>
-          </a>
-        ) : (
-          <div class="post-navigation__placeholder" aria-hidden="true"></div>
-        )}
-      </div>
+{
+  hasNavigation && (
+    <nav class="post-navigation" aria-label="文章导航">
+      <div class="post-navigation__container">
+        {/* 上一篇 */}
+        <div class="post-navigation__item post-navigation__item--prev">
+          {prevPost ? (
+            <a href={getPostUrl(prevPost.slug)} class="post-navigation__link">
+              <span class="post-navigation__direction">
+                <Icon name="material-symbols:arrow-back" class="post-navigation__icon" />
+                <span>上一篇</span>
+              </span>
+              <span class="post-navigation__title">{prevPost.title}</span>
+            </a>
+          ) : (
+            <div class="post-navigation__placeholder" aria-hidden="true" />
+          )}
+        </div>
 
-      {/* 下一篇 */}
-      <div class="post-navigation__item post-navigation__item--next">
-        {nextPost ? (
-          <a href={getPostUrl(nextPost.slug)} class="post-navigation__link">
-            <span class="post-navigation__direction">
-              <span>下一篇</span>
-              <Icon name="material-symbols:arrow-forward" class="post-navigation__icon" />
-            </span>
-            <span class="post-navigation__title">{nextPost.title}</span>
-          </a>
-        ) : (
-          <div class="post-navigation__placeholder" aria-hidden="true"></div>
-        )}
+        {/* 下一篇 */}
+        <div class="post-navigation__item post-navigation__item--next">
+          {nextPost ? (
+            <a href={getPostUrl(nextPost.slug)} class="post-navigation__link">
+              <span class="post-navigation__direction">
+                <span>下一篇</span>
+                <Icon name="material-symbols:arrow-forward" class="post-navigation__icon" />
+              </span>
+              <span class="post-navigation__title">{nextPost.title}</span>
+            </a>
+          ) : (
+            <div class="post-navigation__placeholder" aria-hidden="true" />
+          )}
+        </div>
       </div>
-    </div>
-  </nav>
-)}
+    </nav>
+  )
+}
 
 <style>
   .post-navigation {
@@ -111,9 +115,10 @@ const hasNavigation = prevPost || nextPost;
     border-radius: var(--radius-lg);
     text-decoration: none;
     color: inherit;
-    transition: background-color var(--transition-fast), 
-                border-color var(--transition-fast),
-                box-shadow var(--transition-fast);
+    transition:
+      background-color var(--transition-fast),
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast);
     height: 100%;
   }
 

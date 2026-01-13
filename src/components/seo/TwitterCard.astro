@@ -3,21 +3,21 @@
  * TwitterCard 组件
  * 生成 Twitter Card meta 标签，用于 Twitter 分享
  */
-import { siteConfig } from '../../utils/config';
+import { siteConfig } from '../../utils/config'
 
 interface Props {
   /** 页面标题 */
-  title: string;
+  title: string
   /** 页面描述 */
-  description: string;
+  description: string
   /** 分享图片 URL */
-  image?: string;
+  image?: string
   /** 卡片类型 */
-  card?: 'summary' | 'summary_large_image';
+  card?: 'summary' | 'summary_large_image'
   /** 网站 Twitter 账号（@username） */
-  site?: string;
+  site?: string
   /** 内容创作者 Twitter 账号（@username） */
-  creator?: string;
+  creator?: string
 }
 
 const {
@@ -27,14 +27,15 @@ const {
   card = image ? 'summary_large_image' : 'summary',
   site,
   creator,
-} = Astro.props;
+} = Astro.props
 
 // 构建完整的图片 URL
-const siteUrl = siteConfig.site.url || Astro.url.origin;
-const twitterImage = image ? new URL(image, siteUrl).href : undefined;
+const siteUrl = siteConfig.site.url || Astro.url.origin
+const twitterImage = image ? new URL(image, siteUrl).href : undefined
 
 // 从配置中获取 Twitter 账号（如果未提供）
-const twitterSite = site || (siteConfig.social.twitter ? `@${siteConfig.social.twitter.split('/').pop()}` : undefined);
+const twitterSite =
+  site || (siteConfig.social.twitter ? `@${siteConfig.social.twitter.split('/').pop()}` : undefined)
 ---
 
 <!-- Twitter Card 标签 -->

@@ -34,12 +34,12 @@
 
 ### 1.3 技术栈
 
-| 技术 | 用途 |
-|------|------|
+| 技术                                 | 用途             |
+| ------------------------------------ | ---------------- |
 | `@material/material-color-utilities` | MD3 颜色生成算法 |
-| Astro 组件 | 静态组件渲染 |
-| YAML 配置 | 站点和主题配置 |
-| CSS 变量 | 运行时主题切换 |
+| Astro 组件                           | 静态组件渲染     |
+| YAML 配置                            | 站点和主题配置   |
+| CSS 变量                             | 运行时主题切换   |
 
 ---
 
@@ -54,7 +54,7 @@ graph TB
     subgraph SeedColor[种子颜色]
         Seed["#007FFF"]
     end
-    
+
     subgraph ColorRoles[颜色角色]
         Primary[Primary 主色系]
         Secondary[Secondary 次要色系]
@@ -63,12 +63,12 @@ graph TB
         Surface[Surface 表面色系]
         Outline[Outline 轮廓色系]
     end
-    
+
     subgraph Variants[变体]
         Container[Container 容器色]
         OnColor[On-Color 前景色]
     end
-    
+
     Seed --> Primary
     Seed --> Secondary
     Seed --> Tertiary
@@ -83,58 +83,58 @@ graph TB
 ```typescript
 export interface ColorRoles {
   // Primary 主色系
-  primary: string;
-  onPrimary: string;
-  primaryContainer: string;
-  onPrimaryContainer: string;
+  primary: string
+  onPrimary: string
+  primaryContainer: string
+  onPrimaryContainer: string
 
   // Secondary 次要色系
-  secondary: string;
-  onSecondary: string;
-  secondaryContainer: string;
-  onSecondaryContainer: string;
+  secondary: string
+  onSecondary: string
+  secondaryContainer: string
+  onSecondaryContainer: string
 
   // Tertiary 第三色系
-  tertiary: string;
-  onTertiary: string;
-  tertiaryContainer: string;
-  onTertiaryContainer: string;
+  tertiary: string
+  onTertiary: string
+  tertiaryContainer: string
+  onTertiaryContainer: string
 
   // Error 错误色系
-  error: string;
-  onError: string;
-  errorContainer: string;
-  onErrorContainer: string;
+  error: string
+  onError: string
+  errorContainer: string
+  onErrorContainer: string
 
   // Background & Surface 背景和表面
-  background: string;
-  onBackground: string;
-  surface: string;
-  onSurface: string;
-  surfaceVariant: string;
-  onSurfaceVariant: string;
+  background: string
+  onBackground: string
+  surface: string
+  onSurface: string
+  surfaceVariant: string
+  onSurfaceVariant: string
 
   // Outline 轮廓
-  outline: string;
-  outlineVariant: string;
+  outline: string
+  outlineVariant: string
 
   // Inverse 反色
-  inverseSurface: string;
-  inverseOnSurface: string;
-  inversePrimary: string;
+  inverseSurface: string
+  inverseOnSurface: string
+  inversePrimary: string
 
   // Shadow & Scrim
-  shadow: string;
-  scrim: string;
+  shadow: string
+  scrim: string
 
   // Surface Tones 表面色调
-  surfaceDim: string;
-  surfaceBright: string;
-  surfaceContainerLowest: string;
-  surfaceContainerLow: string;
-  surfaceContainer: string;
-  surfaceContainerHigh: string;
-  surfaceContainerHighest: string;
+  surfaceDim: string
+  surfaceBright: string
+  surfaceContainerLowest: string
+  surfaceContainerLow: string
+  surfaceContainer: string
+  surfaceContainerHigh: string
+  surfaceContainerHighest: string
 }
 ```
 
@@ -142,15 +142,15 @@ export interface ColorRoles {
 
 根据 MD3 规范，浅色和深色模式使用不同的 tone 值：
 
-| Surface 变体 | 浅色模式 Tone | 深色模式 Tone |
-|-------------|--------------|--------------|
-| surfaceDim | 87 | 6 |
-| surfaceBright | 98 | 24 |
-| surfaceContainerLowest | 100 | 4 |
-| surfaceContainerLow | 96 | 10 |
-| surfaceContainer | 94 | 12 |
-| surfaceContainerHigh | 92 | 17 |
-| surfaceContainerHighest | 90 | 22 |
+| Surface 变体            | 浅色模式 Tone | 深色模式 Tone |
+| ----------------------- | ------------- | ------------- |
+| surfaceDim              | 87            | 6             |
+| surfaceBright           | 98            | 24            |
+| surfaceContainerLowest  | 100           | 4             |
+| surfaceContainerLow     | 96            | 10            |
+| surfaceContainer        | 94            | 12            |
+| surfaceContainerHigh    | 92            | 17            |
+| surfaceContainerHighest | 90            | 22            |
 
 ---
 
@@ -223,12 +223,12 @@ graph TB
         Interactive[交互组件<br/>ThemeToggle, Search, TOC]
         SEO[SEO组件<br/>SEO, OpenGraph, JsonLd]
     end
-    
+
     subgraph Rendering[渲染方式]
         Static[静态渲染<br/>Astro 组件]
         Client[客户端交互<br/>内联 JavaScript]
     end
-    
+
     Common --> Static
     Layout --> Static
     Blog --> Static
@@ -249,15 +249,15 @@ graph TB
     subgraph Layer1[第一层：MD3 基础变量]
         MD3["--md-primary<br/>--md-surface<br/>--md-on-background<br/>..."]
     end
-    
+
     subgraph Layer2[第二层：语义化映射]
         Semantic["--bg-primary<br/>--text-primary<br/>--link-color<br/>..."]
     end
-    
+
     subgraph Layer3[第三层：布局/排版变量]
         Layout["--font-sans<br/>--space-4<br/>--radius-md<br/>..."]
     end
-    
+
     Layer1 --> Layer2
     Layer2 --> Components[组件使用]
     Layer3 --> Components
@@ -390,37 +390,38 @@ graph TB
 ```css
 :root {
   /* 字体族 */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans SC', sans-serif;
   --font-serif: Georgia, 'Times New Roman', 'Noto Serif SC', serif;
-  --font-mono: 'Fira Code', 'JetBrains Mono', Consolas, 'Liberation Mono',
-    monospace;
+  --font-mono:
+    'Fira Code', 'JetBrains Mono', Consolas, 'Liberation Mono', monospace;
 
   /* 字体大小 */
-  --text-xs: 0.75rem;      /* 12px */
-  --text-sm: 0.875rem;     /* 14px */
-  --text-base: 1rem;       /* 16px */
-  --text-lg: 1.125rem;     /* 18px */
-  --text-xl: 1.25rem;      /* 20px */
-  --text-2xl: 1.5rem;      /* 24px */
-  --text-3xl: 1.875rem;    /* 30px */
-  --text-4xl: 2.25rem;     /* 36px */
-  --text-5xl: 3rem;        /* 48px */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem; /* 36px */
+  --text-5xl: 3rem; /* 48px */
 
   /* 间距比例（基于 4px 基准） */
   --space-0: 0;
-  --space-1: 0.25rem;      /* 4px */
-  --space-2: 0.5rem;       /* 8px */
-  --space-3: 0.75rem;      /* 12px */
-  --space-4: 1rem;         /* 16px */
-  --space-5: 1.25rem;      /* 20px */
-  --space-6: 1.5rem;       /* 24px */
-  --space-8: 2rem;         /* 32px */
-  --space-10: 2.5rem;      /* 40px */
-  --space-12: 3rem;        /* 48px */
-  --space-16: 4rem;        /* 64px */
-  --space-20: 5rem;        /* 80px */
-  --space-24: 6rem;        /* 96px */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+  --space-20: 5rem; /* 80px */
+  --space-24: 6rem; /* 96px */
 
   /* 布局变量 */
   --container-sm: 640px;
@@ -443,9 +444,12 @@ graph TB
 
   /* 阴影 - 使用 MD3 shadow 变量 */
   --shadow-sm: 0 1px 2px 0 color-mix(in srgb, var(--md-shadow) 5%, transparent);
-  --shadow-md: 0 4px 6px -1px color-mix(in srgb, var(--md-shadow) 10%, transparent);
-  --shadow-lg: 0 10px 15px -3px color-mix(in srgb, var(--md-shadow) 10%, transparent);
-  --shadow-xl: 0 20px 25px -5px color-mix(in srgb, var(--md-shadow) 10%, transparent);
+  --shadow-md: 0 4px 6px -1px
+    color-mix(in srgb, var(--md-shadow) 10%, transparent);
+  --shadow-lg: 0 10px 15px -3px
+    color-mix(in srgb, var(--md-shadow) 10%, transparent);
+  --shadow-xl: 0 20px 25px -5px
+    color-mix(in srgb, var(--md-shadow) 10%, transparent);
 
   /* 过渡 */
   --transition-fast: 150ms ease;
@@ -475,7 +479,7 @@ sequenceDiagram
     participant Theme as theme.ts
     participant Layout as BaseLayout.astro
     participant Browser as 浏览器
-    
+
     Config->>Utils: 读取 seedColor
     Utils->>Theme: getSeedColor()
     Theme->>Theme: generateTheme(seedColor)
@@ -499,15 +503,15 @@ sequenceDiagram
  */
 export function generateTheme(seedColor: string): ThemePalette {
   // 将十六进制颜色转换为 ARGB 格式
-  const sourceColor = argbFromHex(seedColor);
+  const sourceColor = argbFromHex(seedColor)
 
   // 使用 Material Color Utilities 生成主题
-  const theme = themeFromSourceColor(sourceColor);
+  const theme = themeFromSourceColor(sourceColor)
 
   return {
     light: extractColorRoles(theme, 'light'),
     dark: extractColorRoles(theme, 'dark'),
-  };
+  }
 }
 ```
 
@@ -526,18 +530,18 @@ export function colorRolesToCssVariables(
   colors: ColorRoles,
   prefix: string = 'md'
 ): string {
-  const lines: string[] = [];
+  const lines: string[] = []
 
   // 将 camelCase 转换为 kebab-case
   const toKebabCase = (str: string): string =>
-    str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+    str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 
   for (const [key, value] of Object.entries(colors)) {
-    const cssVarName = `--${prefix}-${toKebabCase(key)}`;
-    lines.push(`  ${cssVarName}: ${value};`);
+    const cssVarName = `--${prefix}-${toKebabCase(key)}`
+    lines.push(`  ${cssVarName}: ${value};`)
   }
 
-  return lines.join('\n');
+  return lines.join('\n')
 }
 ```
 
@@ -547,11 +551,11 @@ export function colorRolesToCssVariables(
 
 ```astro
 ---
-import { generateFullThemeCss, getSeedColorFromConfig } from '../utils/theme';
+import { generateFullThemeCss, getSeedColorFromConfig } from '../utils/theme'
 
 // 在构建时生成主题 CSS
-const seedColor = getSeedColorFromConfig();
-const themeCss = generateFullThemeCss(seedColor);
+const seedColor = getSeedColorFromConfig()
+const themeCss = generateFullThemeCss(seedColor)
 ---
 
 <html>
@@ -616,24 +620,25 @@ const themeCss = generateFullThemeCss(seedColor);
 
 ### 6.1 核心组件列表
 
-| 组件名称 | 类型 | 文件路径 | 职责 |
-|---------|------|----------|------|
-| BaseLayout | 布局 | `layouts/BaseLayout.astro` | 基础 HTML 结构、主题注入 |
-| Header | 布局 | `components/layout/Header.astro` | 网站头部、导航 |
-| Footer | 布局 | `components/layout/Footer.astro` | 网站底部、版权 |
-| ThemeToggle | 交互 | `components/interactive/ThemeToggle.astro` | 三态主题切换 |
-| PostCard | 博客 | `components/blog/PostCard.astro` | 文章卡片展示 |
-| PostList | 博客 | `components/blog/PostList.astro` | 文章列表容器 |
-| PostMeta | 博客 | `components/blog/PostMeta.astro` | 文章元信息 |
-| SEO | SEO | `components/seo/SEO.astro` | 页面 SEO 元信息 |
-| Container | 通用 | `components/common/Container.astro` | 内容容器 |
-| Button | 通用 | `components/common/Button.astro` | 按钮组件 |
+| 组件名称    | 类型 | 文件路径                                   | 职责                     |
+| ----------- | ---- | ------------------------------------------ | ------------------------ |
+| BaseLayout  | 布局 | `layouts/BaseLayout.astro`                 | 基础 HTML 结构、主题注入 |
+| Header      | 布局 | `components/layout/Header.astro`           | 网站头部、导航           |
+| Footer      | 布局 | `components/layout/Footer.astro`           | 网站底部、版权           |
+| ThemeToggle | 交互 | `components/interactive/ThemeToggle.astro` | 三态主题切换             |
+| PostCard    | 博客 | `components/blog/PostCard.astro`           | 文章卡片展示             |
+| PostList    | 博客 | `components/blog/PostList.astro`           | 文章列表容器             |
+| PostMeta    | 博客 | `components/blog/PostMeta.astro`           | 文章元信息               |
+| SEO         | SEO  | `components/seo/SEO.astro`                 | 页面 SEO 元信息          |
+| Container   | 通用 | `components/common/Container.astro`        | 内容容器                 |
+| Button      | 通用 | `components/common/Button.astro`           | 按钮组件                 |
 
 ### 6.2 ThemeToggle 组件
 
 三态主题切换组件定义在 [`src/components/interactive/ThemeToggle.astro`](../src/components/interactive/ThemeToggle.astro)：
 
 **支持的模式：**
+
 - `light` - 浅色模式
 - `dark` - 深色模式
 - `system` - 跟随系统
@@ -643,7 +648,7 @@ const themeCss = generateFullThemeCss(seedColor);
 ```typescript
 interface Props {
   /** 初始主题模式 */
-  initialTheme?: 'light' | 'dark' | 'system';
+  initialTheme?: 'light' | 'dark' | 'system'
 }
 ```
 
@@ -658,6 +663,7 @@ stateDiagram-v2
 ```
 
 **图标显示：**
+
 - 太阳图标 (`material-symbols:light-mode`) - 浅色模式
 - 月亮图标 (`material-symbols:dark-mode`) - 深色模式
 - 电脑图标 (`material-symbols:computer`) - 跟随系统
@@ -670,12 +676,12 @@ graph TB
     BaseLayout --> Main[Main Content]
     BaseLayout --> Footer[Footer.astro]
     BaseLayout --> SEO[SEO.astro]
-    
+
     Header --> ThemeToggle[ThemeToggle.astro]
-    
+
     Main --> Container[Container.astro]
     Container --> PageContent[页面内容]
-    
+
     PageContent --> PostList[PostList.astro]
     PostList --> PostCard[PostCard.astro]
     PostCard --> PostMeta[PostMeta.astro]
@@ -705,11 +711,11 @@ categories:
   - slug: tech
     name: 技术
     description: 技术相关文章
-    color: "#3b82f6"
+    color: '#3b82f6'
   - slug: life
     name: 生活
     description: 生活随笔
-    color: "#10b981"
+    color: '#10b981'
 
 # 社交链接
 social:
@@ -719,7 +725,7 @@ social:
 
 # 页脚配置
 footer:
-  copyright: "©HAIYEWEI.COM 2025. All rights reserved."
+  copyright: '©HAIYEWEI.COM 2025. All rights reserved.'
   links:
     - name: RSS
       href: /rss.xml
@@ -735,7 +741,7 @@ features:
 
 # 帖子显示配置
 posts:
-  layout: "blog"           # cms | blog | image-blog
+  layout: 'blog' # cms | blog | image-blog
   showImage: false
   postsPerPage: 10
   excerptLength: 150
@@ -743,21 +749,21 @@ posts:
 # Hero 区域配置
 hero:
   enabled: true
-  title: ""
-  subtitle: ""
-  background: ""
+  title: ''
+  subtitle: ''
+  background: ''
   showScrollIndicator: true
 
 # 作者配置
 authors:
-  - id: "admin"
-    name: "管理员"
-    email: "admin@example.com"
-    bio: "网站管理员"
+  - id: 'admin'
+    name: '管理员'
+    email: 'admin@example.com'
+    bio: '网站管理员'
 
 # 主题配置
 theme:
-  seedColor: "#007FFF"
+  seedColor: '#007FFF'
 ```
 
 ### 7.2 配置类型定义
@@ -767,60 +773,60 @@ theme:
 ```typescript
 /** 网站基本信息 */
 export interface SiteInfo {
-  title: string;
-  description: string;
-  author: string;
-  language: string;
-  url: string;
+  title: string
+  description: string
+  author: string
+  language: string
+  url: string
 }
 
 /** 主题配置 */
 export interface ThemeSettings {
   /** 种子颜色 - Material Design 3 会从这个颜色生成完整的调色板 */
-  seedColor: string;
+  seedColor: string
 }
 
 /** 帖子布局类型 */
-export type PostLayout = 'cms' | 'blog' | 'image-blog';
+export type PostLayout = 'cms' | 'blog' | 'image-blog'
 
 /** 帖子显示配置 */
 export interface PostsConfig {
   /** 布局样式 */
-  layout: PostLayout;
+  layout: PostLayout
   /** 是否显示封面图片 */
-  showImage: boolean;
+  showImage: boolean
   /** 每页显示数量 */
-  postsPerPage: number;
+  postsPerPage: number
   /** 摘要长度（字符数） */
-  excerptLength: number;
+  excerptLength: number
 }
 
 /** Hero 区域配置 */
 export interface HeroConfig {
   /** 是否启用 hero 区域 */
-  enabled: boolean;
+  enabled: boolean
   /** 可选标题 */
-  title?: string;
+  title?: string
   /** 可选副标题 */
-  subtitle?: string;
+  subtitle?: string
   /** 可选背景图片 URL */
-  background?: string;
+  background?: string
   /** 是否显示向下滚动指示器 */
-  showScrollIndicator?: boolean;
+  showScrollIndicator?: boolean
 }
 
 /** 作者配置 */
 export interface Author {
   /** 作者唯一标识 */
-  id: string;
+  id: string
   /** 作者名称 */
-  name: string;
+  name: string
   /** 邮箱地址 */
-  email?: string;
+  email?: string
   /** 头像 URL */
-  avatar?: string;
+  avatar?: string
   /** 作者简介 */
-  bio?: string;
+  bio?: string
 }
 ```
 
@@ -828,42 +834,42 @@ export interface Author {
 
 [`src/utils/config.ts`](../src/utils/config.ts) 提供了一系列工具函数来访问配置：
 
-| 函数名 | 返回类型 | 描述 |
-|--------|----------|------|
-| `getSiteInfo()` | `SiteInfo` | 获取网站基本信息 |
-| `getNavigation()` | `NavLink[]` | 获取导航链接列表 |
-| `getCategories()` | `Category[]` | 获取所有分类 |
-| `getCategory(slug)` | `Category \| undefined` | 根据 slug 获取分类 |
-| `getCategoryName(slug)` | `string` | 获取分类名称 |
-| `getCategoryColor(slug)` | `string` | 获取分类颜色 |
-| `getSocialLinks()` | `SocialLinks` | 获取社交链接 |
-| `getFooterConfig()` | `FooterConfig` | 获取页脚配置 |
-| `getFeatures()` | `Features` | 获取功能开关 |
-| `isFeatureEnabled(feature)` | `boolean` | 检查功能是否启用 |
-| `getCopyright()` | `string` | 获取版权信息 |
-| `getThemeSettings()` | `ThemeSettings` | 获取主题配置 |
-| `getSeedColor()` | `string` | 获取种子颜色 |
-| `getPostsConfig()` | `PostsConfig` | 获取帖子显示配置 |
-| `getPostLayout()` | `PostLayout` | 获取帖子布局类型 |
-| `shouldShowPostImage()` | `boolean` | 检查是否显示帖子图片 |
-| `getPostsPerPage()` | `number` | 获取每页帖子数量 |
-| `getExcerptLength()` | `number` | 获取摘要长度 |
-| `getHeroConfig()` | `HeroConfig` | 获取 Hero 区域配置 |
-| `isHeroEnabled()` | `boolean` | 检查 Hero 区域是否启用 |
-| `getAuthors()` | `Author[]` | 获取所有作者 |
-| `getAuthorById(id)` | `Author \| undefined` | 根据 ID 获取作者 |
-| `getAuthorName(id)` | `string` | 获取作者名称 |
-| `getDefaultAuthor()` | `Author \| undefined` | 获取默认作者 |
+| 函数名                      | 返回类型                | 描述                   |
+| --------------------------- | ----------------------- | ---------------------- |
+| `getSiteInfo()`             | `SiteInfo`              | 获取网站基本信息       |
+| `getNavigation()`           | `NavLink[]`             | 获取导航链接列表       |
+| `getCategories()`           | `Category[]`            | 获取所有分类           |
+| `getCategory(slug)`         | `Category \| undefined` | 根据 slug 获取分类     |
+| `getCategoryName(slug)`     | `string`                | 获取分类名称           |
+| `getCategoryColor(slug)`    | `string`                | 获取分类颜色           |
+| `getSocialLinks()`          | `SocialLinks`           | 获取社交链接           |
+| `getFooterConfig()`         | `FooterConfig`          | 获取页脚配置           |
+| `getFeatures()`             | `Features`              | 获取功能开关           |
+| `isFeatureEnabled(feature)` | `boolean`               | 检查功能是否启用       |
+| `getCopyright()`            | `string`                | 获取版权信息           |
+| `getThemeSettings()`        | `ThemeSettings`         | 获取主题配置           |
+| `getSeedColor()`            | `string`                | 获取种子颜色           |
+| `getPostsConfig()`          | `PostsConfig`           | 获取帖子显示配置       |
+| `getPostLayout()`           | `PostLayout`            | 获取帖子布局类型       |
+| `shouldShowPostImage()`     | `boolean`               | 检查是否显示帖子图片   |
+| `getPostsPerPage()`         | `number`                | 获取每页帖子数量       |
+| `getExcerptLength()`        | `number`                | 获取摘要长度           |
+| `getHeroConfig()`           | `HeroConfig`            | 获取 Hero 区域配置     |
+| `isHeroEnabled()`           | `boolean`               | 检查 Hero 区域是否启用 |
+| `getAuthors()`              | `Author[]`              | 获取所有作者           |
+| `getAuthorById(id)`         | `Author \| undefined`   | 根据 ID 获取作者       |
+| `getAuthorName(id)`         | `string`                | 获取作者名称           |
+| `getDefaultAuthor()`        | `Author \| undefined`   | 获取默认作者           |
 
 ### 7.4 帖子布局系统
 
 项目支持三种帖子布局样式：
 
-| 布局类型 | 描述 | 图片显示 |
-|----------|------|----------|
-| `cms` | 紧凑的列表样式，适合内容管理系统风格 | 不显示 |
-| `blog` | 标准博客卡片样式 | 可配置 |
-| `image-blog` | 以图片为主的瀑布流/网格样式 | 始终显示 |
+| 布局类型     | 描述                                 | 图片显示 |
+| ------------ | ------------------------------------ | -------- |
+| `cms`        | 紧凑的列表样式，适合内容管理系统风格 | 不显示   |
+| `blog`       | 标准博客卡片样式                     | 可配置   |
+| `image-blog` | 以图片为主的瀑布流/网格样式          | 始终显示 |
 
 ```mermaid
 graph LR
@@ -872,13 +878,13 @@ graph LR
         Blog[blog<br/>标准卡片]
         ImageBlog[image-blog<br/>图片网格]
     end
-    
+
     subgraph Features[特性]
         NoImage[无图片]
         OptionalImage[可选图片]
         RequiredImage[必须图片]
     end
-    
+
     CMS --> NoImage
     Blog --> OptionalImage
     ImageBlog --> RequiredImage
@@ -900,7 +906,7 @@ flowchart LR
     B -->|theme = 'system' 或无| E{检查系统偏好}
     E -->|prefers-color-scheme: dark| D
     E -->|prefers-color-scheme: light| C
-    
+
     C --> F[添加 .light 类]
     D --> G[添加 .dark 类]
 ```
@@ -912,16 +918,20 @@ flowchart LR
 ```html
 <!-- 防闪烁脚本：在页面渲染前应用正确的主题 -->
 <script is:inline>
-  (function() {
-    const theme = localStorage.getItem('theme');
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (theme === 'dark' || (theme === 'system' && systemDark) || (!theme && systemDark)) {
-      document.documentElement.classList.add('dark');
+  ;(function () {
+    const theme = localStorage.getItem('theme')
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+    if (
+      theme === 'dark' ||
+      (theme === 'system' && systemDark) ||
+      (!theme && systemDark)
+    ) {
+      document.documentElement.classList.add('dark')
     } else if (theme === 'light') {
-      document.documentElement.classList.add('light');
+      document.documentElement.classList.add('light')
     }
-  })();
+  })()
 </script>
 ```
 
@@ -956,32 +966,32 @@ flowchart LR
 主题切换逻辑定义在 [`src/components/interactive/ThemeToggle.astro`](../src/components/interactive/ThemeToggle.astro:85)：
 
 ```typescript
-type ThemeMode = 'light' | 'dark' | 'system';
-const STORAGE_KEY = 'theme';
-const MODES: ThemeMode[] = ['light', 'dark', 'system'];
+type ThemeMode = 'light' | 'dark' | 'system'
+const STORAGE_KEY = 'theme'
+const MODES: ThemeMode[] = ['light', 'dark', 'system']
 
 /**
  * 应用主题到 document
  */
 function applyTheme(mode: ThemeMode): void {
-  const resolved = resolveTheme(mode);
-  const root = document.documentElement;
-  
+  const resolved = resolveTheme(mode)
+  const root = document.documentElement
+
   // 设置 data-theme 属性用于图标显示
-  root.setAttribute('data-theme', mode);
-  
+  root.setAttribute('data-theme', mode)
+
   // 设置 class 用于样式
-  root.classList.remove('light', 'dark');
-  root.classList.add(resolved);
+  root.classList.remove('light', 'dark')
+  root.classList.add(resolved)
 }
 
 // 监听系统主题变化
-const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 mediaQuery.addEventListener('change', () => {
   if (currentMode === 'system') {
-    applyTheme('system');
+    applyTheme('system')
   }
-});
+})
 ```
 
 ---
@@ -1005,14 +1015,14 @@ mediaQuery.addEventListener('change', () => {
 
 ### 9.2 计划中功能
 
-| 功能 | 优先级 | 描述 |
-|------|--------|------|
-| 自定义字体配置 | 中 | 支持在配置中指定自定义字体 |
-| 多主题预设 | 低 | 提供多个预设的种子颜色方案 |
-| 动态主题切换 | 低 | 运行时更换种子颜色 |
-| 评论系统集成 | 中 | 集成 Giscus 或其他评论系统 |
-| 搜索功能增强 | 中 | 全文搜索支持 |
-| 国际化支持 | 低 | 多语言支持 |
+| 功能           | 优先级 | 描述                       |
+| -------------- | ------ | -------------------------- |
+| 自定义字体配置 | 中     | 支持在配置中指定自定义字体 |
+| 多主题预设     | 低     | 提供多个预设的种子颜色方案 |
+| 动态主题切换   | 低     | 运行时更换种子颜色         |
+| 评论系统集成   | 中     | 集成 Giscus 或其他评论系统 |
+| 搜索功能增强   | 中     | 全文搜索支持               |
+| 国际化支持     | 低     | 多语言支持                 |
 
 ### 9.3 架构改进计划
 
@@ -1046,25 +1056,25 @@ gantt
 
 ### B. 相关文件索引
 
-| 文件 | 描述 |
-|------|------|
-| [`src/utils/theme.ts`](../src/utils/theme.ts) | MD3 主题生成工具 |
-| [`src/utils/config.ts`](../src/utils/config.ts) | 配置工具函数 |
-| [`src/config/site.yaml`](../src/config/site.yaml) | 站点配置文件 |
-| [`src/styles/global.css`](../src/styles/global.css) | 全局样式 |
-| [`src/layouts/BaseLayout.astro`](../src/layouts/BaseLayout.astro) | 基础布局（主题注入） |
-| [`src/components/interactive/ThemeToggle.astro`](../src/components/interactive/ThemeToggle.astro) | 主题切换组件 |
+| 文件                                                                                              | 描述                 |
+| ------------------------------------------------------------------------------------------------- | -------------------- |
+| [`src/utils/theme.ts`](../src/utils/theme.ts)                                                     | MD3 主题生成工具     |
+| [`src/utils/config.ts`](../src/utils/config.ts)                                                   | 配置工具函数         |
+| [`src/config/site.yaml`](../src/config/site.yaml)                                                 | 站点配置文件         |
+| [`src/styles/global.css`](../src/styles/global.css)                                               | 全局样式             |
+| [`src/layouts/BaseLayout.astro`](../src/layouts/BaseLayout.astro)                                 | 基础布局（主题注入） |
+| [`src/components/interactive/ThemeToggle.astro`](../src/components/interactive/ThemeToggle.astro) | 主题切换组件         |
 
 ### C. 颜色角色速查表
 
-| MD3 变量 | 用途 | 浅色示例 | 深色示例 |
-|----------|------|----------|----------|
-| `--md-primary` | 主要操作、强调 | #0061a4 | #9ecaff |
-| `--md-on-primary` | 主色上的文字 | #ffffff | #003258 |
-| `--md-primary-container` | 主色容器背景 | #d1e4ff | #004880 |
-| `--md-secondary` | 次要操作 | #535f70 | #bbc7db |
-| `--md-tertiary` | 第三强调色 | #6b5778 | #d6bee4 |
-| `--md-error` | 错误状态 | #ba1a1a | #ffb4ab |
-| `--md-background` | 页面背景 | #fdfcff | #1a1c1e |
-| `--md-surface` | 组件表面 | #fdfcff | #1a1c1e |
-| `--md-outline` | 边框、分隔线 | #73777f | #8d9199 |
+| MD3 变量                 | 用途           | 浅色示例 | 深色示例 |
+| ------------------------ | -------------- | -------- | -------- |
+| `--md-primary`           | 主要操作、强调 | #0061a4  | #9ecaff  |
+| `--md-on-primary`        | 主色上的文字   | #ffffff  | #003258  |
+| `--md-primary-container` | 主色容器背景   | #d1e4ff  | #004880  |
+| `--md-secondary`         | 次要操作       | #535f70  | #bbc7db  |
+| `--md-tertiary`          | 第三强调色     | #6b5778  | #d6bee4  |
+| `--md-error`             | 错误状态       | #ba1a1a  | #ffb4ab  |
+| `--md-background`        | 页面背景       | #fdfcff  | #1a1c1e  |
+| `--md-surface`           | 组件表面       | #fdfcff  | #1a1c1e  |
+| `--md-outline`           | 边框、分隔线   | #73777f  | #8d9199  |

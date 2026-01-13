@@ -3,41 +3,41 @@
  * PostCard 组件
  * 文章卡片，支持多种变体和布局
  */
-import CategoryBadge from './CategoryBadge.astro';
-import TagList from './TagList.astro';
-import type { PostLayout } from '../../utils/config';
+import CategoryBadge from './CategoryBadge.astro'
+import TagList from './TagList.astro'
+import type { PostLayout } from '../../utils/config'
 
 interface Props {
   /** 文章标题 */
-  title: string;
+  title: string
   /** 文章描述 */
-  description: string;
+  description: string
   /** 发布日期 */
-  pubDate: Date;
+  pubDate: Date
   /** 更新日期 */
-  updatedDate?: Date;
+  updatedDate?: Date
   /** 封面图片（从文章内容提取或使用默认图片） */
-  coverImage?: string;
+  coverImage?: string
   /** 分类 slug */
-  category?: string;
+  category?: string
   /** 标签数组 */
-  tags?: string[];
+  tags?: string[]
   /** 文章 slug */
-  slug: string;
+  slug: string
   /** 卡片变体（传统模式） */
-  variant?: 'default' | 'compact' | 'featured';
+  variant?: 'default' | 'compact' | 'featured'
   /** 布局类型（新模式） */
-  layout?: PostLayout;
+  layout?: PostLayout
   /** 是否显示图片 */
-  showImage?: boolean;
+  showImage?: boolean
   /** 摘要长度 */
-  excerptLength?: number;
+  excerptLength?: number
   /** 自定义类名 */
-  class?: string;
+  class?: string
   /** 上下文类型（用于翻页导航） */
-  context?: 'all' | 'category' | 'tag';
+  context?: 'all' | 'category' | 'tag'
   /** 上下文值（分类 slug 或标签名） */
-  contextValue?: string;
+  contextValue?: string
 }
 
 const {
@@ -55,29 +55,29 @@ const {
   excerptLength = 150,
   class: className = '',
   context = 'all',
-  contextValue
-} = Astro.props;
+  contextValue,
+} = Astro.props
 
 // 根据 layout 确定实际使用的变体
 function getEffectiveVariant(): 'default' | 'compact' | 'featured' | 'cms' | 'blog' | 'image-blog' {
-  if (layout === 'cms') return 'cms';
-  if (layout === 'blog') return 'blog';
-  if (layout === 'image-blog') return 'image-blog';
-  return variant;
+  if (layout === 'cms') return 'cms'
+  if (layout === 'blog') return 'blog'
+  if (layout === 'image-blog') return 'image-blog'
+  return variant
 }
 
-const effectiveVariant = getEffectiveVariant();
+const effectiveVariant = getEffectiveVariant()
 
 // 截断描述文字
 function truncateDescription(text: string, maxLength: number): string {
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength).trim() + '...';
+  if (text.length <= maxLength) return text
+  return text.slice(0, maxLength).trim() + '...'
 }
 
-const truncatedDescription = truncateDescription(description, excerptLength);
+const truncatedDescription = truncateDescription(description, excerptLength)
 
 // 是否应该显示图片
-const shouldShowImage = layout === 'image-blog' || (layout !== 'cms' && showImage && coverImage);
+const shouldShowImage = layout === 'image-blog' || (layout !== 'cms' && showImage && coverImage)
 
 /**
  * 格式化日期为中文格式
@@ -87,171 +87,194 @@ function formatDate(date: Date): string {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-  });
+  })
 }
 
 // 文章链接（根据上下文生成）
 function getPostUrl(): string {
-  const baseUrl = `/post/${slug}`;
-  if (context === 'all' || !contextValue) return baseUrl;
-  if (context === 'category') return `${baseUrl}?from=category&value=${encodeURIComponent(contextValue)}`;
-  if (context === 'tag') return `${baseUrl}?from=tag&value=${encodeURIComponent(contextValue)}`;
-  return baseUrl;
+  const baseUrl = `/post/${slug}`
+  if (context === 'all' || !contextValue) return baseUrl
+  if (context === 'category')
+    return `${baseUrl}?from=category&value=${encodeURIComponent(contextValue)}`
+  if (context === 'tag') return `${baseUrl}?from=tag&value=${encodeURIComponent(contextValue)}`
+  return baseUrl
 }
 
-const postUrl = getPostUrl();
+const postUrl = getPostUrl()
 
 // 默认占位图片
-const placeholderImage = '/placeholder-image.svg';
+const placeholderImage = '/placeholder-image.svg'
 ---
 
 <article class:list={['post-card', `post-card--${effectiveVariant}`, className]}>
   <a href={postUrl} class="post-card__link">
     {/* CMS 布局 - 紧凑的单行列表 */}
-    {effectiveVariant === 'cms' && (
-      <div class="post-card__cms-row">
-        <span class="post-card__cms-icon" aria-hidden="true"></span>
-        <h3 class="post-card__title">{title}</h3>
-        <div class="post-card__cms-meta">
-          {category && (
-            <span class="post-card__cms-category">
-              <CategoryBadge category={category} size="sm" />
-            </span>
-          )}
-          <time datetime={pubDate.toISOString()} class="post-card__date">
-            {formatDate(pubDate)}
-          </time>
+    {
+      effectiveVariant === 'cms' && (
+        <div class="post-card__cms-row">
+          <span class="post-card__cms-icon" aria-hidden="true" />
+          <h3 class="post-card__title">{title}</h3>
+          <div class="post-card__cms-meta">
+            {category && (
+              <span class="post-card__cms-category">
+                <CategoryBadge category={category} size="sm" />
+              </span>
+            )}
+            <time datetime={pubDate.toISOString()} class="post-card__date">
+              {formatDate(pubDate)}
+            </time>
+          </div>
+          {/* 悬停时显示的摘要 */}
+          <div class="post-card__cms-tooltip">
+            <p>{truncatedDescription}</p>
+          </div>
         </div>
-        {/* 悬停时显示的摘要 */}
-        <div class="post-card__cms-tooltip">
-          <p>{truncatedDescription}</p>
-        </div>
-      </div>
-    )}
+      )
+    }
 
     {/* Blog 布局 - 列表视图 */}
-    {effectiveVariant === 'blog' && (
-      <div class="post-card__blog-row">
-        {/* 可选图片 */}
-        {shouldShowImage && (
-          <div class="post-card__blog-image">
+    {
+      effectiveVariant === 'blog' && (
+        <div class="post-card__blog-row">
+          {/* 可选图片 */}
+          {shouldShowImage && (
+            <div class="post-card__blog-image">
+              <img
+                src={coverImage || placeholderImage}
+                alt={title}
+                class="post-card__image"
+                loading="lazy"
+              />
+            </div>
+          )}
+          {/* 内容区域 */}
+          <div class="post-card__blog-content">
+            <h3 class="post-card__title">{title}</h3>
+            <p class="post-card__description">{truncatedDescription}</p>
+            <div class="post-card__blog-meta">
+              <time datetime={pubDate.toISOString()} class="post-card__date">
+                {formatDate(pubDate)}
+              </time>
+              {category && (
+                <span class="post-card__blog-category">
+                  · <CategoryBadge category={category} size="sm" />
+                </span>
+              )}
+              {tags.length > 0 && (
+                <span class="post-card__blog-tags">
+                  · <TagList tags={tags} size="sm" limit={3} />
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    {/* Image-Blog 布局 - 大图卡片 */}
+    {
+      effectiveVariant === 'image-blog' && (
+        <>
+          <div class="post-card__image-wrapper post-card__image-wrapper--full">
             <img
               src={coverImage || placeholderImage}
               alt={title}
               class="post-card__image"
               loading="lazy"
             />
+            {/* 渐变遮罩和标题覆盖 */}
+            <div class="post-card__image-overlay">
+              <div class="post-card__overlay-content">
+                {category && (
+                  <div class="post-card__category">
+                    <CategoryBadge category={category} size="sm" />
+                  </div>
+                )}
+                <h3 class="post-card__title">{title}</h3>
+                <time datetime={pubDate.toISOString()} class="post-card__date">
+                  {formatDate(pubDate)}
+                </time>
+              </div>
+            </div>
           </div>
-        )}
-        {/* 内容区域 */}
-        <div class="post-card__blog-content">
-          <h3 class="post-card__title">{title}</h3>
-          <p class="post-card__description">{truncatedDescription}</p>
-          <div class="post-card__blog-meta">
-            <time datetime={pubDate.toISOString()} class="post-card__date">
-              {formatDate(pubDate)}
-            </time>
-            {category && (
-              <span class="post-card__blog-category">
-                · <CategoryBadge category={category} size="sm" />
-              </span>
-            )}
-            {tags.length > 0 && (
-              <span class="post-card__blog-tags">
-                · <TagList tags={tags} size="sm" limit={3} />
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
-    )}
+        </>
+      )
+    }
 
-    {/* Image-Blog 布局 - 大图卡片 */}
-    {effectiveVariant === 'image-blog' && (
-      <>
-        <div class="post-card__image-wrapper post-card__image-wrapper--full">
-          <img
-            src={coverImage || placeholderImage}
-            alt={title}
-            class="post-card__image"
-            loading="lazy"
-          />
-          {/* 渐变遮罩和标题覆盖 */}
-          <div class="post-card__image-overlay">
-            <div class="post-card__overlay-content">
-              {category && (
+    {/* 默认布局 */}
+    {
+      effectiveVariant !== 'cms' &&
+        effectiveVariant !== 'blog' &&
+        effectiveVariant !== 'image-blog' && (
+          <>
+            {/* 封面图片 */}
+            {shouldShowImage && (
+              <div class="post-card__image-wrapper">
+                <img
+                  src={coverImage || placeholderImage}
+                  alt={title}
+                  class="post-card__image"
+                  loading="lazy"
+                />
+                {effectiveVariant === 'featured' && updatedDate && (
+                  <span class="post-card__updated-badge">已更新</span>
+                )}
+              </div>
+            )}
+
+            {/* 内容区域 */}
+            <div class="post-card__content">
+              {/* 分类徽章 */}
+              {category && effectiveVariant !== 'compact' && (
                 <div class="post-card__category">
                   <CategoryBadge category={category} size="sm" />
                 </div>
               )}
-              <h3 class="post-card__title">{title}</h3>
-              <time datetime={pubDate.toISOString()} class="post-card__date">
-                {formatDate(pubDate)}
-              </time>
-            </div>
-          </div>
-        </div>
-      </>
-    )}
 
-    {/* 默认布局 */}
-    {effectiveVariant !== 'cms' && effectiveVariant !== 'blog' && effectiveVariant !== 'image-blog' && (
-      <>
-        {/* 封面图片 */}
-        {shouldShowImage && (
-          <div class="post-card__image-wrapper">
-            <img
-              src={coverImage || placeholderImage}
-              alt={title}
-              class="post-card__image"
-              loading="lazy"
-            />
-            {effectiveVariant === 'featured' && updatedDate && (
-              <span class="post-card__updated-badge">已更新</span>
-            )}
-          </div>
-        )}
-        
-        {/* 内容区域 */}
-        <div class="post-card__content">
-          {/* 分类徽章 */}
-          {category && effectiveVariant !== 'compact' && (
-            <div class="post-card__category">
-              <CategoryBadge category={category} size="sm" />
+              {/* 标题 */}
+              <h3 class="post-card__title">{title}</h3>
+
+              {/* 描述 */}
+              {effectiveVariant !== 'compact' && (
+                <p class="post-card__description">{truncatedDescription}</p>
+              )}
+
+              {/* 元信息 */}
+              <div class="post-card__meta">
+                <time datetime={pubDate.toISOString()} class="post-card__date">
+                  {formatDate(pubDate)}
+                </time>
+                {effectiveVariant === 'compact' && updatedDate && (
+                  <span
+                    class="post-card__updated-indicator"
+                    title={`更新于 ${formatDate(updatedDate)}`}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                )}
+              </div>
+
+              {/* 标签 */}
+              {tags.length > 0 && effectiveVariant !== 'compact' && (
+                <div class="post-card__tags">
+                  <TagList tags={tags} size="sm" limit={3} />
+                </div>
+              )}
             </div>
-          )}
-          
-          {/* 标题 */}
-          <h3 class="post-card__title">{title}</h3>
-          
-          {/* 描述 */}
-          {effectiveVariant !== 'compact' && (
-            <p class="post-card__description">{truncatedDescription}</p>
-          )}
-          
-          {/* 元信息 */}
-          <div class="post-card__meta">
-            <time datetime={pubDate.toISOString()} class="post-card__date">
-              {formatDate(pubDate)}
-            </time>
-            {effectiveVariant === 'compact' && updatedDate && (
-              <span class="post-card__updated-indicator" title={`更新于 ${formatDate(updatedDate)}`}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
-                </svg>
-              </span>
-            )}
-          </div>
-          
-          {/* 标签 */}
-          {tags.length > 0 && effectiveVariant !== 'compact' && (
-            <div class="post-card__tags">
-              <TagList tags={tags} size="sm" limit={3} />
-            </div>
-          )}
-        </div>
-      </>
-    )}
+          </>
+        )
+    }
   </a>
 </article>
 
@@ -261,7 +284,9 @@ const placeholderImage = '/placeholder-image.svg';
     border: 1px solid var(--md-outline-variant);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+    transition:
+      box-shadow var(--transition-normal),
+      transform var(--transition-normal);
   }
 
   .post-card:hover {

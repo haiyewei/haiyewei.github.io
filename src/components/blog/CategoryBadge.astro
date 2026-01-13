@@ -3,37 +3,32 @@
  * CategoryBadge 组件
  * 显示分类徽章，带有颜色和可选图标
  */
-import { getCategory, getCategoryName, getCategoryColor } from '../../utils/config';
+import { getCategory, getCategoryName, getCategoryColor } from '../../utils/config'
 
 interface Props {
   /** 分类 slug */
-  category: string;
+  category: string
   /** 徽章大小 */
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg'
   /** 是否显示图标 */
-  showIcon?: boolean;
+  showIcon?: boolean
   /** 自定义类名 */
-  class?: string;
+  class?: string
 }
 
-const { 
-  category, 
-  size = 'md', 
-  showIcon = false,
-  class: className = '' 
-} = Astro.props;
+const { category, size = 'md', showIcon = false, class: className = '' } = Astro.props
 
 // 获取分类信息
-const categoryInfo = getCategory(category);
-const categoryName = getCategoryName(category);
-const categoryColor = getCategoryColor(category);
+const categoryInfo = getCategory(category)
+const categoryName = getCategoryName(category)
+const categoryColor = getCategoryColor(category)
 
 // 根据大小设置样式类
 const sizeClasses = {
   sm: 'badge-sm',
   md: 'badge-md',
   lg: 'badge-lg',
-};
+}
 ---
 
 <a
@@ -41,14 +36,20 @@ const sizeClasses = {
   class:list={['category-badge', sizeClasses[size], className]}
   style={`--category-color: ${categoryColor}`}
 >
-  {showIcon && (
-    <span class="badge-icon" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z" clip-rule="evenodd" />
-        <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
-      </svg>
-    </span>
-  )}
+  {
+    showIcon && (
+      <span class="badge-icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path
+            fill-rule="evenodd"
+            d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
+            clip-rule="evenodd"
+          />
+          <path d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
+        </svg>
+      </span>
+    )
+  }
   <span class="badge-text">{categoryName}</span>
 </a>
 
@@ -62,7 +63,9 @@ const sizeClasses = {
     border-radius: var(--radius-sm);
     font-weight: var(--font-medium);
     text-decoration: none;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    transition:
+      background-color var(--transition-fast),
+      transform var(--transition-fast);
     white-space: nowrap;
   }
 
