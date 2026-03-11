@@ -28,10 +28,35 @@ export async function getStaticPaths() {
     return data.draft !== true
   })
 
-  // 为每个分类生成路径
-  return categories.map((category) => {
-    // 过滤出该分类的文章
-    const filteredPosts = allPosts.filter((post) => post.data.category === category.slug)
+  // 兼容中文分类：合并配置分类与文章分类字段
+  const categorySlugSet = new Set<string>()
+  categories.forEach((category) => {
+    if (category.slug) categorySlugSet.add(category.slug)
+    if (category.name) categorySlugSet.add(category.name)
+  })
+  allPosts.forEach((post) => {
+    if (post.data.category) categorySlugSet.add(post.data.category)
+  })
+
+  // 为每个分类生成路径（支持中文 slug）
+  return Array.from(categorySlugSet).map((categorySlug) => {
+    const matchedCategory =
+      categories.find((category) => category.slug === categorySlug) ??
+      categories.find((category) => category.name === categorySlug)
+
+    const category = matchedCategory
+      ? { ...matchedCategory, slug: categorySlug }
+      : { slug: categorySlug, name: categorySlug, description: '', color: '#6b7280' }
+
+    // 过滤出该分类的文章（兼容 slug / 中文名称）
+    const filteredPosts = allPosts.filter((post) => {
+      if (!post.data.category) return false
+      return (
+        post.data.category === category.slug ||
+        post.data.category === category.name ||
+        post.data.category === categorySlug
+      )
+    })
 
     // 按发布日期降序排列
     const sortedPosts = filteredPosts.sort(
@@ -39,7 +64,7 @@ export async function getStaticPaths() {
     )
 
     return {
-      params: { slug: category.slug },
+      params: { slug: categorySlug },
       props: {
         posts: sortedPosts,
         category,

@@ -39,7 +39,7 @@ const categories = getCategories()
           </a>
           {categories.map((cat) => (
             <a
-              href={`/category/${cat.slug}`}
+              href={`/category/${encodeURIComponent(cat.slug)}`}
               class="category-nav__item"
               style={`--category-color: ${cat.color}`}
             >

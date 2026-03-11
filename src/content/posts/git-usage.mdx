@@ -1,0 +1,280 @@
+---
+title: 'Git 使用入门与实践指南'
+description: '从安装配置到常用工作流，系统讲解 Git 的日常使用与最佳实践。'
+pubDate: 2026-03-11
+updatedDate: 2026-03-11
+tags: ['Git', '版本控制', '教程']
+category: '教程'
+author: 'admin'
+draft: false
+---
+
+# Git 使用入门与实践指南
+
+Git 是当今最主流的分布式版本控制系统，适用于个人项目、团队协作与持续集成。本文从基础概念到常用命令、典型工作流与最佳实践，帮助你在实际项目中高效使用 Git。
+
+---
+
+## 1. Git 能解决什么问题
+
+在没有版本控制时，文件常会出现「final、final2、final-really-final」等混乱版本。Git 通过**快照**与**分支**机制，提供：
+
+- **完整历史**：每次提交都可追溯与回滚
+- **多人协作**：并行开发、合并变更
+- **安全备份**：远程仓库保存与同步
+- **质量保障**：代码评审与分支保护
+
+---
+
+## 2. 安装与基础配置
+
+### 2.1 安装
+
+- Windows：建议安装 [Git for Windows](https://git-scm.com/download/win)
+- macOS：`brew install git`
+- Linux：`sudo apt install git` / `sudo yum install git`
+
+### 2.2 基础配置
+
+```bash
+# 设置全局用户名和邮箱（提交记录会显示）
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+# 查看配置
+
+git config --list
+```
+
+可选配置：
+
+```bash
+# 使用更直观的默认分支名
+
+git config --global init.defaultBranch main
+
+# 设置默认编辑器
+
+git config --global core.editor "code --wait"
+```
+
+---
+
+## 3. 认识 Git 的三个区域
+
+- **工作区（Working Directory）**：你正在编辑的文件
+- **暂存区（Staging Area）**：准备提交的快照
+- **本地仓库（Repository）**：历史提交记录
+
+常用流转顺序：
+
+`工作区 → 暂存区 → 本地仓库 → 远程仓库`
+
+---
+
+## 4. 常用命令速查
+
+### 4.1 初始化与克隆
+
+```bash
+# 初始化新仓库
+
+git init
+
+# 克隆已有仓库
+
+git clone <repo_url>
+```
+
+### 4.2 基本提交流程
+
+```bash
+# 查看状态
+
+git status
+
+# 添加到暂存区
+
+git add <file>
+
+git add .
+
+# 提交
+
+git commit -m "feat: add login page"
+```
+
+### 4.3 查看历史
+
+```bash
+# 简洁历史
+
+git log --oneline --graph --decorate
+
+# 查看某文件历史
+
+git log -- <file>
+```
+
+### 4.4 撤销与回退
+
+```bash
+# 撤销暂存（不丢失工作区修改）
+git restore --staged <file>
+
+# 撤销工作区修改（慎用）
+git restore <file>
+
+# 回退到某次提交（保留历史）
+git revert <commit_id>
+
+# 强制回退（重写历史，慎用）
+git reset --hard <commit_id>
+```
+
+---
+
+## 5. 分支与合并
+
+### 5.1 分支操作
+
+```bash
+# 查看分支
+
+git branch
+
+# 创建分支
+
+git branch feature/login
+
+# 切换分支
+
+git checkout feature/login
+
+# 创建并切换
+
+git checkout -b feature/login
+```
+
+### 5.2 合并分支
+
+```bash
+# 切回主分支
+
+git checkout main
+
+# 合并功能分支
+
+git merge feature/login
+```
+
+当出现冲突时，手动修改冲突文件，确认无误后：
+
+```bash
+
+git add .
+
+git commit -m "fix: resolve merge conflicts"
+```
+
+---
+
+## 6. 远程仓库协作
+
+```bash
+# 查看远程
+
+git remote -v
+
+# 添加远程
+
+git remote add origin <repo_url>
+
+# 推送
+
+git push -u origin main
+
+# 拉取
+
+git pull
+```
+
+团队协作流程建议：
+
+1. 从 `main` 拉出功能分支
+2. 本地完成开发并提交
+3. 推送到远程并发起合并请求（PR/MR）
+4. 评审通过后合并到 `main`
+
+---
+
+## 7. 常见工作流
+
+### 7.1 个人简单流（单分支）
+
+- 直接在 `main` 上开发、提交
+- 适合个人练习或小型项目
+
+### 7.2 功能分支流（Feature Branch）
+
+- 每个需求一个分支
+- 通过 PR 合并到主分支
+- 适合多数团队
+
+### 7.3 Git Flow（较重）
+
+- `main`、`develop`、`feature/*`、`release/*`、`hotfix/*`
+- 流程完整但管理成本高
+
+---
+
+## 8. 最佳实践建议
+
+- **提交信息规范**：使用 `type: subject`，如 `feat:`, `fix:`, `docs:`
+- **小步提交**：单次提交聚焦一个变更点
+- **常拉取**：减少冲突
+- **避免强推**：共享分支上不要 `git push --force`
+- **善用 .gitignore**：排除构建产物与临时文件
+
+示例 `.gitignore` 片段：
+
+```gitignore
+node_modules/
+dist/
+.env
+.DS_Store
+```
+
+---
+
+## 9. 常见问题与排错
+
+### 9.1 提交错分支怎么办？
+
+```bash
+# 切回正确分支
+
+git checkout correct-branch
+
+# 将提交应用到正确分支
+
+git cherry-pick <commit_id>
+```
+
+然后再把错误分支上的提交回退（视情况使用 `reset` 或 `revert`）。
+
+### 9.2 不小心提交了大文件？
+
+- 立刻停止推送
+- 使用 `.gitignore` 排除
+- 如需彻底清理历史，考虑 `git filter-repo`（谨慎）
+
+---
+
+## 10. 小结
+
+掌握 Git 的关键在于理解**快照与分支**的思维方式。日常工作中，建议采用功能分支流，保持小步提交与清晰提交信息。当遇到冲突与回退需求时，优先使用可追溯的方式（如 `revert`），确保团队协作稳定可靠。
+
+---
+
+_希望这篇文章能帮助你快速上手 Git 并建立良好的版本控制习惯。_
