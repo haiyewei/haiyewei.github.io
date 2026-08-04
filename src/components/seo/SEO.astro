@@ -7,7 +7,7 @@ import OpenGraph from './OpenGraph.astro'
 import TwitterCard from './TwitterCard.astro'
 import JsonLd from './JsonLd.astro'
 import { siteConfig } from '../../utils/config'
-import { createWebSiteSchema, createArticleSchema, createBlogPostingSchema } from './schema-helpers'
+import { createWebSiteSchema, createBlogPostingSchema } from './schema-helpers'
 
 interface Props {
   /** 页面标题 */
@@ -53,7 +53,7 @@ const siteUrl = siteConfig.site.url || Astro.url.origin
 const siteName = siteConfig.site.title
 
 // 构建页面标题
-const pageTitle = title ? `${title} | ${siteName}` : siteName
+const pageTitle = title && title !== siteName ? `${title} | ${siteName}` : siteName
 
 // 构建规范 URL
 const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : Astro.url.href
@@ -71,7 +71,7 @@ let jsonLdData: Record<string, any>
 if (type === 'article' && publishedTime) {
   jsonLdType = 'BlogPosting'
   jsonLdData = createBlogPostingSchema({
-    title: pageTitle,
+    title,
     description,
     url: canonicalUrl,
     image: ogImage,

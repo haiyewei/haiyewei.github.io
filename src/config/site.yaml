@@ -26,13 +26,11 @@ categories:
 
 # 社交链接
 social:
-  github: https://github.com/username
-  twitter: https://twitter.com/username
-  email: email@example.com
+  github: https://github.com/haiyewei
 
 # 页脚配置
 footer:
-  copyright: "©HAIYEWEI.COM 2025. All rights reserved."
+  copyright: "© {year} HAIYEWEI.COM. All rights reserved."
   links:
     - name: RSS
       href: /rss.xml
@@ -63,7 +61,7 @@ posts:
 # Hero 区域配置
 hero:
   # 是否启用 hero 区域（全屏首屏）
-  enabled: true
+  enabled: false
   # 可选标题，为空则不显示
   title: ""
   # 可选副标题，为空则不显示
@@ -77,17 +75,13 @@ hero:
 authors:
   - id: "admin"
     name: "管理员"
-    email: "admin@example.com"
     bio: "网站管理员"
   - id: "guest"
     name: "访客作者"
-    email: "guest@example.com"
   - id: "donghai"
     name: "donghai"
-    email: "donghai@example.com"
   - id: "junrong"
     name: "junrong"
-    email: "junrong@example.com"
 
 # 主题配置
 theme:

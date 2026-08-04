@@ -77,7 +77,7 @@ const cardVariant = variant === 'list' ? 'compact' : 'default'
         className,
       ]}
     >
-      {posts.map((post, index) => (
+      {posts.map((post) => (
         <PostCard
           title={post.data.title}
           description={post.data.description}
@@ -86,7 +86,7 @@ const cardVariant = variant === 'list' ? 'compact' : 'default'
           coverImage={getCoverImage(post.body || '')}
           category={showCategory ? post.data.category : undefined}
           tags={showTags ? post.data.tags : undefined}
-          slug={post.slug}
+          slug={post.id}
           variant={cardVariant}
           layout={layout}
           showImage={showImage}

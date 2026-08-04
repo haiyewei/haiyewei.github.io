@@ -288,14 +288,14 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
     const containers = document.querySelectorAll<HTMLDivElement>('[data-search-container]')
 
     containers.forEach((container) => {
-      const toggleBtn = container.querySelector<HTMLButtonElement>('[data-search-toggle]')
-      const expandedEl = container.querySelector<HTMLDivElement>('[data-search-expanded]')
-      const input = container.querySelector<HTMLInputElement>('[data-search-input]')
-      const closeBtn = container.querySelector<HTMLButtonElement>('[data-search-close]')
-      const dropdown = container.querySelector<HTMLDivElement>('[data-search-dropdown]')
-      const loadingEl = container.querySelector<HTMLDivElement>('[data-search-loading]')
-      const resultsEl = container.querySelector<HTMLUListElement>('[data-search-results]')
-      const noResultsEl = container.querySelector<HTMLDivElement>('[data-search-no-results]')
+      const toggleBtn = container.querySelector<HTMLButtonElement>('[data-search-toggle]')!
+      const expandedEl = container.querySelector<HTMLDivElement>('[data-search-expanded]')!
+      const input = container.querySelector<HTMLInputElement>('[data-search-input]')!
+      const closeBtn = container.querySelector<HTMLButtonElement>('[data-search-close]')!
+      const dropdown = container.querySelector<HTMLDivElement>('[data-search-dropdown]')!
+      const loadingEl = container.querySelector<HTMLDivElement>('[data-search-loading]')!
+      const resultsEl = container.querySelector<HTMLUListElement>('[data-search-results]')!
+      const noResultsEl = container.querySelector<HTMLDivElement>('[data-search-no-results]')!
 
       if (
         !toggleBtn ||
@@ -409,23 +409,27 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
           li.setAttribute('aria-selected', String(index === selectedIndex))
           li.dataset.index = String(index)
 
-          let tagsHtml = ''
-          if (result.tags && result.tags.length > 0) {
-            tagsHtml = `
-              <div class="search-result-tags">
-                ${result.tags
-                  .slice(0, 3)
-                  .map((tag) => `<span class="search-result-tag">${tag}</span>`)
-                  .join('')}
-              </div>
-            `
-          }
+          const titleEl = document.createElement('div')
+          titleEl.className = 'search-result-title'
+          titleEl.textContent = result.title
 
-          li.innerHTML = `
-            <div class="search-result-title">${result.title}</div>
-            <div class="search-result-description">${result.description}</div>
-            ${tagsHtml}
-          `
+          const descriptionEl = document.createElement('div')
+          descriptionEl.className = 'search-result-description'
+          descriptionEl.textContent = result.description
+
+          li.append(titleEl, descriptionEl)
+
+          if (result.tags && result.tags.length > 0) {
+            const tagsEl = document.createElement('div')
+            tagsEl.className = 'search-result-tags'
+            result.tags.slice(0, 3).forEach((tag) => {
+              const tagEl = document.createElement('span')
+              tagEl.className = 'search-result-tag'
+              tagEl.textContent = tag
+              tagsEl.appendChild(tagEl)
+            })
+            li.appendChild(tagsEl)
+          }
 
           li.addEventListener('click', () => navigateToResult(result))
           li.addEventListener('mouseenter', () => {

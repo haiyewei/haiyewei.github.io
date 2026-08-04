@@ -3,10 +3,10 @@
  * CategoryBadge 组件
  * 显示分类徽章，带有颜色和可选图标
  */
-import { getCategory, getCategoryName, getCategoryColor } from '../../utils/config'
+import { getCategorySlug, getCategoryName, getCategoryColor } from '../../utils/config'
 
 interface Props {
-  /** 分类 slug */
+  /** 分类 slug 或旧名称 */
   category: string
   /** 徽章大小 */
   size?: 'sm' | 'md' | 'lg'
@@ -18,8 +18,8 @@ interface Props {
 
 const { category, size = 'md', showIcon = false, class: className = '' } = Astro.props
 
-// 获取分类信息
-const categoryInfo = getCategory(category)
+// 统一解析为规范 slug，并获取展示信息
+const categorySlug = getCategorySlug(category)
 const categoryName = getCategoryName(category)
 const categoryColor = getCategoryColor(category)
 
@@ -32,7 +32,7 @@ const sizeClasses = {
 ---
 
 <a
-  href={`/category/${encodeURIComponent(category)}`}
+  href={`/category/${encodeURIComponent(categorySlug)}`}
   class:list={['category-badge', sizeClasses[size], className]}
   style={`--category-color: ${categoryColor}`}
 >

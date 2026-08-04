@@ -17,8 +17,7 @@ description: 了解更多关于这个博客和作者的信息
 
 如果你有任何问题或建议，欢迎通过以下方式联系我：
 
-- **GitHub：** [@username](https://github.com)
-- **Email：** [example@example.com](mailto:example@example.com)
+- **GitHub：** [@haiyewei](https://github.com/haiyewei)
 
 ## 技术栈
 
@@ -27,4 +26,4 @@ description: 了解更多关于这个博客和作者的信息
 - Astro - 静态站点生成器
 - TypeScript - 类型安全
 - CSS 变量 - 主题系统
-- React - 交互组件
+- 原生浏览器脚本 - 搜索、主题切换等交互

@@ -323,15 +323,15 @@ const {
 
     containers.forEach((container) => {
       const targetSelector = container.dataset.targetSelector || '.article-content'
-      const toggleBtn = container.querySelector<HTMLButtonElement>('[data-page-search-toggle]')
-      const expandedEl = container.querySelector<HTMLDivElement>('[data-page-search-expanded]')
-      const input = container.querySelector<HTMLInputElement>('[data-page-search-input]')
-      const closeBtn = container.querySelector<HTMLButtonElement>('[data-page-search-close]')
-      const countEl = container.querySelector<HTMLSpanElement>('[data-page-search-count]')
-      const currentMatchEl = container.querySelector<HTMLSpanElement>('[data-current-match]')
-      const totalMatchesEl = container.querySelector<HTMLSpanElement>('[data-total-matches]')
-      const prevBtn = container.querySelector<HTMLButtonElement>('[data-page-search-prev]')
-      const nextBtn = container.querySelector<HTMLButtonElement>('[data-page-search-next]')
+      const toggleBtn = container.querySelector<HTMLButtonElement>('[data-page-search-toggle]')!
+      const expandedEl = container.querySelector<HTMLDivElement>('[data-page-search-expanded]')!
+      const input = container.querySelector<HTMLInputElement>('[data-page-search-input]')!
+      const closeBtn = container.querySelector<HTMLButtonElement>('[data-page-search-close]')!
+      const countEl = container.querySelector<HTMLSpanElement>('[data-page-search-count]')!
+      const currentMatchEl = container.querySelector<HTMLSpanElement>('[data-current-match]')!
+      const totalMatchesEl = container.querySelector<HTMLSpanElement>('[data-total-matches]')!
+      const prevBtn = container.querySelector<HTMLButtonElement>('[data-page-search-prev]')!
+      const nextBtn = container.querySelector<HTMLButtonElement>('[data-page-search-next]')!
 
       if (
         !toggleBtn ||

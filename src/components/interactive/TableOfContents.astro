@@ -257,8 +257,6 @@ const minDepth = Math.min(...headings.map((h) => h.depth))
       if (!toggleBtn || !content || items.length === 0) return
 
       let isExpanded = true
-      let activeId = ''
-
       // 切换展开/折叠
       toggleBtn.addEventListener('click', () => {
         isExpanded = !isExpanded
@@ -295,7 +293,6 @@ const minDepth = Math.min(...headings.map((h) => h.depth))
 
       // 设置活动项
       function setActiveId(id: string): void {
-        activeId = id
         items.forEach((item) => {
           const isActive = item.dataset.slug === id
           item.classList.toggle('active', isActive)

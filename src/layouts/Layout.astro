@@ -27,16 +27,7 @@ interface Props {
   containerSize?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
 }
 
-const {
-  title,
-  description,
-  image,
-  type = 'website',
-  class: className = '',
-  // 忽略旧版属性，仅保留接口兼容
-  useContainer,
-  containerSize,
-} = Astro.props
+const { title, description, image, type = 'website', class: className = '' } = Astro.props
 ---
 
 <BaseLayout title={title} description={description} image={image} type={type} class={className}>

@@ -3,15 +3,10 @@
  * 作者详情页
  * 显示作者信息和该作者的所有文章
  */
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 import PageLayout from '../../layouts/PageLayout.astro'
 import PostList from '../../components/blog/PostList.astro'
-import {
-  getAuthors,
-  getPostLayout,
-  shouldShowPostImage,
-  getExcerptLength,
-} from '../../utils/config'
+import { getPostLayout, shouldShowPostImage, getExcerptLength } from '../../utils/config'
 
 // 获取帖子配置
 const postLayout = getPostLayout()
@@ -30,7 +25,7 @@ export async function getStaticPaths() {
   // 为每个作者生成路径
   return authorEntries.map((author) => {
     // 过滤出该作者的文章
-    const filteredPosts = allPosts.filter((post) => post.data.author === author.slug)
+    const filteredPosts = allPosts.filter((post) => post.data.author === author.id)
 
     // 按发布日期降序排列
     const sortedPosts = filteredPosts.sort(
@@ -38,7 +33,7 @@ export async function getStaticPaths() {
     )
 
     return {
-      params: { slug: author.slug },
+      params: { slug: author.id },
       props: {
         posts: sortedPosts,
         author,
@@ -53,7 +48,7 @@ interface Props {
 }
 
 const { posts, author } = Astro.props
-const { Content } = await author.render()
+const { Content } = await render(author)
 ---
 
 <PageLayout

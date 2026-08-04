@@ -6,7 +6,7 @@
 import { getCollection } from 'astro:content'
 import { Icon } from 'astro-icon/components'
 import PageLayout from '../layouts/PageLayout.astro'
-import { getCategories } from '../utils/config'
+import { getCategories, getCategorySlug } from '../utils/config'
 
 // 获取所有博客文章，过滤草稿
 const allPosts = await getCollection('posts', ({ data }) => {
@@ -16,35 +16,38 @@ const allPosts = await getCollection('posts', ({ data }) => {
 // 从 YAML 配置获取所有分类
 const categories = getCategories()
 
-// 统计每个分类的文章数量（兼容中文分类）
+// 按规范 slug 统计分类文章数量，兼容旧的分类名称
 const categoryCounts = new Map<string, number>()
 allPosts.forEach((post) => {
   if (post.data.category) {
-    categoryCounts.set(post.data.category, (categoryCounts.get(post.data.category) || 0) + 1)
+    const categorySlug = getCategorySlug(post.data.category)
+    categoryCounts.set(categorySlug, (categoryCounts.get(categorySlug) || 0) + 1)
   }
 })
 
-// 合并配置分类与文章中出现的分类（支持中文）
-const categoryKeySet = new Set<string>()
+// 合并配置分类与文章中未配置的分类，每个 slug 只保留一项
+const categoriesBySlug = new Map<string, (typeof categories)[number]>()
 categories.forEach((category) => {
-  if (category.slug) categoryKeySet.add(category.slug)
-  if (category.name) categoryKeySet.add(category.name)
+  if (!categoriesBySlug.has(category.slug)) {
+    categoriesBySlug.set(category.slug, category)
+  }
 })
-Array.from(categoryCounts.keys()).forEach((categoryKey) => categoryKeySet.add(categoryKey))
+categoryCounts.forEach((_count, categorySlug) => {
+  if (!categoriesBySlug.has(categorySlug)) {
+    categoriesBySlug.set(categorySlug, {
+      slug: categorySlug,
+      name: categorySlug,
+      description: '',
+      color: '#6b7280',
+    })
+  }
+})
 
-// 为每个分类添加文章数量
-const categoriesWithCount = Array.from(categoryKeySet).map((categoryKey) => {
-  const matchedCategory =
-    categories.find((category) => category.slug === categoryKey) ??
-    categories.find((category) => category.name === categoryKey)
-
-  const category = matchedCategory
-    ? { ...matchedCategory, slug: categoryKey }
-    : { slug: categoryKey, name: categoryKey, description: '', color: '#6b7280' }
-
+// 为每个规范分类添加文章数量
+const categoriesWithCount = Array.from(categoriesBySlug.values()).map((category) => {
   return {
     ...category,
-    count: categoryCounts.get(categoryKey) || 0,
+    count: categoryCounts.get(category.slug) || 0,
   }
 })
 
@@ -55,7 +58,11 @@ const sortedCategories = categoriesWithCount.sort((a, b) => b.count - a.count)
 const totalPosts = allPosts.length
 ---
 
-<PageLayout title="所有分类" description={`共 ${categories.length} 个分类`} containerSize="lg">
+<PageLayout
+  title="所有分类"
+  description={`共 ${sortedCategories.length} 个分类`}
+  containerSize="lg"
+>
   <nav class="categories-breadcrumb" aria-label="面包屑导航">
     <a href="/posts" class="categories-breadcrumb__link">文章</a>
     <span class="categories-breadcrumb__separator" aria-hidden="true">/</span>
@@ -110,7 +117,7 @@ const totalPosts = allPosts.length
     <dl class="categories-stats__list">
       <div class="categories-stats__item">
         <dt class="categories-stats__label">分类总数</dt>
-        <dd class="categories-stats__value">{categories.length}</dd>
+        <dd class="categories-stats__value">{sortedCategories.length}</dd>
       </div>
       <div class="categories-stats__item">
         <dt class="categories-stats__label">文章总数</dt>

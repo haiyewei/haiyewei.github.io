@@ -9,12 +9,13 @@ import { getCollection, render } from 'astro:content'
 import PostLayout from '../../layouts/PostLayout.astro'
 import PostNavigation from '../../components/blog/PostNavigation.astro'
 import RelatedPosts from '../../components/blog/RelatedPosts.astro'
+import { getCategorySlug } from '../../utils/config'
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts')
+  const posts = await getCollection('posts', ({ data }) => data.draft !== true)
 
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: { post },
   }))
 }
@@ -24,11 +25,14 @@ const { Content, headings } = await render(post)
 
 // 获取 URL 参数（上下文信息）
 const url = new URL(Astro.request.url)
-const fromContext = url.searchParams.get('from') as 'category' | 'tag' | 'author' | null
+const requestedContext = url.searchParams.get('from')
 const contextValue = url.searchParams.get('value') || ''
 
 // 确定上下文类型
-const context: 'all' | 'category' | 'tag' | 'author' = fromContext || 'all'
+const context: 'all' | 'category' | 'tag' | 'author' =
+  requestedContext === 'category' || requestedContext === 'tag' || requestedContext === 'author'
+    ? requestedContext
+    : 'all'
 
 // 映射上下文类型到 BackToList 组件的 context 类型
 type BackContext = 'posts' | 'category' | 'tag' | 'author'
@@ -45,7 +49,10 @@ const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pu
 // 根据上下文过滤文章列表
 function getFilteredPosts() {
   if (context === 'category' && contextValue) {
-    return sortedPosts.filter((p) => p.data.category === contextValue)
+    const categorySlug = getCategorySlug(contextValue)
+    return sortedPosts.filter(
+      (p) => p.data.category && getCategorySlug(p.data.category) === categorySlug
+    )
   }
   if (context === 'tag' && contextValue) {
     return sortedPosts.filter((p) => p.data.tags && p.data.tags.includes(contextValue))
@@ -59,7 +66,7 @@ function getFilteredPosts() {
 const filteredPosts = getFilteredPosts()
 
 // 找到当前文章在列表中的位置
-const currentIndex = filteredPosts.findIndex((p) => p.slug === post.slug)
+const currentIndex = filteredPosts.findIndex((p) => p.id === post.id)
 
 // 计算上一篇和下一篇（按时间顺序，上一篇是更新的，下一篇是更旧的）
 const prevPost = currentIndex > 0 ? filteredPosts[currentIndex - 1] : undefined
@@ -100,15 +107,15 @@ const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 4)
 
   <PostNavigation
     slot="navigation"
-    prevPost={prevPost ? { slug: prevPost.slug, title: prevPost.data.title } : undefined}
-    nextPost={nextPost ? { slug: nextPost.slug, title: nextPost.data.title } : undefined}
+    prevPost={prevPost ? { slug: prevPost.id, title: prevPost.data.title } : undefined}
+    nextPost={nextPost ? { slug: nextPost.id, title: nextPost.data.title } : undefined}
     context={context}
     contextValue={contextValue}
   />
 
   <RelatedPosts
     slot="related"
-    currentSlug={post.slug}
+    currentSlug={post.id}
     category={post.data.category}
     tags={post.data.tags}
     allPosts={allPosts}

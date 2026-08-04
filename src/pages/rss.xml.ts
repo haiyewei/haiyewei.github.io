@@ -4,12 +4,12 @@
  */
 import rss from '@astrojs/rss'
 import { getCollection } from 'astro:content'
-import { siteConfig } from '../utils/config'
+import { getAuthorName, siteConfig } from '../utils/config'
 import type { APIContext } from 'astro'
 
 export async function GET(context: APIContext) {
   // 获取所有博客文章
-  const posts = await getCollection('posts')
+  const posts = await getCollection('posts', ({ data }) => data.draft !== true)
 
   // 按发布日期排序（最新的在前）
   const sortedPosts = posts.sort((a, b) => {
@@ -19,7 +19,7 @@ export async function GET(context: APIContext) {
   })
 
   // 获取网站 URL
-  const siteUrl = siteConfig.site.url || context.site?.toString() || 'https://example.com'
+  const siteUrl = siteConfig.site.url || context.site?.toString() || 'https://blog.haiyewei.com'
 
   return rss({
     // RSS 频道标题
@@ -37,11 +37,11 @@ export async function GET(context: APIContext) {
       // 文章发布日期
       pubDate: post.data.pubDate ? new Date(post.data.pubDate) : new Date(),
       // 文章链接
-      link: `/post/${post.slug}/`,
+      link: `/post/${post.id}/`,
       // 文章分类
       categories: post.data.category ? [post.data.category] : [],
       // 文章作者
-      author: post.data.author || siteConfig.site.author,
+      author: post.data.author ? getAuthorName(post.data.author) : siteConfig.site.author,
     })),
     // 自定义 XML 命名空间
     customData: `<language>${siteConfig.site.language}</language>`,

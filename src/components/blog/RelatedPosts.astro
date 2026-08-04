@@ -4,10 +4,10 @@
  * 根据当前文章的分类和标签推荐相关文章
  */
 import PostCard from './PostCard.astro'
-import { getCoverImage } from '../../utils/config'
+import { getCategorySlug, getCoverImage } from '../../utils/config'
 
 interface Post {
-  slug: string
+  id: string
   body?: string
   data: {
     title: string
@@ -46,7 +46,11 @@ function calculateRelevanceScore(post: Post): number {
   let score = 0
 
   // 同分类加分
-  if (category && post.data.category === category) {
+  if (
+    category &&
+    post.data.category &&
+    getCategorySlug(post.data.category) === getCategorySlug(category)
+  ) {
     score += 3
   }
 
@@ -62,7 +66,7 @@ function calculateRelevanceScore(post: Post): number {
 // 过滤并排序相关文章
 const relatedPosts = allPosts
   // 排除当前文章和草稿
-  .filter((post) => post.slug !== currentSlug && post.data.draft !== true)
+  .filter((post) => post.id !== currentSlug && post.data.draft !== true)
   // 计算相关性分数
   .map((post) => ({
     post,
@@ -98,7 +102,7 @@ const hasRelatedPosts = relatedPosts.length > 0
             coverImage={getCoverImage(post.body || '')}
             category={post.data.category}
             tags={post.data.tags}
-            slug={post.slug}
+            slug={post.id}
             variant="compact"
             showImage={false}
             excerptLength={80}

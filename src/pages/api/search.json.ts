@@ -22,22 +22,16 @@ export const GET: APIRoute = async () => {
     return data.draft !== true
   })
 
-  // 构建搜索索引
-  const searchIndex: SearchItem[] = posts.map((post) => ({
-    title: post.data.title,
-    description: post.data.description,
-    slug: `post/${post.slug}`,
-    category: post.data.category,
-    tags: post.data.tags,
-  }))
-
-  // 按发布日期排序（最新的在前）
-  searchIndex.sort((a, b) => {
-    const postA = posts.find((p) => p.slug === a.slug)
-    const postB = posts.find((p) => p.slug === b.slug)
-    if (!postA || !postB) return 0
-    return postB.data.pubDate.getTime() - postA.data.pubDate.getTime()
-  })
+  // 按发布日期排序后构建索引，确保搜索结果默认最新优先
+  const searchIndex: SearchItem[] = posts
+    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+    .map((post) => ({
+      title: post.data.title,
+      description: post.data.description,
+      slug: `post/${post.id}`,
+      category: post.data.category,
+      tags: post.data.tags,
+    }))
 
   return new Response(JSON.stringify(searchIndex), {
     status: 200,

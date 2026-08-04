@@ -5,6 +5,7 @@
  * 支持从分类、标签、作者页面进入时显示对应的返回文案
  */
 import Icon from '../common/Icon.astro'
+import { getCategorySlug } from '../../utils/config'
 
 type ContextType = 'posts' | 'category' | 'tag' | 'author'
 
@@ -37,11 +38,13 @@ function getBackHref(): string {
 
   switch (context) {
     case 'category':
-      return contextValue ? `/category/${contextValue}` : '/categories'
+      return contextValue
+        ? `/category/${encodeURIComponent(getCategorySlug(contextValue))}`
+        : '/categories'
     case 'tag':
-      return contextValue ? `/tag/${contextValue}` : '/tags'
+      return contextValue ? `/tag/${encodeURIComponent(contextValue)}` : '/tags'
     case 'author':
-      return contextValue ? `/author/${contextValue}` : '/posts'
+      return contextValue ? `/author/${encodeURIComponent(contextValue)}` : '/posts'
     default:
       return '/posts'
   }

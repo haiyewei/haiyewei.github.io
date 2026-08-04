@@ -81,16 +81,16 @@ export type ThemeMode = 'light' | 'dark' | 'system'
  */
 export const themeConfig: ThemeConfig = {
   site: {
-    title: '我的博客',
+    title: '海野味',
     description: '分享技术、想法和生活',
-    author: 'Your Name',
+    author: 'ddlg',
     language: 'zh-CN',
   },
 
   navigation: {
     links: [
       { text: '首页', href: '/' },
-      { text: '博客', href: '/blog' },
+      { text: '博客', href: '/posts' },
     ],
   },
 
@@ -117,13 +117,12 @@ export const themeConfig: ThemeConfig = {
   },
 
   social: {
-    github: 'https://github.com/username',
-    email: 'hello@example.com',
+    github: 'https://github.com/haiyewei',
     rss: true,
   },
 
   footer: {
-    copyright: '© {year} 我的博客. All rights reserved.',
+    copyright: '© {year} HAIYEWEI.COM. All rights reserved.',
     links: [{ text: 'RSS', href: '/rss.xml' }],
   },
 }

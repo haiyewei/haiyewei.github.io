@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Container from '../components/common/Container.astro'
+---
+
+<BaseLayout title="页面未找到" description="你访问的页面不存在或已被移动。">
+  <Container size="sm">
+    <main class="not-found">
+      <p class="not-found__code">404</p>
+      <h1>页面未找到</h1>
+      <p class="not-found__description">你访问的页面不存在或已被移动。</p>
+      <a class="not-found__link" href="/">返回首页</a>
+    </main>
+  </Container>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
+    padding: var(--space-20) var(--space-4);
+    text-align: center;
+  }
+
+  .not-found__code {
+    margin: 0;
+    color: var(--md-primary);
+    font-size: clamp(4rem, 15vw, 7rem);
+    font-weight: var(--font-bold);
+    line-height: 1;
+  }
+
+  .not-found h1 {
+    margin: 0;
+    font-size: var(--text-2xl);
+  }
+
+  .not-found__description {
+    margin: 0;
+    color: var(--md-on-surface-variant);
+  }
+
+  .not-found__link {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--md-primary);
+    border-radius: var(--radius-md);
+    color: var(--md-primary);
+    font-weight: var(--font-medium);
+  }
+
+  .not-found__link:hover {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+  }
+</style>

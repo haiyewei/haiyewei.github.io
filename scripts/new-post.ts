@@ -1,6 +1,6 @@
 /**
  * 新建博客文章脚本
- * 使用方法: npm run new-post
+ * 使用方法: pnpm new-post
  */
 
 import * as fs from 'node:fs'

@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro'
+import { siteConfig } from '../utils/config'
 
 /**
  * 提供 /sitemap.xml 作为 /sitemap-index.xml 的别名
@@ -11,7 +12,7 @@ import type { APIRoute } from 'astro'
  */
 
 // 获取站点 URL
-const siteUrl = import.meta.env.SITE || 'https://example.com'
+const siteUrl = siteConfig.site.url || import.meta.env.SITE || 'https://blog.haiyewei.com'
 
 export const GET: APIRoute = async () => {
   // 生成 sitemap index XML 内容

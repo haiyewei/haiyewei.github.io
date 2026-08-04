@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config'
+import { unified } from '@astrojs/markdown-remark'
 
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
@@ -12,37 +13,43 @@ import rehypeExternalLinks from 'rehype-external-links'
 // https://astro.build/config
 export default defineConfig({
   // 网站 URL（用于生成 sitemap 和 RSS）
-  site: 'https://example.com',
+  site: 'https://blog.haiyewei.com',
+
+  // Astro 7 defaults to JSX-aware compression, which can change whitespace
+  // between inline elements. Keep the previous HTML compression semantics.
+  compressHTML: true,
 
   // Markdown 配置
   markdown: {
-    rehypePlugins: [
-      rehypeSlug,
-      [
-        rehypeAutolinkHeadings,
-        {
-          behavior: 'wrap', // 整个标题成为链接，不需要额外的 # 符号
-          properties: {
-            className: ['heading-link'],
-            ariaLabel: '链接到此标题',
+    processor: unified({
+      rehypePlugins: [
+        rehypeSlug,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'wrap', // 整个标题成为链接，不需要额外的 # 符号
+            properties: {
+              className: ['heading-link'],
+              ariaLabel: '链接到此标题',
+            },
           },
-        },
-      ],
-      [
-        rehypeExternalLinks,
-        {
-          target: '_blank',
-          rel: ['noopener', 'noreferrer'],
-          content: {
-            type: 'element',
-            tagName: 'span',
-            properties: { className: ['external-link-icon'] },
-            children: [],
+        ],
+        [
+          rehypeExternalLinks,
+          {
+            target: '_blank',
+            rel: ['noopener', 'noreferrer'],
+            content: {
+              type: 'element',
+              tagName: 'span',
+              properties: { className: ['external-link-icon'] },
+              children: [],
+            },
+            contentProperties: { className: ['external-link-icon-wrapper'] },
           },
-          contentProperties: { className: ['external-link-icon-wrapper'] },
-        },
+        ],
       ],
-    ],
+    }),
   },
 
   integrations: [
@@ -117,7 +124,6 @@ export default defineConfig({
       // 自定义 sitemap 配置
       changefreq: 'weekly',
       priority: 0.7,
-      lastmod: new Date(),
       // 过滤不需要包含在 sitemap 中的页面
       filter: (page) => !page.includes('/api/'),
     }),

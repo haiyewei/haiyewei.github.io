@@ -1,9 +1,8 @@
 ---
 name: '管理员'
-email: 'admin@example.com'
 bio: '网站管理员'
 social:
-  github: 'https://github.com/username'
+  github: 'https://github.com/haiyewei'
 ---
 
 # 关于管理员
@@ -18,4 +17,4 @@ social:
 
 ## 联系我
 
-如果你有任何问题或建议，欢迎通过邮件联系我。
+如果你有任何问题或建议，欢迎通过 GitHub 联系我。

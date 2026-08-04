@@ -2,7 +2,7 @@
 title: 'Markdown 完整语法指南'
 description: '全面介绍 Markdown 语法，包括基础语法、扩展语法和本博客的增强功能'
 pubDate: 2024-01-10
-category: '教程'
+category: tutorial
 tags: ['markdown', '写作', '教程']
 author: 'admin'
 ---

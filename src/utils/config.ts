@@ -2,7 +2,7 @@
  * 网站配置加载工具
  * 从 YAML 配置文件读取并提供类型安全的配置访问
  */
-import yaml from 'js-yaml'
+import { load as parseYaml } from 'js-yaml'
 import fs from 'node:fs'
 import path from 'node:path'
 
@@ -142,7 +142,7 @@ function loadConfig(): SiteConfig {
 
   try {
     const fileContents = fs.readFileSync(CONFIG_PATH, 'utf8')
-    const config = yaml.load(fileContents) as SiteConfig
+    const config = parseYaml(fileContents) as SiteConfig
 
     // 验证必要字段
     if (!config.site || !config.navigation || !config.categories) {
@@ -165,15 +165,15 @@ function loadConfig(): SiteConfig {
 function getDefaultConfig(): SiteConfig {
   return {
     site: {
-      title: '我的博客',
+      title: '海野味',
       description: '分享技术、想法和生活',
-      author: 'Author',
+      author: 'ddlg',
       language: 'zh-CN',
-      url: 'https://example.com',
+      url: 'https://blog.haiyewei.com',
     },
     navigation: [
       { name: '首页', href: '/' },
-      { name: '博客', href: '/blog' },
+      { name: '博客', href: '/posts' },
     ],
     categories: [
       { slug: 'tech', name: '技术', description: '技术相关文章', color: '#3b82f6' },
@@ -181,11 +181,10 @@ function getDefaultConfig(): SiteConfig {
       { slug: 'tutorial', name: '教程', description: '教程和指南', color: '#f59e0b' },
     ],
     social: {
-      github: 'https://github.com/username',
-      email: 'email@example.com',
+      github: 'https://github.com/haiyewei',
     },
     footer: {
-      copyright: '© 2026 我的博客',
+      copyright: '© {year} HAIYEWEI.COM. All rights reserved.',
       links: [{ name: 'RSS', href: '/rss.xml' }],
     },
     features: {
@@ -229,31 +228,45 @@ export function getCategories(): Category[] {
 }
 
 /**
- * 根据 slug 获取分类
- * @param slug 分类标识
+ * 根据 slug 或名称获取分类
+ * @param identifier 分类 slug 或名称
  * @returns 分类对象，如果未找到则返回 undefined
  */
-export function getCategory(slug: string): Category | undefined {
-  return siteConfig.categories.find((cat) => cat.slug === slug)
+export function getCategory(identifier: string): Category | undefined {
+  const normalizedIdentifier = identifier.trim()
+  return (
+    siteConfig.categories.find((category) => category.slug === normalizedIdentifier) ??
+    siteConfig.categories.find((category) => category.name === normalizedIdentifier)
+  )
+}
+
+/**
+ * 将分类 slug 或名称解析为规范 slug
+ * @param identifier 分类 slug 或名称
+ * @returns 配置中的规范 slug；未知分类保留原标识
+ */
+export function getCategorySlug(identifier: string): string {
+  const normalizedIdentifier = identifier.trim()
+  return getCategory(normalizedIdentifier)?.slug ?? normalizedIdentifier
 }
 
 /**
  * 获取分类名称
- * @param slug 分类标识
- * @returns 分类名称，如果未找到则返回 slug
+ * @param identifier 分类 slug 或名称
+ * @returns 分类名称，如果未找到则返回原标识
  */
-export function getCategoryName(slug: string): string {
-  const category = getCategory(slug)
-  return category ? category.name : slug
+export function getCategoryName(identifier: string): string {
+  const category = getCategory(identifier)
+  return category ? category.name : identifier.trim()
 }
 
 /**
  * 获取分类颜色
- * @param slug 分类标识
+ * @param identifier 分类 slug 或名称
  * @returns 分类颜色，如果未找到则返回默认颜色
  */
-export function getCategoryColor(slug: string): string {
-  const category = getCategory(slug)
+export function getCategoryColor(identifier: string): string {
+  const category = getCategory(identifier)
   return category ? category.color : '#6b7280'
 }
 
