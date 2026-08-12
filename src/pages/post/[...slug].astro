@@ -86,8 +86,8 @@ function calculateReadingTime(content: string): number {
 // 获取文章原始内容用于计算阅读时间
 const readingTime = calculateReadingTime(post.body || '')
 
-// 过滤标题（只保留 h2-h4 级别的标题用于目录）
-const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 4)
+// 过滤标题（只保留 h2-h5 级别的标题用于目录）
+const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 5)
 ---
 
 <PostLayout
