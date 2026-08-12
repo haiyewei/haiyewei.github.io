@@ -45,10 +45,10 @@ const hasNavigation = prevPost || nextPost
 {
   hasNavigation && (
     <nav class="post-navigation" aria-label="文章导航">
-      <div class="post-navigation__container">
+      <div class={`post-navigation__container ${(!prevPost || !nextPost) ? 'post-navigation__container--single' : ''}`}>
         {/* 上一篇 */}
-        <div class="post-navigation__item post-navigation__item--prev">
-          {prevPost ? (
+        {prevPost && (
+          <div class="post-navigation__item post-navigation__item--prev">
             <a href={getPostUrl(prevPost.slug)} class="post-navigation__link">
               <span class="post-navigation__direction">
                 <Icon name="material-symbols:arrow-back" class="post-navigation__icon" />
@@ -56,14 +56,12 @@ const hasNavigation = prevPost || nextPost
               </span>
               <span class="post-navigation__title">{prevPost.title}</span>
             </a>
-          ) : (
-            <div class="post-navigation__placeholder" aria-hidden="true" />
-          )}
-        </div>
+          </div>
+        )}
 
         {/* 下一篇 */}
-        <div class="post-navigation__item post-navigation__item--next">
-          {nextPost ? (
+        {nextPost && (
+          <div class="post-navigation__item post-navigation__item--next">
             <a href={getPostUrl(nextPost.slug)} class="post-navigation__link">
               <span class="post-navigation__direction">
                 <span>下一篇</span>
@@ -71,10 +69,8 @@ const hasNavigation = prevPost || nextPost
               </span>
               <span class="post-navigation__title">{nextPost.title}</span>
             </a>
-          ) : (
-            <div class="post-navigation__placeholder" aria-hidden="true" />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </nav>
   )
@@ -84,13 +80,16 @@ const hasNavigation = prevPost || nextPost
   .post-navigation {
     margin-top: var(--space-8);
     padding-top: var(--space-8);
-    border-top: 1px solid var(--md-outline-variant);
   }
 
   .post-navigation__container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-4);
+  }
+
+  .post-navigation__container--single {
+    grid-template-columns: 1fr;
   }
 
   .post-navigation__item {
@@ -107,25 +106,24 @@ const hasNavigation = prevPost || nextPost
 
   .post-navigation__link {
     display: flex;
+    width: 100%;
     flex-direction: column;
     gap: var(--space-2);
     padding: var(--space-4);
     background-color: var(--md-surface-container-low);
-    border: 1px solid var(--md-outline-variant);
+    box-shadow: var(--shadow-sm);
     border-radius: var(--radius-lg);
     text-decoration: none;
     color: inherit;
     transition:
       background-color var(--transition-fast),
-      border-color var(--transition-fast),
       box-shadow var(--transition-fast);
     height: 100%;
   }
 
   .post-navigation__link:hover {
     background-color: var(--md-surface-container);
-    border-color: var(--md-outline);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
   }
 
   .post-navigation__item--next .post-navigation__link {

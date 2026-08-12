@@ -60,57 +60,59 @@ function formatDate(date: Date): string {
 ---
 
 <div class:list={['post-meta', className]}>
-  {/* 第一行：基本信息（作者、日期、阅读时间） */}
-  <div class="meta-row meta-primary">
-    {
-      showAuthor && author && authorName && (
-        <span class="meta-item meta-author">
-          <Icon name="material-symbols:person" class="meta-icon" aria-hidden="true" />
-          <a href={`/author/${author}`} class="author-link">
-            {authorName}
-          </a>
-        </span>
-      )
-    }
+  {/* 作者 */}
+  {
+    showAuthor && author && authorName && (
+      <span class="meta-item meta-author">
+        <Icon name="material-symbols:person" class="meta-icon" aria-hidden="true" />
+        <a href={`/author/${author}`} class="author-link">
+          {authorName}
+        </a>
+      </span>
+    )
+  }
 
-    <span class="meta-item">
-      <Icon name="material-symbols:calendar-today" class="meta-icon" aria-hidden="true" />
-      <time datetime={pubDate.toISOString()}>
-        {formatDate(pubDate)}
-      </time>
-    </span>
+  {/* 发布日期 */}
+  <span class="meta-item">
+    <Icon name="material-symbols:calendar-today" class="meta-icon" aria-hidden="true" />
+    <time datetime={pubDate.toISOString()}>
+      {formatDate(pubDate)}
+    </time>
+  </span>
 
-    {
-      updatedDate && (
-        <span class="meta-item meta-updated">
-          <Icon name="material-symbols:refresh" class="meta-icon" aria-hidden="true" />
-          <time datetime={updatedDate.toISOString()}>更新于 {formatDate(updatedDate)}</time>
-        </span>
-      )
-    }
+  {/* 更新日期 */}
+  {
+    updatedDate && (
+      <span class="meta-item meta-updated">
+        <Icon name="material-symbols:refresh" class="meta-icon" aria-hidden="true" />
+        <time datetime={updatedDate.toISOString()}>更新于 {formatDate(updatedDate)}</time>
+      </span>
+    )
+  }
 
-    {
-      readingTime && (
-        <span class="meta-item">
-          <Icon name="material-symbols:schedule" class="meta-icon" aria-hidden="true" />
-          <span>{readingTime} 分钟阅读</span>
-        </span>
-      )
-    }
+  {/* 阅读时间 */}
+  {
+    readingTime && (
+      <span class="meta-item">
+        <Icon name="material-symbols:schedule" class="meta-icon" aria-hidden="true" />
+        <span>{readingTime} 分钟阅读</span>
+      </span>
+    )
+  }
 
-    {
-      showCategory && category && (
-        <span class="meta-item meta-category-inline">
-          <CategoryBadge category={category} size="sm" />
-        </span>
-      )
-    }
-  </div>
+  {/* 分类 */}
+  {
+    showCategory && category && (
+      <span class="meta-item meta-category-badge">
+        <CategoryBadge category={category} size="sm" />
+      </span>
+    )
+  }
 
-  {/* 第二行：标签列表 */}
+  {/* 标签 */}
   {
     showTags && tags.length > 0 && (
-      <div class="meta-row meta-tags">
+      <div class="meta-item meta-tags-inline">
         <Icon name="material-symbols:sell" class="meta-icon tags-icon" aria-hidden="true" />
         <TagList tags={tags} size="sm" />
       </div>
@@ -121,34 +123,32 @@ function formatDate(date: Date): string {
 <style>
   .post-meta {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-  }
-
-  .meta-row {
-    display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-3);
+    column-gap: var(--space-4, 16px);
+    row-gap: var(--space-2, 8px);
   }
 
   .meta-item {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-1);
+    gap: var(--space-1, 4px);
     font-size: var(--text-sm);
     color: var(--md-on-surface-variant);
+    line-height: 1;
+    flex-shrink: 0;
   }
 
   .meta-icon {
-    width: 1em;
-    height: 1em;
+    width: 1.1em;
+    height: 1.1em;
     flex-shrink: 0;
-    opacity: 0.7;
+    opacity: 0.75;
+    color: var(--md-on-surface-variant);
   }
 
-  .meta-updated {
-    color: var(--md-outline);
+  .meta-author .meta-icon {
+    color: var(--md-primary);
   }
 
   .meta-author .author-link {
@@ -162,54 +162,31 @@ function formatDate(date: Date): string {
     text-decoration: underline;
   }
 
-  /* 第一行：基本信息 */
-  .meta-primary {
-    flex-wrap: wrap;
-    row-gap: var(--space-2);
-  }
-
-  /* 第一行内的分隔符 */
-  .meta-primary .meta-item:not(:last-child)::after {
-    content: '·';
-    margin-left: var(--space-3);
+  .meta-updated {
     color: var(--md-outline);
   }
 
-  /* 分类徽章不需要分隔符后缀 */
-  .meta-category-inline::after {
-    display: none !important;
+  /* 标签项：允许收缩以适应一行 */
+  .meta-tags-inline {
+    gap: var(--space-2, 8px);
+    flex-shrink: 1;
+    min-width: 0;
   }
 
-  /* 第二行：标签 */
-  .meta-tags {
-    padding-top: var(--space-1);
-    gap: var(--space-2);
+  /* 让嵌套的 TagList 也 inline flow，不独占行 */
+  .meta-tags-inline :global(.tag-list) {
+    flex-wrap: wrap;
   }
 
   .tags-icon {
     color: var(--md-on-surface-variant);
-    align-self: flex-start;
-    margin-top: 0.125rem;
   }
 
-  /* 移动端响应式 */
+  /* 移动端间距微调 */
   @media (max-width: 640px) {
     .post-meta {
-      gap: var(--space-3);
-    }
-
-    .meta-primary .meta-item:not(:last-child)::after {
-      display: none;
-    }
-
-    .meta-primary {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-2);
-    }
-
-    .meta-tags {
-      padding-top: 0;
+      column-gap: var(--space-3, 12px);
+      row-gap: var(--space-2, 8px);
     }
   }
 </style>

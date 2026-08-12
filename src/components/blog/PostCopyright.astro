@@ -1,0 +1,112 @@
+---
+import { themeConfig } from '../../config/theme.config'
+import { getAuthorName } from '../../utils/config'
+
+interface Props {
+  title: string
+  pubDate: Date
+  author?: string
+}
+
+const { title, pubDate, author } = Astro.props
+
+const authorName = author ? getAuthorName(author) : themeConfig.site.author
+const postUrl = Astro.url.href
+
+const formattedDate = pubDate.toLocaleDateString('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+})
+---
+
+<div class="post-copyright">
+  <div class="post-copyright__item">
+    <span class="post-copyright__label">本文标题：</span>
+    <span class="post-copyright__value">{title}</span>
+  </div>
+  <div class="post-copyright__item">
+    <span class="post-copyright__label">本文作者：</span>
+    <span class="post-copyright__value">{authorName}</span>
+  </div>
+  <div class="post-copyright__item">
+    <span class="post-copyright__label">发布时间：</span>
+    <span class="post-copyright__value">{formattedDate}</span>
+  </div>
+  <div class="post-copyright__item">
+    <span class="post-copyright__label">本文链接：</span>
+    <span class="post-copyright__value">
+      <a href={postUrl} class="post-copyright__link" target="_blank" rel="noopener noreferrer">
+        {postUrl}
+      </a>
+    </span>
+  </div>
+  <div class="post-copyright__item post-copyright__item--license">
+    <span class="post-copyright__label">版权声明：</span>
+    <span class="post-copyright__value">
+      本博客所有文章除特别声明外，均采用 
+      <a 
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" 
+        class="post-copyright__license-link" 
+        target="_blank" 
+        rel="noopener noreferrer"
+      >
+        CC BY-NC-SA 4.0 (署名-非商业性使用-相同方式共享)
+      </a> 
+      许可协议。转载请注明来自 <a href="/" class="post-copyright__site-link">{themeConfig.site.title}</a>！
+    </span>
+  </div>
+</div>
+
+<style>
+  .post-copyright {
+    background-color: var(--md-surface-container-low);
+    border-left: 4px solid var(--md-primary);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: var(--space-5) var(--space-6);
+    margin: var(--space-8) 0;
+    box-shadow: var(--shadow-sm);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--md-on-surface-variant);
+  }
+
+  .post-copyright__item {
+    word-break: break-all;
+  }
+
+  .post-copyright__label {
+    font-weight: var(--font-semibold);
+    color: var(--md-on-surface);
+    display: inline-block;
+    min-width: 75px;
+  }
+
+  .post-copyright__value {
+    color: var(--md-on-surface-variant);
+  }
+
+  .post-copyright__link,
+  .post-copyright__license-link,
+  .post-copyright__site-link {
+    color: var(--md-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .post-copyright__link:hover,
+  .post-copyright__license-link:hover,
+  .post-copyright__site-link:hover {
+    color: var(--md-primary-container);
+    text-decoration: underline;
+  }
+
+  .post-copyright__item--license {
+    margin-top: var(--space-2);
+    padding-top: var(--space-2);
+    border-top: 1px dashed var(--md-outline-variant);
+  }
+</style>

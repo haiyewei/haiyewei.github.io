@@ -47,7 +47,7 @@ const {
 <style>
   .header {
     background-color: var(--md-surface);
-    border-bottom: 1px solid var(--md-outline-variant);
+    box-shadow: var(--shadow-sm);
     height: var(--nav-height-mobile);
     transition:
       background-color var(--transition-normal),
@@ -120,6 +120,13 @@ const {
 
     .header-right {
       gap: var(--space-2);
+    }
+  }
+
+  /* 移动端/中屏下隐藏页头主题按钮，移至右下角悬浮按钮组 */
+  @media (max-width: 1199px) {
+    .header :global(.theme-toggle) {
+      display: none;
     }
   }
 </style>

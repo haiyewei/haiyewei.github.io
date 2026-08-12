@@ -31,30 +31,32 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
 
   {/* 展开的搜索框 */}
   <div class="search-expanded" data-search-expanded hidden>
-    <div class="search-input-wrapper">
-      <span class="search-icon">
-        <Icon name="material-symbols:search" size={18} aria-hidden="true" />
-      </span>
-      <input
-        type="text"
-        placeholder={placeholder}
-        class="search-input"
-        aria-label="搜索文章"
-        aria-expanded="false"
-        aria-controls="search-results"
-        aria-autocomplete="list"
-        role="combobox"
-        data-search-input
-      />
-      <button type="button" class="search-close" aria-label="关闭搜索" data-search-close>
-        <Icon name="material-symbols:close" size={18} aria-hidden="true" />
-      </button>
-    </div>
+    <div class="search-modal-card" data-search-card>
+      <div class="search-input-wrapper">
+        <span class="search-icon">
+          <Icon name="material-symbols:search" size={18} aria-hidden="true" />
+        </span>
+        <input
+          type="text"
+          placeholder={placeholder}
+          class="search-input"
+          aria-label="搜索文章"
+          aria-expanded="false"
+          aria-controls="search-results"
+          aria-autocomplete="list"
+          role="combobox"
+          data-search-input
+        />
+        <button type="button" class="search-close" aria-label="关闭搜索" data-search-close>
+          <Icon name="material-symbols:close" size={18} aria-hidden="true" />
+        </button>
+      </div>
 
-    <div class="search-dropdown" role="listbox" id="search-results" data-search-dropdown hidden>
-      <div class="search-loading" data-search-loading hidden>加载中...</div>
-      <ul class="search-results" data-search-results></ul>
-      <div class="search-no-results" data-search-no-results hidden>未找到相关文章</div>
+      <div class="search-dropdown" role="listbox" id="search-results" data-search-dropdown hidden>
+        <div class="search-loading" data-search-loading hidden>加载中...</div>
+        <ul class="search-results" data-search-results></ul>
+        <div class="search-no-results" data-search-no-results hidden>未找到相关文章</div>
+      </div>
     </div>
   </div>
 </div>
@@ -94,70 +96,118 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
     outline-offset: 2px;
   }
 
-  /* 搜索框展开时隐藏按钮 */
-  .search-container.expanded .search-toggle-btn {
-    display: none;
+  /* 展开的搜索遮罩（使用 MD3 主题的 scrim 遮罩色） */
+  .search-expanded {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: color-mix(in srgb, var(--md-scrim) 60%, transparent); /* 吃到主题系统自带的 --md-scrim 变量 */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 12vh 20px 20px;
+    animation: backdropFadeIn 0.25s ease-out forwards;
   }
 
-  /* 展开的搜索框 */
-  .search-expanded {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    width: 280px;
-    z-index: var(--z-dropdown, 100);
+  [data-theme='dark'] .search-expanded {
+    background-color: color-mix(in srgb, var(--md-scrim) 75%, transparent); /* 暗色模式下遮罩加深以获得更好对比度 */
+  }
+
+  @keyframes backdropFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   .search-expanded[hidden] {
     display: none;
   }
 
+  /* 居中的搜索对话框卡片 */
+  .search-modal-card {
+    background-color: var(--md-surface-container-high);
+    border: 1px solid var(--md-primary);
+    border-radius: var(--radius-lg, 12px);
+    width: 100%;
+    max-width: 760px; /* 拓宽搜索框，从 600px 提升到 760px */
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: 
+      cardSlideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+      searchBoxBreathe 3s ease-in-out infinite;
+  }
+
+  @keyframes cardSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-24px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes searchBoxBreathe {
+    0% {
+      border-color: var(--md-primary);
+      box-shadow: 0 0 0 1px var(--md-primary), var(--shadow-xl);
+    }
+    50% {
+      border-color: color-mix(in srgb, var(--md-primary) 40%, transparent);
+      box-shadow: 0 0 12px 2px color-mix(in srgb, var(--md-primary) 30%, transparent), var(--shadow-xl);
+    }
+    100% {
+      border-color: var(--md-primary);
+      box-shadow: 0 0 0 1px var(--md-primary), var(--shadow-xl);
+    }
+  }
+
   .search-input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--md-outline-variant);
   }
 
   .search-icon {
-    position: absolute;
-    left: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--md-outline);
+    color: var(--md-primary);
     pointer-events: none;
   }
 
   .search-input {
-    width: 100%;
-    padding: 10px 40px 10px 36px;
-    font-size: var(--text-sm, 0.875rem);
+    flex: 1;
+    min-width: 0;
+    padding: 0 12px;
+    font-size: 1rem;
     color: var(--md-on-surface);
-    background-color: var(--md-surface);
-    border: 1px solid var(--md-outline);
-    border-radius: var(--radius-md, 8px);
+    background: transparent;
+    border: none;
     outline: none;
-    transition:
-      border-color var(--transition-fast, 150ms ease),
-      box-shadow var(--transition-fast, 150ms ease);
-    box-shadow: var(--shadow-lg);
   }
 
   .search-input::placeholder {
     color: var(--md-outline);
   }
 
-  .search-input:focus {
-    border-color: var(--md-primary);
-    box-shadow:
-      var(--shadow-lg),
-      0 0 0 3px color-mix(in srgb, var(--md-primary) 20%, transparent);
-  }
-
   .search-close {
-    position: absolute;
-    right: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -166,9 +216,9 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
     padding: 0;
     background: none;
     border: none;
-    color: var(--md-outline);
+    color: var(--md-on-surface-variant);
     cursor: pointer;
-    border-radius: var(--radius-sm, 4px);
+    border-radius: var(--radius-full, 9999px);
     transition:
       color var(--transition-fast, 150ms ease),
       background-color var(--transition-fast, 150ms ease);
@@ -185,15 +235,8 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
   }
 
   .search-dropdown {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    right: 0;
-    background-color: var(--md-surface);
-    border: 1px solid var(--md-outline-variant);
-    border-radius: var(--radius-md, 8px);
-    box-shadow: var(--shadow-lg);
-    z-index: var(--z-dropdown, 100);
+    width: 100%;
+    background-color: var(--md-surface-container-high);
     max-height: 400px;
     overflow-y: auto;
   }
@@ -258,6 +301,20 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
     border-radius: var(--radius-sm, 4px);
   }
 
+  /* 搜索匹配文本高亮样式 */
+  :global(.search-highlight) {
+    background-color: var(--md-tertiary-container, #ffd8e4);
+    color: var(--md-on-tertiary-container, #31111d);
+    border-radius: 2px;
+    padding: 0 2px;
+    font-weight: inherit;
+  }
+
+  [data-theme='dark'] :global(.search-highlight) {
+    background-color: var(--md-tertiary-container, #633b48);
+    color: var(--md-on-tertiary-container, #ffd8e4);
+  }
+
   /* 移动端响应式 */
   @media (max-width: 640px) {
     .search-expanded {
@@ -282,6 +339,7 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
     slug: string
     category?: string
     tags?: string[]
+    body?: string
   }
 
   ;(function initSearch() {
@@ -316,12 +374,65 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
       let isSearchExpanded = false
       let isLoading = false
 
+      // HTML 转义辅助函数，防止 XSS
+      function escapeHtml(str: string): string {
+        return str
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;')
+      }
+
+      // 对文本中的查询词进行高亮
+      function highlightText(text: string, query: string): string | null {
+        if (!text || !query) return null
+        const index = text.toLowerCase().indexOf(query.toLowerCase())
+        if (index === -1) return null
+
+        const escapedText = escapeHtml(text)
+        const escapedQuery = escapeHtml(query)
+        const regex = new RegExp(`(${escapedQuery.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi')
+        return escapedText.replace(regex, '<mark class="search-highlight">$1</mark>')
+      }
+
+      // 获取包含匹配词的预览上下文片段
+      function getHighlightSnippet(text: string, query: string, maxLength = 120): string | null {
+        if (!text || !query) return null
+        const index = text.toLowerCase().indexOf(query.toLowerCase())
+        if (index === -1) return null
+
+        // 计算预览片段范围，尽量让匹配词居中
+        let start = Math.max(0, index - Math.floor(maxLength / 2))
+        let end = Math.min(text.length, index + query.length + Math.floor(maxLength / 2))
+
+        let snippet = text.substring(start, end)
+        let prefix = start > 0 ? '...' : ''
+        let suffix = end < text.length ? '...' : ''
+
+        const escapedSnippet = escapeHtml(snippet)
+        const escapedQuery = escapeHtml(query)
+
+        const regex = new RegExp(`(${escapedQuery.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi')
+        const highlighted = escapedSnippet.replace(regex, '<mark class="search-highlight">$1</mark>')
+
+        return prefix + highlighted + suffix
+      }
+
       // 展开搜索框
       function expandSearch(): void {
+        if (isSearchExpanded) return
         isSearchExpanded = true
         container.classList.add('expanded')
         expandedEl.hidden = false
         toggleBtn.setAttribute('aria-expanded', 'true')
+
+        // 锁定背景页面滚动条，并动态补偿滚动条宽度，防止页面内容左右抖动（Layout Shift）
+        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+        if (scrollbarWidth > 0) {
+          document.body.style.paddingRight = `${scrollbarWidth}px`
+        }
+        document.body.style.overflow = 'hidden'
 
         // 延迟聚焦，等待动画
         requestAnimationFrame(() => {
@@ -331,10 +442,15 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
 
       // 收起搜索框
       function collapseSearch(): void {
+        if (!isSearchExpanded) return
         isSearchExpanded = false
         container.classList.remove('expanded')
         expandedEl.hidden = true
         toggleBtn.setAttribute('aria-expanded', 'false')
+
+        // 恢复背景页面滚动条及内边距补偿
+        document.body.style.overflow = ''
+        document.body.style.paddingRight = ''
 
         // 清空搜索
         input.value = ''
@@ -383,7 +499,8 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
             const descMatch = item.description.toLowerCase().includes(lowerQuery)
             const tagMatch = item.tags?.some((tag) => tag.toLowerCase().includes(lowerQuery))
             const categoryMatch = item.category?.toLowerCase().includes(lowerQuery)
-            return titleMatch || descMatch || tagMatch || categoryMatch
+            const contentMatch = item.body?.toLowerCase().includes(lowerQuery)
+            return titleMatch || descMatch || tagMatch || categoryMatch || contentMatch
           })
           .slice(0, 5)
 
@@ -411,11 +528,29 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
 
           const titleEl = document.createElement('div')
           titleEl.className = 'search-result-title'
-          titleEl.textContent = result.title
+          
+          const query = input.value.trim()
+          const titleHighlight = highlightText(result.title, query)
+          if (titleHighlight) {
+            titleEl.innerHTML = titleHighlight
+          } else {
+            titleEl.textContent = result.title
+          }
 
           const descriptionEl = document.createElement('div')
           descriptionEl.className = 'search-result-description'
-          descriptionEl.textContent = result.description
+          
+          const snippetHtml = getHighlightSnippet(result.body || '', query)
+          if (snippetHtml) {
+            descriptionEl.innerHTML = snippetHtml
+          } else {
+            const descHighlight = highlightText(result.description, query)
+            if (descHighlight) {
+              descriptionEl.innerHTML = descHighlight
+            } else {
+              descriptionEl.textContent = result.description
+            }
+          }
 
           li.append(titleEl, descriptionEl)
 
@@ -459,6 +594,7 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
 
       // 导航到结果
       function navigateToResult(result: SearchResult): void {
+        collapseSearch() // 跳转前先关闭并解锁滚动
         window.location.href = `/${result.slug}`
       }
 
@@ -532,10 +668,39 @@ const { placeholder = '搜索文章...', class: className = '' } = Astro.props
         }
       })
 
-      // 点击外部关闭
+          // 点击外部区域（除搜索卡片和打开按钮外）关闭搜索框
       document.addEventListener('mousedown', (e) => {
-        if (isSearchExpanded && !container.contains(e.target as Node)) {
+        if (!isSearchExpanded) return
+        const card = container.querySelector('[data-search-card]')
+        const clickedToggle = toggleBtn.contains(e.target as Node)
+        if (card && !card.contains(e.target as Node) && !clickedToggle) {
           collapseSearch()
+        }
+      })
+
+      // 全局快捷键 Ctrl+K / Cmd+K 或 "/" 键打开搜索框
+      document.addEventListener('keydown', (e) => {
+        const activeEl = document.activeElement
+        if (
+          activeEl &&
+          (activeEl.tagName === 'INPUT' ||
+            activeEl.tagName === 'TEXTAREA' ||
+            (activeEl instanceof HTMLElement && activeEl.contentEditable === 'true'))
+        ) {
+          // 如果当前焦点就是搜索框本身，按 Esc 可以关闭
+          if (activeEl === input && e.key === 'Escape') {
+            collapseSearch()
+          }
+          return
+        }
+
+        if (
+          ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') ||
+          (e.key === '/' && !e.ctrlKey && !e.metaKey)
+        ) {
+          e.preventDefault()
+          expandSearch()
+          loadSearchData()
         }
       })
     })

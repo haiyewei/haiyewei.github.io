@@ -11,8 +11,10 @@ import TagList from '../components/blog/TagList.astro'
 import BackToList from '../components/blog/BackToList.astro'
 import TableOfContents from '../components/interactive/TableOfContents.astro'
 import ImageLightbox from '../components/interactive/ImageLightbox.astro'
-import PageSearch from '../components/interactive/PageSearch.astro'
+import PostCopyright from '../components/blog/PostCopyright.astro'
+import ThemeToggle from '../components/interactive/ThemeToggle.astro'
 import { themeConfig } from '../config/theme.config'
+import { Icon } from 'astro-icon/components'
 import { getAuthorName } from '../utils/config'
 
 /**
@@ -88,6 +90,8 @@ const authorName = author ? getAuthorName(author) : undefined
         <header class="article-header">
           <h1 class="article-title">{title}</h1>
 
+          {description && <p class="article-description">{description}</p>}
+
           <PostMeta
             pubDate={pubDate}
             updatedDate={updatedDate}
@@ -100,8 +104,6 @@ const authorName = author ? getAuthorName(author) : undefined
             showTags={true}
             class="article-meta"
           />
-
-          <p class="article-description">{description}</p>
         </header>
 
         <!-- 文章内容 -->
@@ -111,6 +113,8 @@ const authorName = author ? getAuthorName(author) : undefined
 
         <!-- 文章底部 -->
         <footer class="article-footer">
+          <PostCopyright title={title} pubDate={pubDate} author={author} />
+
           {/* 文章底部标签 */}
           {
             tags && tags.length > 0 && (
@@ -151,19 +155,43 @@ const authorName = author ? getAuthorName(author) : undefined
     }
   </div>
 
-  {/* 移动端浮动目录 */}
+  {/* 移动端右下角浮动按钮组 */}
+  <div class="mobile-action-buttons">
+    <!-- 返回顶部按钮 -->
+    <button class="mobile-action-btn mobile-action-btn--back-to-top" data-action-top aria-label="返回顶部">
+      <Icon name="material-symbols:arrow-upward" class="mobile-action-btn__icon" />
+    </button>
+
+    <!-- 打开目录按钮 (仅当有目录时显示) -->
+    {
+      showToc && (
+        <button class="mobile-action-btn mobile-toc-trigger" data-toc-trigger aria-label="打开目录">
+          <Icon name="material-symbols:format-list-bulleted" class="mobile-action-btn__icon" />
+        </button>
+      )
+    }
+
+    <!-- 主题切换按钮 -->
+    <div class="mobile-action-btn mobile-theme-toggle-wrapper">
+      <ThemeToggle initialTheme={themeConfig.appearance.defaultTheme} />
+    </div>
+  </div>
+
+  {/* 移动端侧边栏目录（Drawer Panel） */}
   {
     showToc && (
-      <div class="mobile-toc">
-        <TableOfContents headings={headings} />
+      <div class="mobile-toc-drawer" data-toc-drawer>
+        <div class="mobile-toc-drawer__backdrop" data-toc-backdrop></div>
+        <aside class="mobile-toc-drawer__aside" data-toc-aside>
+          <div class="mobile-toc-drawer__content">
+            <TableOfContents headings={headings} />
+          </div>
+        </aside>
       </div>
     )
   }
 
-  {/* 页面内搜索组件 */}
-  <div class="page-search-wrapper">
-    <PageSearch targetSelector=".article-content" placeholder="在文章中搜索..." />
-  </div>
+
 
   {/* 图片灯箱组件 */}
   <ImageLightbox />
@@ -195,8 +223,159 @@ const authorName = author ? getAuthorName(author) : undefined
     top: calc(var(--nav-height) + var(--space-6));
   }
 
-  .mobile-toc {
+  /* 统一移动端右下角浮动按钮 */
+  .mobile-action-buttons {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3, 12px);
+    z-index: 999;
     display: none;
+  }
+
+  .mobile-action-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full, 50%);
+    background-color: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+    border: none;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+
+  .mobile-action-btn:focus,
+  .mobile-action-btn:active {
+    outline: none;
+  }
+
+  .mobile-action-btn:hover {
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+  }
+
+  .mobile-action-btn:active {
+    transform: scale(0.95);
+  }
+
+  .mobile-action-btn__icon {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
+  .mobile-theme-toggle-wrapper :global(.theme-toggle) {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: var(--radius-full, 50%) !important;
+    background-color: var(--md-primary-container) !important;
+    color: var(--md-on-primary-container) !important;
+    box-shadow: var(--shadow-md) !important;
+    transition: transform 0.2s, background-color 0.2s !important;
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
+  }
+
+  .mobile-theme-toggle-wrapper :global(.theme-toggle:focus),
+  .mobile-theme-toggle-wrapper :global(.theme-toggle:active) {
+    outline: none !important;
+  }
+
+  .mobile-theme-toggle-wrapper :global(.theme-toggle:hover) {
+    background-color: var(--md-primary) !important;
+    color: var(--md-on-primary) !important;
+  }
+
+  .mobile-theme-toggle-wrapper :global(.theme-toggle:active) {
+    transform: scale(0.95) !important;
+  }
+
+  /* 移动端侧边栏目录容器 */
+  .mobile-toc-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    display: none;
+  }
+
+  .mobile-toc-drawer.open {
+    display: block;
+  }
+
+  /* 背景蒙版 (Scrim) */
+  .mobile-toc-drawer__backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: color-mix(in srgb, var(--md-scrim) 40%, transparent);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.25s ease-out;
+  }
+
+  /* 侧边栏面板 (优化为屏幕宽度的 80%，左侧留白暴露蒙版以支持点击收起) */
+  .mobile-toc-drawer__aside {
+    position: absolute;
+    top: 16px;
+    bottom: 16px;
+    right: 16px;
+    width: 80%;
+    max-width: 360px;
+    border-radius: var(--radius-lg, 12px);
+    background-color: var(--md-surface-container-high);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(calc(100% + 16px));
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  /* 移除去除目录组件按钮的方形点击高亮 */
+  .mobile-toc-drawer__aside :global(.toc-header) {
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none !important;
+  }
+  .mobile-toc-drawer__aside :global(.toc-header:focus) {
+    outline: none !important;
+  }
+
+  /* 侧边栏目录内容区 (零内边距以使目录从最上方贴边开始展示) */
+  .mobile-toc-drawer__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  /* 让目录组件 seamless 融入侧边栏 */
+  .mobile-toc-drawer__content :global(.toc-container) {
+    position: static !important;
+    width: 100% !important;
+    max-width: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  .mobile-toc-drawer__content :global(.toc-content.expanded) {
+    max-height: none !important;
+    overflow-y: visible !important;
   }
 
   /* 大屏幕显示侧边栏目录 */
@@ -208,12 +387,12 @@ const authorName = author ? getAuthorName(author) : undefined
 
   /* 中等屏幕和移动端显示浮动目录 */
   @media (max-width: 1199px) {
-    .article-layout {
-      padding: 0;
+    .mobile-action-buttons {
+      display: flex;
     }
-
-    .mobile-toc {
-      display: block;
+    /* 保持左右 16px 留白，防止文字贴边 */
+    .article-layout {
+      padding: 0 var(--space-4);
     }
   }
 
@@ -224,7 +403,6 @@ const authorName = author ? getAuthorName(author) : undefined
   .article-header {
     margin-bottom: var(--space-10);
     padding-bottom: var(--space-8);
-    border-bottom: 1px solid var(--md-outline-variant);
   }
 
   .footer-back-link {
@@ -234,19 +412,19 @@ const authorName = author ? getAuthorName(author) : undefined
   .article-title {
     font-size: var(--text-4xl);
     color: var(--md-on-background);
-    margin: 0 0 var(--space-6) 0;
+    margin: 0 0 var(--space-3) 0;
     line-height: var(--leading-tight);
     font-weight: var(--font-bold);
   }
 
   .article-meta {
-    margin-bottom: var(--space-6);
+    margin-bottom: 0;
   }
 
   .article-description {
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
     color: var(--md-on-surface-variant);
-    margin: 0;
+    margin: 0 0 var(--space-6) 0;
     line-height: var(--leading-relaxed);
   }
 
@@ -267,6 +445,7 @@ const authorName = author ? getAuthorName(author) : undefined
     margin-bottom: var(--space-4);
     font-weight: var(--font-semibold);
     line-height: var(--leading-tight);
+    scroll-margin-top: calc(var(--nav-height) + 24px);
   }
 
   .article-content :global(h1) {
@@ -344,6 +523,8 @@ const authorName = author ? getAuthorName(author) : undefined
     width: 100%;
     border-collapse: collapse;
     margin: var(--space-6) 0;
+    display: block;
+    overflow-x: auto;
   }
 
   .article-content :global(th),
@@ -368,7 +549,6 @@ const authorName = author ? getAuthorName(author) : undefined
   .article-footer {
     margin-top: var(--space-12);
     padding-top: var(--space-8);
-    border-top: 1px solid var(--md-outline-variant);
   }
 
   .footer-tags {
@@ -392,40 +572,114 @@ const authorName = author ? getAuthorName(author) : undefined
     margin-top: var(--space-8);
   }
 
-  /* 页面内搜索组件定位 */
-  .page-search-wrapper {
-    position: fixed;
-    top: calc(var(--nav-height, 64px) + var(--space-4, 16px));
-    right: var(--space-4, 16px);
-    z-index: var(--z-fixed, 50);
-  }
 
   @media (max-width: 640px) {
     .article-title {
-      font-size: var(--text-3xl);
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-2);
+    }
+
+    .article-description {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-4);
+    }
+
+    .article-header {
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+    }
+
+    .article-content :global(h1),
+    .article-content :global(h2),
+    .article-content :global(h3),
+    .article-content :global(h4),
+    .article-content :global(h5),
+    .article-content :global(h6) {
+      scroll-margin-top: calc(var(--nav-height-mobile) + 16px);
     }
 
     .article-content :global(h1) {
-      font-size: var(--text-2xl);
+      font-size: var(--text-xl);
+      margin-top: var(--space-6);
     }
 
     .article-content :global(h2) {
-      font-size: var(--text-xl);
+      font-size: var(--text-lg);
+      margin-top: var(--space-6);
     }
 
     .article-content :global(h3) {
-      font-size: var(--text-lg);
+      font-size: var(--text-base);
+      margin-top: var(--space-5);
     }
 
     .footer-tags {
       flex-direction: column;
-      gap: var(--space-2);
-    }
-
-    .page-search-wrapper {
-      top: auto;
-      bottom: var(--space-4, 16px);
-      right: var(--space-4, 16px);
     }
   }
 </style>
+
+<script>
+  function initMobileActions() {
+    // 1. 返回顶部按钮 (始终存在于页面上)
+    const floatTopBtn = document.querySelector('[data-action-top]');
+    if (floatTopBtn) {
+      floatTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // 2. 移动端侧边栏目录控制 (仅当有目录时存在)
+    const trigger = document.querySelector('[data-toc-trigger]') as HTMLElement;
+    const drawer = document.querySelector('[data-toc-drawer]') as HTMLElement;
+    const backdrop = document.querySelector('[data-toc-backdrop]') as HTMLElement;
+    const aside = document.querySelector('[data-toc-aside]') as HTMLElement;
+
+    if (!trigger || !drawer || !backdrop || !aside) return;
+
+    function openDrawer() {
+      drawer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      
+      // 补偿滚动条宽度，防止背景内容抖动
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
+
+      requestAnimationFrame(() => {
+        backdrop.style.opacity = '1';
+        aside.style.transform = 'translateX(0)';
+      });
+    }
+
+    function closeDrawer() {
+      backdrop.style.opacity = '0';
+      aside.style.transform = 'translateX(calc(100% + 16px))';
+      
+      setTimeout(() => {
+        drawer.classList.remove('open');
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+      }, 250);
+    }
+
+    trigger.addEventListener('click', openDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+    drawer.addEventListener('click', (e) => {
+      if (e.target === drawer) {
+        closeDrawer();
+      }
+    });
+
+    // 点击目录内的跳转链接后，自动收起抽屉
+    const tocLinks = drawer.querySelectorAll('.mobile-toc-drawer__content a');
+    tocLinks.forEach(link => {
+      link.addEventListener('click', closeDrawer);
+    });
+  }
+
+  // 挂载至 Astro 页面生命周期
+  document.addEventListener('astro:page-load', initMobileActions);
+  initMobileActions();
+</script>
