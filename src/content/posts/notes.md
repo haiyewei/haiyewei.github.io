@@ -2,7 +2,7 @@
 title: "日记本"
 description: "东东海的小日记本文章页"
 pubDate: 2026-08-12
-draft: true
+draft: false
 category: "life"
 tags: ["日记", "生活"]
 author: "donghai"
